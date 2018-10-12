@@ -1,17 +1,21 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
+    <NaveBar/>
+    <LessonList/>
   </div>
 </template>
 
 <script>
+import NaveBar from './components/base/navbar'
 import HelloWorld from './components/HelloWorld'
+import LessonList from './components/base/lesson-list'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld,
+    NaveBar,
+    LessonList
   }
 }
 </script>
@@ -23,6 +27,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
