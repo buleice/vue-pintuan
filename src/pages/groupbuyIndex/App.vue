@@ -6,9 +6,9 @@
 </template>
 
 <script>
-import NaveBar from './components/base/navbar'
-import HelloWorld from './components/HelloWorld'
-import LessonList from './components/base/lesson-list'
+import NaveBar from '../../components/base/navbar'
+import HelloWorld from '../../components/HelloWorld'
+import LessonList from '../../components/base/lesson-list'
 
 export default {
   name: 'App',
