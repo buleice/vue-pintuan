@@ -4,10 +4,58 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <script type="text/javascript" src="//wxyx.youban.com/js/adaptation.js?">	</script>
+    <script type="text/javascript" src="/js/wx-sdk-1.2.0.js"></script>
+    <script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <title>小伴龙优学</title>
   </head>
   <body>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
+  <script type="text/javascript">
+  var SH_fullURL = window.location.href;
+  var SH_rootURL = window.location.host;
+  var SH_protocol = location.protocol;
+  WXshare()
+  function WXshare() {
+    var WXSHDATA = {
+      title: '<?=$count?>位朋友正在小伴龙优学参与拼课，快为宝宝报名有趣的课程吧!',
+      link: 'https://wxyx.youban.com/shop/index',
+      imgUrl: 'https://udata.youban.com/webimg/wxyx/puintuan/shop-icon.png',
+      type: "link",
+      dataUrl: "",
+      desc: '这里的课程生动有趣，快来小伴龙优学陪伴孩子快乐成长吧！',
+      success: function() {
+        $.get('/common/record.json?wxschool=detail', {}, function(data) {});
+      },
+      cancel: function() {}
+    };
+    $.post('/weixin/config', {
+      url: SH_fullURL,
+    }, function(data) {
+      console.log(data)
+      data = JSON.parse(data);
+      var apilist = [
+        'onMenuShareTimeline',
+        'onMenuShareQQ',
+        'onMenuShareAppMessage'
+      ];
+      wx.config({
+        debug: false,
+        appId: data.appId,
+        timestamp: data.timestamp,
+        nonceStr: data.nonceStr,
+        signature: data.signature,
+        jsApiList: apilist
+      });
+      wx.error(function(res) {
+        console.log('微信：', JSON.stringify(res));
+      });
+      wx.ready(function() {
+        wx.onMenuShareAppMessage(WXSHDATA);
+        wx.onMenuShareTimeline(WXSHDATA); //朋友圈
+      });
+    });
+  }
+  </script>
 </html>
