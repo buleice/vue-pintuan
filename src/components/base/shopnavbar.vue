@@ -10,18 +10,21 @@ export default {
   name: 'ShopNavBar',
   data() {
     return {
-      clickedTab: 0,
+      clickedTab: 1,
     }
   },
   created() {
-    if(this._GetQueryString("source")=="mine"){
+    if(this._GetQueryString("source")=="mine"||(window.location.href).indexOf("mine")>0){
       this.$router.push('/mine');
       this.clickedTab=1;
+    }else{
+      this.clickedTab=0;
+      this.$router.push('/');
     }
   },
   methods: {
     routerTo(index) {
-      this.clickedTab = index == 0 ? 0 : 1;
+      this.clickedTab = index;
       index == 0 ? this.$router.push('/') : this.$router.push('/mine')
     },
     _GetQueryString(name) {
