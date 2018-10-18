@@ -4,7 +4,7 @@
 				<li v-for="item in lessonList">
 							<div class="tuanimg">
 								<a :href="'/purchase/index?id='+item._id" target="_blank">
-									<img class="" v-lazy="item['Fbanner'][0]" >
+									<img class="" v-lazy="item['Fbanner'][0]" :key="item['Fbanner'][0]">
 									<img class="tuan-label" :src="renderLabel(item['Ftag'])" alt="">
                 </a>
 								<div class="people">已有
@@ -66,7 +66,7 @@ export default {
 <style lang="css" scoped>
 	.item{display:block;height:auto;overflow:hidden;padding:.625rem;position:relative}
 	.item li{height:auto;overflow:hidden;display:block;background-color:#fff;border-radius:.625rem;margin-bottom:.8125rem;-webkit-box-shadow:0 .125rem .5rem rgba(0,0,0,.2);box-shadow:0 .125rem .5rem rgba(0,0,0,.2)}
-	.item li .tuanimg,.tuanInfo,.tuanTitle{height:auto;display:block;overflow:hidden}
+	.item li .tuanimg,.tuanInfo,.tuanTitle{height:auto;display:block;overflow:hidden;text-align: left;}
 	.tuanimg{position:relative;}
   .tuanimg a{display: block;}
 	.tuan-label{position:absolute;width:22%;height:auto;left:0;top:0}

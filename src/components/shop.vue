@@ -4,7 +4,6 @@
     <LessonList :lessonList="lessonList"/>
   </div>
 </template>
-
 <script>
 import 'whatwg-fetch'
 import NaveBar from './base/navbar'

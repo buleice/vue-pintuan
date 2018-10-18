@@ -107,7 +107,7 @@ export default {
 .bonus_entry{display: flex;align-items: center;justify-content: space-around;width:5.63rem;height: 2.13rem;background: #fff;position: absolute;right: 0;top: 4.88rem;border-radius: 1rem 0 0 1rem;box-shadow: -2px 3px 15px 1px rgba(0,0,0,.2) ;color: #3e3e3e}
 .bonus_entry img{width: 1rem;height: auto;margin-left: .63rem}
 .id-card>span{display:inline-block;position:absolute;top:60%;left:45%}
-.id-card span{font-size:1rem;max-width: 9rem;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;font-weight: 500;}
+.id-card span{font-size:1rem;max-width: 9rem;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;font-weight: 500;text-align: left;}
 .mypro{background:rgba(6, 6, 6,.4);border:2px solid #fff;width:5.38rem;height:1.75rem;border-radius: .88rem;-webkit-appearance: none;overflow: hidden;color: #fff;position: relative;top: .38rem;}
 .mypro+span{position: absolute;top: .94rem;right: 0.61rem;width: 5.38rem;text-align: center;line-height: 1.75rem;background: transparent;}
 ::-webkit-progress-bar{
