@@ -31,6 +31,8 @@
   </a>
 </div>
 
+<div class="noempty" v-if="!myLesson&&!uncompletedGroups"><img src="https://udata.youban.com/webimg/other/quesheng.png"/></div>
+
   <div class="myGroup" v-for="item in myLesson">
     <a :href="item['url']" class="a_box" target="_blank">
 			<img v-lazy="item['banner']" data-url="" alt="">
@@ -114,6 +116,8 @@ export default {
 ::-webkit-progress-value{
     background:#eb6100;
  }
+ .noempty{text-align:center}
+ .noempty img{width:40%;height:auto;overflow:hidden;display:block;margin:10px auto 0}
  	.myGroup{display:block;height:auto;padding:0 .625rem;margin:.88rem auto;position:relative}
  	.learning_progress{position: absolute;top: 10px;left: 0.625rem;min-width: 3.25rem;padding: .5rem;border-radius: 0 .88rem 0.88rem 0;background: #fff;text-align: center;color: #3c3c3c}
  	.myGroup .a_box,img{display:block;width: 100%;height:100%;position:relative;color: rgba(0,0,0.5);color: #3c3c3c;border-radius: .625rem;}
