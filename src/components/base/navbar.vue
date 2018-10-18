@@ -17,24 +17,38 @@
 
 <script>
 export default {
-  props:{
-    category: {},
+  props: {
+    category: [{
+        id: "1",
+        title: "英语"
+      },
+      {
+        id: "2",
+        title: "数学"
+      },
+      {
+        id: "3",
+        title: "唐诗"
+      }, {
+        id: "0",
+        title: "其他"
+      }
+    ]
   },
-  data(){
-    return{
-      navClick:true,
-      clickIndex:99
+  data() {
+    return {
+      navClick: true,
+      clickIndex: 99
     }
   },
-  created(){
-  },
-  methods:{
-    emitAndsetActive(index){
+  created() {},
+  methods: {
+    emitAndsetActive(index) {
       this.$emit('getListData', index);
-      this.clickIndex=index;
+      this.clickIndex = index;
     }
   },
-  computed:{
+  computed: {
 
   }
 }

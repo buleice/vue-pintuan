@@ -1,11 +1,15 @@
 <template lang="html">
 <div class="">
   <div class="id-card">
-    <img :src="userInfo.img" alt="">
+    <img class="userIcon" :src="userInfo.img" alt="">
     <span>
       <span>昵称：{{userInfo.nick}}</span><br>
       <span>学号：{{userInfo.wid}}</span>
     </span>
+    <a href="/bonus/detail" class="bonus_entry">
+      <img src="http://udata.youban.com/webimg/wxyx/puintuan/bonus.png" alt="">
+      <b>奖学金</b>
+    </a>
   </div>
 
   <div class="myGroup" v-if="uncompletedGroups"  v-for="item in uncompletedGroups">
@@ -30,7 +34,7 @@
   <div class="myGroup" v-for="item in myLesson">
     <a :href="item['url']" class="a_box" target="_blank">
 			<img v-lazy="item['banner']" data-url="" alt="">
-			<div class="groupInfo">
+			<div class="groupInfo" :style="{background:item['total']!=0?'rgba(6,6,6,.4)':'rgba(6,6,6,0)'}">
 				<div class="groupInfo__avatarbox" style="margin-left:0.63rem">
           <div v-if="item['total']!=0">
              进度&nbsp;：<progress v-if="item['total']!=0" class="mypro" :value="setProgressValue(item['learned'],item['total'])" max="100"></progress><span>{{item['learned']}}/{{item['total']}}</span>
@@ -51,7 +55,7 @@ export default {
     return{
       userInfo:'',
       myLesson:'',
-      uncompletedGroups:'',
+      uncompletedGroups:''
     }
   },
   created(){
@@ -97,7 +101,9 @@ export default {
 
 <style lang="css" scoped="true">
 .id-card{background:url(//udata.youban.com/webimg/wxyx/puintuan/common/shopIndex/userbg.png);background-repeat:no-repeat;background-size:100% auto;padding-top: 58%;height: 0;position:relative;margin-top:-3.125rem}
-.id-card img{width:16vw;height:16vw;border-radius:50%;border:3px solid #fff;position:absolute;left:20%;top:54%}
+.id-card img.userIcon{width:16vw;height:16vw;border-radius:50%;border:3px solid #fff;position:absolute;left:20%;top:54%}
+.bonus_entry{display: flex;align-items: center;justify-content: space-around;width:5.63rem;height: 2.13rem;background: #fff;position: absolute;right: 0;top: 4.88rem;border-radius: 1rem 0 0 1rem;box-shadow: -2px 3px 15px 1px rgba(0,0,0,.2) ;color: #3e3e3e}
+.bonus_entry img{width: 1rem;height: auto;margin-left: .63rem}
 .id-card>span{display:inline-block;position:absolute;top:60%;left:45%}
 .id-card span{font-size:1rem;max-width: 9rem;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;font-weight: 500;}
 .mypro{background:rgba(6, 6, 6,.4);border:2px solid #fff;width:5.38rem;height:1.75rem;border-radius: .88rem;-webkit-appearance: none;overflow: hidden;color: #fff;position: relative;top: .38rem;}
@@ -120,4 +126,5 @@ export default {
  	.groupInfo__middleBox .remainPeople{display: inline-block;line-height: 1.25rem;margin-left: .63rem}
  	.groupInfo::after{content: '';display: block;clear: both;}
  	.groupInfo .groupInfo_buttton{display: block;position: absolute;bottom: .625rem;right: 5px;width: 6.25rem;line-height: 2.2rem;text-align: center;background: #f69f00;border-radius: 1rem;color: #fff;}
+
 </style>
