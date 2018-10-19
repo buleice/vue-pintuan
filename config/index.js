@@ -13,10 +13,10 @@ module.exports = {
     proxyTable:{},
   //   proxyTable: {
   // '/apis': {  //使用"/api"来代替"http://xxxx.cn"
-  //   target: 'http://wxyx.youban.com', //源地址 （接口域名）
+  //   target: 'https://wxyx.youban.com', //源地址 （接口域名）
   //   changeOrigin: true, //改变源 （是否跨域）
   //   pathRewrite: {
-  //     '^/apis': 'http://wxyx.youban.com' //路径重写 (正常请求接口的简写)
+  //     '^/apis': 'https://wxyx.youban.com' //路径重写 (正常请求接口的简写)
   //     }
   // }},
 

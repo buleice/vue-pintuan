@@ -14,14 +14,11 @@ export default {
     }
   },
   created() {
-    if(this._GetQueryString("source")=="mine"||(window.location.href).indexOf("mine")>0){
-      this.$router.push('/mine');
-      this.clickedTab=1;
-    }else{
-      this.clickedTab=0;
-      this.$router.push('/');
-    }
+    this._goPath()
   },
+  watch: {
+  '$route':'_goPath'
+},
   methods: {
     routerTo(index) {
       this.clickedTab = index;
@@ -32,6 +29,15 @@ export default {
       var r = window.location.search.substr(1).match(reg); //search,查询？后面的参数，并匹配正则
       if (r != null) return unescape(r[2]);
       return null;
+    },
+    _goPath(){
+      if(this._GetQueryString("source")=="mine"||(window.location.href).indexOf("mine")>0){
+        this.$router.push('/mine');
+        this.clickedTab=1;
+      }else{
+        this.clickedTab=0;
+        this.$router.push('/');
+      }
     }
   }
 }
