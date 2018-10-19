@@ -3,22 +3,14 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
+var proxyConfig = require('./proxyConfig')
 
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable:{},
-  //   proxyTable: {
-  // '/apis': {  //使用"/api"来代替"http://xxxx.cn"
-  //   target: 'https://wxyx.youban.com', //源地址 （接口域名）
-  //   changeOrigin: true, //改变源 （是否跨域）
-  //   pathRewrite: {
-  //     '^/apis': 'https://wxyx.youban.com' //路径重写 (正常请求接口的简写)
-  //     }
-  // }},
+    proxyTable: proxyConfig.proxy,
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

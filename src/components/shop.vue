@@ -8,6 +8,7 @@
 import 'whatwg-fetch'
 import NaveBar from './base/navbar'
 import LessonList from './base/lesson-list'
+import {ROOT} from '../fetch/config'
 export default {
   name: 'Shop',
   components: {
@@ -23,7 +24,7 @@ export default {
     }
   },
   created() {
-    fetch('/shop/index.json?', {
+    fetch(ROOT+'/shop/index.json?debug=20009150', {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -40,7 +41,7 @@ export default {
       category==99?(this.lessonList=this.allList):this._fetchData(category);
   },
   _fetchData(category){
-    fetch('/shop/category.json?category='+category, {
+    fetch(ROOT+'/shop/category.json?category='+category, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
