@@ -14,15 +14,23 @@ export default {
     }
   },
   created() {
-    this._goPath()
+    this._goPath();
   },
   watch: {
-  '$route':'_goPath'
-},
+    $route(to,from){
+      console.log(window.location.href);
+      console.log(to.path);
+      if(to.path=="/shop"){
+        this.clickedTab=0;
+      }else if(to.path=="/mine"){
+        this.clickedTab=1;
+      }
+    },
+  },
   methods: {
     routerTo(index) {
       this.clickedTab = index;
-      index == 0 ? this.$router.push('/') : this.$router.push('/mine')
+      index == 0 ? this.$router.push('/shop') : this.$router.push('/mine')
     },
     _GetQueryString(name) {
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -30,13 +38,14 @@ export default {
       if (r != null) return unescape(r[2]);
       return null;
     },
-    _goPath(){
-      if(this._GetQueryString("source")=="mine"||(window.location.href).indexOf("mine")>0){
+    _goPath() {
+      console.log(window.location.href)
+      if (this._GetQueryString('source') == "mine") {
         this.$router.push('/mine');
-        this.clickedTab=1;
-      }else{
-        this.clickedTab=0;
-        this.$router.push('/');
+        this.clickedTab = 1;
+      } else{
+        this.$router.push('/shop');
+        this.clickedTab = 0;
       }
     }
   }
