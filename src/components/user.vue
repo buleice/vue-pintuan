@@ -6,7 +6,7 @@
       <span>昵称：{{userInfo.nick}}</span><br>
       <span>学号：{{userInfo.wid}}</span>
     </span>
-    <a href="/bonus/detail" class="bonus_entry" style="display:none;">
+    <a href="/bonus/detail" class="bonus_entry">
       <img src="http://udata.youban.com/webimg/wxyx/puintuan/bonus.png" alt="">
       <b>奖学金</b>
     </a>
