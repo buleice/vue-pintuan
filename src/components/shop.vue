@@ -9,6 +9,16 @@ import 'whatwg-fetch'
 import NaveBar from './base/navbar'
 import LessonList from './base/lesson-list'
 import {ROOT} from '../fetch/config'
+let requestConfig = {
+  credentials: 'include',
+  method: "POST",
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type' : 'application/json'
+  },
+  mode: "cors",
+  cache: "force-cache"
+}
 export default {
   name: 'Shop',
   components: {
@@ -17,19 +27,21 @@ export default {
   },
   data() {
     return {
-      lessonList:{},
+      lessonList:'',
       allList:{},
       isShowAll:true,
       category:''
     }
   },
   created() {
-    fetch(ROOT+'/shop/index.json?debug=20009150', {
+    fetch('//wxyx.youban.com/shop/index.json?debug=20009150', {
+      mode: "cors",
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "cache": "force-cache"
       },
-      credentials: "same-origin"
+      credentials: "include"
     }).then(response=>response.json()).then(res=>{
       this.allList=res.list;
       this.lessonList=res.list;
