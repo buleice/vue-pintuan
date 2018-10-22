@@ -61,7 +61,7 @@ export default {
     }
   },
   created(){
-       fetch('/shop/mine.json?', {
+       fetch('//wxyx.youban.com/shop/mine.json?debug=20009150', {
           method: "POST",
           headers: {
             "Content-Type": "application/json"

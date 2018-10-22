@@ -4,11 +4,11 @@
     <LessonList :lessonList="lessonList"/>
   </div>
 </template>
+
 <script>
 import 'whatwg-fetch'
 import NaveBar from './base/navbar'
 import LessonList from './base/lesson-list'
-import {ROOT} from '../fetch/config'
 export default {
   name: 'Shop',
   components: {
@@ -24,7 +24,7 @@ export default {
     }
   },
   created() {
-    fetch(ROOT+'/shop/index.json?debug=20009150', {
+    fetch('//wxyx.youban.com/shop/index.json?debug=20009150', {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -41,7 +41,7 @@ export default {
       category==99?(this.lessonList=this.allList):this._fetchData(category);
   },
   _fetchData(category){
-    fetch(ROOT+'/shop/category.json?category='+category, {
+    fetch('//wxyx.youban.com/shop/category.json?debug=20009150&category='+category, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -52,8 +52,6 @@ export default {
     })
   }
 },
-
-
 }
 </script>
 <style lang="css">

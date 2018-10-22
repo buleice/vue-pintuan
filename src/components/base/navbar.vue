@@ -18,22 +18,24 @@
 <script>
 export default {
   props: {
-    category: [{
-        id: "1",
-        title: "英语"
-      },
-      {
-        id: "2",
-        title: "数学"
-      },
-      {
-        id: "3",
-        title: "唐诗"
-      }, {
-        id: "0",
-        title: "其他"
-      }
-    ]
+    category: {
+      default:()=>[{
+          id: "1",
+          title: "英语"
+        },
+        {
+          id: "2",
+          title: "数学"
+        },
+        {
+          id: "3",
+          title: "唐诗"
+        }, {
+          id: "0",
+          title: "其他"
+        }
+      ]
+    }
   },
   data() {
     return {
