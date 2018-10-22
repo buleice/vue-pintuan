@@ -31,12 +31,7 @@
 <script>
 export default {
   props:{
-    lessonList:{}
-  },
-  data() {
-    return {
-
-    }
+    lessonList:Object
   },
   methods:{
     renderLabel:function(Ftag){
