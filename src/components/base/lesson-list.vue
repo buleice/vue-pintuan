@@ -31,7 +31,7 @@
 <script>
 export default {
   props:{
-    lessonList:Object
+    lessonList:{}
   },
   methods:{
     renderLabel:function(Ftag){

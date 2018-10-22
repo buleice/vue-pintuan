@@ -18,8 +18,6 @@ export default {
   },
   watch: {
     $route(to,from){
-      console.log(window.location.href);
-      console.log(to.path);
       if(to.path=="/shop"){
         this.clickedTab=0;
       }else if(to.path=="/mine"){

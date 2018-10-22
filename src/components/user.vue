@@ -55,13 +55,13 @@ export default {
   name:'usercenter',
   data(){
     return{
-      userInfo:'',
-      myLesson:'',
-      uncompletedGroups:''
+      userInfo:{},
+      myLesson:{},
+      uncompletedGroups:[]
     }
   },
   created(){
-       fetch('//wxyx.youban.com/shop/mine.json?debug=20009150', {
+       fetch('//wxyx.youban.com/shop/mine.json?debug=20013152', {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -79,7 +79,7 @@ export default {
   },
   methods:{
     setProgressValue(learn,total){
-      return parseInt(learn/total*100)
+      return parseInt(parseInt(learn)/total*100)
     },
     computedAvatarStyle(index,ava,Fmode){
       if(index==0){

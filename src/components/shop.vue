@@ -9,20 +9,6 @@
 import 'whatwg-fetch'
 import NaveBar from './base/navbar'
 import LessonList from './base/lesson-list'
-<<<<<<< HEAD
-=======
-import {ROOT} from '../fetch/config'
-let requestConfig = {
-  credentials: 'include',
-  method: "POST",
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type' : 'application/json'
-  },
-  mode: "cors",
-  cache: "force-cache"
-}
->>>>>>> c6e152ff46fd4f221a3292d374cc614927cba531
 export default {
   name: 'Shop',
   components: {
@@ -38,11 +24,7 @@ export default {
     }
   },
   created() {
-    fetch('//wxyx.youban.com/shop/index.json?debug=20009150', {
-<<<<<<< HEAD
-=======
-      mode: "cors",
->>>>>>> c6e152ff46fd4f221a3292d374cc614927cba531
+    fetch('//wxyx.youban.com/shop/index.json?debug=20013152', {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -60,7 +42,7 @@ export default {
       category==99?(this.lessonList=this.allList):this._fetchData(category);
   },
   _fetchData(category){
-    fetch('//wxyx.youban.com/shop/category.json?debug=20009150&category='+category, {
+    fetch('//wxyx.youban.com/shop/category.json?debug=20013152&category='+category, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
