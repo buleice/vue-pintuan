@@ -11,15 +11,15 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    // proxyTable:proxyConfig.proxy,
+    proxyTable:{},
     proxyTable: {
-    '/apis':{
-        target:'http://wxyx.youban.com',
-        changeOrigin:true,
-        pathRewrite:{
-            '^/apis':'localhost:8080'
-        }
-    }
+    // '/apis':{
+    //     target:'http://wxyx.youban.com',
+    //     changeOrigin:true,
+    //     pathRewrite:{
+    //         '^/apis':'localhost:8080'
+    //     }
+    // }
 },
 
     // Various Dev Server settings
