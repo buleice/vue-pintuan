@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import 'whatwg-fetch'
+import {Request} from '../api/request'
 import NaveBar from './base/navbar'
 import LessonList from './base/lesson-list'
 export default {
@@ -24,14 +24,7 @@ export default {
     }
   },
   created() {
-    fetch('//wxyx.youban.com/shop/index.json?debug=20013152', {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "cache": "force-cache"
-      },
-      credentials: "include"
-    }).then(response=>response.json()).then(res=>{
+    new Request('/shop/index.json','POST').returnJson().then(res=>{
       this.allList=res.list;
       this.lessonList=res.list;
       this.category= res.category;
@@ -42,13 +35,7 @@ export default {
       category==99?(this.lessonList=this.allList):this._fetchData(category);
   },
   _fetchData(category){
-    fetch('//wxyx.youban.com/shop/category.json?debug=20013152&category='+category, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      credentials: "same-origin"
-    }).then(response=>response.json()).then(res=>{
+      new Request('/shop/category.json','GET',{"category":category}).returnJson().then(res=>{
       this.lessonList=res.list;
     })
   }

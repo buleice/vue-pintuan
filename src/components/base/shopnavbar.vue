@@ -37,7 +37,6 @@ export default {
       return null;
     },
     _goPath() {
-      console.log(window.location.href)
       if (this._GetQueryString('source') == "mine") {
         this.$router.push('/mine');
         this.clickedTab = 1;

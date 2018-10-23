@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import 'whatwg-fetch'
+import {Request} from '../api/request'
 export default {
   name:'usercenter',
   data(){
@@ -61,13 +61,7 @@ export default {
     }
   },
   created(){
-       fetch('//wxyx.youban.com/shop/mine.json?debug=20013152', {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          credentials: "same-origin"
-        }).then(response=>response.json()).then(res=>{
+        new Request("/shop/mine.json","POST").returnJson().then(res=>{
           this.userInfo={
             nick:res.nick,
             wid:res.wid,
@@ -123,7 +117,7 @@ export default {
  	.myGroup .a_box,img{display:block;width: 100%;height:100%;position:relative;color: rgba(0,0,0.5);color: #3c3c3c;border-radius: .625rem;}
  	.groupInfo{width: 100%;height:3.44rem;line-height: 3.44rem;color: #fff;padding: 0 .38rem 0 0;-webkit-box-sizing: border-box;box-sizing: border-box;border-radius:0 0 .625rem .625rem;position: absolute;left: 0;bottom: 0;background-color: rgba(6, 6, 6,.4)}
    .groupInfo__avatarbox{width: auto;padding: 0 .61rem 0 0;-webkit-box-sizing: border-box;box-sizing: border-box;height: 100%;overflow: hidden;float: left;display: inline-block;vertical-align: middle;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align: center;-ms-flex-align: center;align-items: center;position: relative;font-size: 1rem;}
- 	.groupInfo__avatarbox .avatar{display: inline-block;position: relative;width: 2.5rem;height: 2.5rem;margin-left: .31rem;float: left;border: 2px solid #fff;border-radius: 50%;background-image: url('https://avatar.youban.com/weixin/20180918/5ba0a2716fcf812493');background-repeat: no-repeat;background-size: 100% 100%;}
+ 	.groupInfo__avatarbox >>> .avatar{display: inline-block;position: relative;width: 2.5rem;height: 2.5rem;margin-left: .31rem;float: left;border: 2px solid #fff;border-radius: 50%;background-image: url('https://avatar.youban.com/weixin/20180918/5ba0a2716fcf812493');background-repeat: no-repeat;background-size: 100% 100%;}
  	.groupInfo .remainTime{float: right;line-height: 3.44rem;margin-right: .5rem;}
  	.groupInfo__middleBox{display: inline-block;width: auto;height: 100%;float: left;position: relative;display: -webkit-box;display: -ms-flexbox;display: flex;-webkit-box-orient: vertical;-webkit-box-direction: normal;-ms-flex-direction: column;flex-direction: column;}
    .groupInfo__middleBox .tuan_label{display: inline;width: auto;max-width: 2.81rem;padding: .25rem .25rem;margin-top: .25rem;line-height: .94rem;text-align: center;background-image: url(//udata.youban.com/webimg/wxyx/youxue/_rentuanbg.png);background-repeat: no-repeat;background-size: cover;color:#fff;font-size:.625rem;-webkit-box-sizing:border-box;box-sizing:border-box;border-radius:4px 4px 4px 0;}

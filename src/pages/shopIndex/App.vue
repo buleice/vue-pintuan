@@ -4,16 +4,17 @@
        <router-view></router-view>
      </keep-alive>
      <ShopNavBar/>
-
   </div>
 </template>
 
 <script>
 import ShopNavBar from '../../components/base/shopnavbar.vue'
+import WxShare from '../../components/base/wxshare.vue';
 export default {
   name: 'App',
   components:{
-    ShopNavBar
+    ShopNavBar,
+    WxShare
   },
 }
 </script>
