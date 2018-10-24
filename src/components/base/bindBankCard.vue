@@ -12,7 +12,7 @@
         <label class="weui-label">持卡人</label>
       </div>
       <div class="weui-cell__bd ">
-        <input class="weui-input" type="text" placeholder="">
+        <input class="weui-input" v-model="cardholder" type="text" placeholder="">
       </div>
     </div>
   </div>
@@ -22,7 +22,7 @@
         <label class="weui-label">身份证号</label>
       </div>
       <div class="weui-cell__bd ">
-        <input class="weui-input" type="text" placeholder="">
+        <input class="weui-input" v-model="IDCardNo" type="text" placeholder="">
       </div>
     </div>
   </div>
@@ -32,7 +32,7 @@
         <label class="weui-label">收款银行卡号</label>
       </div>
       <div class="weui-cell__bd ">
-        <input class="weui-input" type="number" placeholder="">
+        <input class="weui-input"  v-model="BankCardNo" type="number" placeholder="">
       </div>
     </div>
   </div>
@@ -41,10 +41,8 @@
                       <label for="" class="weui-label">开户银行</label>
                   </div>
                   <div class="weui-cell__bd">
-                      <select class="weui-select" name="select2">
-                          <option value="1">招商银行</option>
-                          <option value="2">建设银行</option>
-                          <option value="3">工商银行</option>
+                      <select class="weui-select" v-model="BankName" name="select2">
+                          <option v-for="item in bankList" :value="item.text">{{item.text}}</option>
                       </select>
                   </div>
               </div>
@@ -64,34 +62,766 @@
         <label class="weui-label">预留手机号</label>
       </div>
       <div class="weui-cell__bd ">
-        <input class="weui-input" type="tel" placeholder="">
+        <input class="weui-input" v-model="phonenumber" type="tel" placeholder="">
       </div>
     </div>
   </div>
   <div></div>
-  <div class="submit_button">提交</div>
+  <div class="submit_button" @click="submitCardInfo">提交</div>
   <div class="info">为确保完成银行转账，请确认身份证信息和银行卡信息是同一人 。</div>
+
+  <div class="js_dialog" id="iosDialog2" v-if="isAlert" style="opacity: 1;">
+              <div class="weui-mask" @click="isAlert=false"></div>
+              <div class="weui-dialog">
+                  <div class="weui-dialog__bd">{{alertContent}}</div>
+                  <div class="weui-dialog__ft">
+                      <a @click="isAlert=false" class="weui-dialog__btn weui-dialog__btn_primary">知道了</a>
+                  </div>
+              </div>
+  </div>
+
 </div>
 </template>
 
 <script>
-import {Request} from '../../api/request'
+import {
+  Request
+} from '../../api/request'
 export default {
-  components:{
+  components: {
 
   },
-  data(){
-    return{
-      bankList:{}
+  data() {
+    return {
+      bankList: [{
+          value: 'CDB',
+          text: '国家开发银行'
+        },
+        {
+          value: 'ICBC',
+          text: '中国工商银行'
+        },
+        {
+          value: 'ABC',
+          text: '中国农业银行'
+        },
+        {
+          value: 'BOC',
+          text: '中国银行'
+        },
+        {
+          value: 'CCB',
+          text: '中国建设银行'
+        },
+        {
+          value: 'PSBC',
+          text: '中国邮政储蓄银行'
+        },
+        {
+          value: 'COMM',
+          text: '交通银行'
+        },
+        {
+          value: 'CMB',
+          text: '招商银行'
+        },
+        {
+          value: 'SPDB',
+          text: '上海浦东发展银行'
+        },
+        {
+          value: 'CIB',
+          text: '兴业银行'
+        },
+        {
+          value: 'HXBANK',
+          text: '华夏银行'
+        },
+        {
+          value: 'GDB',
+          text: '广东发展银行'
+        },
+        {
+          value: 'CMBC',
+          text: '中国民生银行'
+        },
+        {
+          value: 'CITIC',
+          text: '中信银行'
+        },
+        {
+          value: 'CEB',
+          text: '中国光大银行'
+        },
+        {
+          value: 'EGBANK',
+          text: '恒丰银行'
+        },
+        {
+          value: 'CZBANK',
+          text: '浙商银行'
+        },
+        {
+          value: 'BOHAIB',
+          text: '渤海银行'
+        },
+        {
+          value: 'SPABANK',
+          text: '平安银行'
+        },
+        {
+          value: 'SHRCB',
+          text: '上海农村商业银行'
+        },
+        {
+          value: 'YXCCB',
+          text: '玉溪市商业银行'
+        },
+        {
+          value: 'YDRCB',
+          text: '尧都农商行'
+        },
+        {
+          value: 'BJBANK',
+          text: '北京银行'
+        },
+        {
+          value: 'SHBANK',
+          text: '上海银行'
+        },
+        {
+          value: 'JSBANK',
+          text: '江苏银行'
+        },
+        {
+          value: 'HZCB',
+          text: '杭州银行'
+        },
+        {
+          value: 'NJCB',
+          text: '南京银行'
+        },
+        {
+          value: 'NBBANK',
+          text: '宁波银行'
+        },
+        {
+          value: 'HSBANK',
+          text: '徽商银行'
+        },
+        {
+          value: 'CSCB',
+          text: '长沙银行'
+        },
+        {
+          value: 'CDCB',
+          text: '成都银行'
+        },
+        {
+          value: 'CQBANK',
+          text: '重庆银行'
+        },
+        {
+          value: 'DLB',
+          text: '大连银行'
+        },
+        {
+          value: 'NCB',
+          text: '南昌银行'
+        },
+        {
+          value: 'FJHXBC',
+          text: '福建海峡银行'
+        },
+        {
+          value: 'HKB',
+          text: '汉口银行'
+        },
+        {
+          value: 'WZCB',
+          text: '温州银行'
+        },
+        {
+          value: 'QDCCB',
+          text: '青岛银行'
+        },
+        {
+          value: 'TZCB',
+          text: '台州银行'
+        },
+        {
+          value: 'JXBANK',
+          text: '嘉兴银行'
+        },
+        {
+          value: 'CSRCB',
+          text: '常熟农村商业银行'
+        },
+        {
+          value: 'NHB',
+          text: '南海农村信用联社'
+        },
+        {
+          value: 'CZRCB',
+          text: '常州农村信用联社'
+        },
+        {
+          value: 'H3CB',
+          text: '内蒙古银行'
+        },
+        {
+          value: 'SXCB',
+          text: '绍兴银行'
+        },
+        {
+          value: 'SDEB',
+          text: '顺德农商银行'
+        },
+        {
+          value: 'WJRCB',
+          text: '吴江农商银行'
+        },
+        {
+          value: 'ZBCB',
+          text: '齐商银行'
+        },
+        {
+          value: 'GYCB',
+          text: '贵阳市商业银行'
+        },
+        {
+          value: 'ZYCBANK',
+          text: '遵义市商业银行'
+        },
+        {
+          value: 'HZCCB',
+          text: '湖州市商业银行'
+        },
+        {
+          value: 'DAQINGB',
+          text: '龙江银行'
+        },
+        {
+          value: 'JINCHB',
+          text: '晋城银行JCBANK'
+        },
+        {
+          value: 'ZJTLCB',
+          text: '浙江泰隆商业银行'
+        },
+        {
+          value: 'GDRCC',
+          text: '广东省农村信用社联合社'
+        },
+        {
+          value: 'DRCBCL',
+          text: '东莞农村商业银行'
+        },
+        {
+          value: 'MTBANK',
+          text: '浙江民泰商业银行'
+        },
+        {
+          value: 'GCB',
+          text: '广州银行'
+        },
+        {
+          value: 'LYCB',
+          text: '辽阳市商业银行'
+        },
+        {
+          value: 'JSRCU',
+          text: '江苏省农村信用联合社'
+        },
+        {
+          value: 'LANGFB',
+          text: '廊坊银行'
+        },
+        {
+          value: 'CZCB',
+          text: '浙江稠州商业银行'
+        },
+        {
+          value: 'DYCB',
+          text: '德阳商业银行'
+        },
+        {
+          value: 'JZBANK',
+          text: '晋中市商业银行'
+        },
+        {
+          value: 'BOSZ',
+          text: '苏州银行'
+        },
+        {
+          value: 'GLBANK',
+          text: '桂林银行'
+        },
+        {
+          value: 'URMQCCB',
+          text: '乌鲁木齐市商业银行'
+        },
+        {
+          value: 'CDRCB',
+          text: '成都农商银行'
+        },
+        {
+          value: 'ZRCBANK',
+          text: '张家港农村商业银行'
+        },
+        {
+          value: 'BOD',
+          text: '东莞银行'
+        },
+        {
+          value: 'LSBANK',
+          text: '莱商银行'
+        },
+        {
+          value: 'BJRCB',
+          text: '北京农村商业银行'
+        },
+        {
+          value: 'TRCB',
+          text: '天津农商银行'
+        },
+        {
+          value: 'SRBANK',
+          text: '上饶银行'
+        },
+        {
+          value: 'FDB',
+          text: '富滇银行'
+        },
+        {
+          value: 'CRCBANK',
+          text: '重庆农村商业银行'
+        },
+        {
+          value: 'ASCB',
+          text: '鞍山银行'
+        },
+        {
+          value: 'NXBANK',
+          text: '宁夏银行'
+        },
+        {
+          value: 'BHB',
+          text: '河北银行'
+        },
+        {
+          value: 'HRXJB',
+          text: '华融湘江银行'
+        },
+        {
+          value: 'ZGCCB',
+          text: '自贡市商业银行'
+        },
+        {
+          value: 'YNRCC',
+          text: '云南省农村信用社'
+        },
+        {
+          value: 'JLBANK',
+          text: '吉林银行'
+        },
+        {
+          value: 'DYCCB',
+          text: '东营市商业银行'
+        },
+        {
+          value: 'KLB',
+          text: '昆仑银行'
+        },
+        {
+          value: 'ORBANK',
+          text: '鄂尔多斯银行'
+        },
+        {
+          value: 'XTB',
+          text: '邢台银行'
+        },
+        {
+          value: 'JSB',
+          text: '晋商银行'
+        },
+        {
+          value: 'TCCB',
+          text: '天津银行'
+        },
+        {
+          value: 'BOYK',
+          text: '营口银行'
+        },
+        {
+          value: 'JLRCU',
+          text: '吉林农信'
+        },
+        {
+          value: 'SDRCU',
+          text: '山东农信'
+        },
+        {
+          value: 'XABANK',
+          text: '西安银行'
+        },
+        {
+          value: 'HBRCU',
+          text: '河北省农村信用社'
+        },
+        {
+          value: 'NXRCU',
+          text: '宁夏黄河农村商业银行'
+        },
+        {
+          value: 'GZRCU',
+          text: '贵州省农村信用社'
+        },
+        {
+          value: 'FXCB',
+          text: '阜新银行'
+        },
+        {
+          value: 'HBHSBANK',
+          text: '湖北银行黄石分行'
+        },
+        {
+          value: 'ZJNX',
+          text: '浙江省农村信用社联合社'
+        },
+        {
+          value: 'XXBANK',
+          text: '新乡银行'
+        },
+        {
+          value: 'HBYCBANK',
+          text: '湖北银行宜昌分行'
+        },
+        {
+          value: 'LSCCB',
+          text: '乐山市商业银行'
+        },
+        {
+          value: 'TCRCB',
+          text: '江苏太仓农村商业银行'
+        },
+        {
+          value: 'BZMD',
+          text: '驻马店银行'
+        },
+        {
+          value: 'GZB',
+          text: '赣州银行'
+        },
+        {
+          value: 'WRCB',
+          text: '无锡农村商业银行'
+        },
+        {
+          value: 'BGB',
+          text: '广西北部湾银行'
+        },
+        {
+          value: 'GRCB',
+          text: '广州农商银行'
+        },
+        {
+          value: 'JRCB',
+          text: '江苏江阴农村商业银行'
+        },
+        {
+          value: 'BOP',
+          text: '平顶山银行'
+        },
+        {
+          value: 'TACCB',
+          text: '泰安市商业银行'
+        },
+        {
+          value: 'CGNB',
+          text: '南充市商业银行'
+        },
+        {
+          value: 'CCQTGB',
+          text: '重庆三峡银行'
+        },
+        {
+          value: 'XLBANK',
+          text: '中山小榄村镇银行'
+        },
+        {
+          value: 'HDBANK',
+          text: '邯郸银行'
+        },
+        {
+          value: 'KORLABANK',
+          text: '库尔勒市商业银行'
+        },
+        {
+          value: 'BOJZ',
+          text: '锦州银行'
+        },
+        {
+          value: 'QLBANK',
+          text: '齐鲁银行'
+        },
+        {
+          value: 'BOQH',
+          text: '青海银行'
+        },
+        {
+          value: 'YQCCB',
+          text: '阳泉银行'
+        },
+        {
+          value: 'SJBANK',
+          text: '盛京银行'
+        },
+        {
+          value: 'FSCB',
+          text: '抚顺银行'
+        },
+        {
+          value: 'ZZBANK',
+          text: '郑州银行'
+        },
+        {
+          value: 'SRCB',
+          text: '深圳农村商业银行'
+        },
+        {
+          value: 'BANKWF',
+          text: '潍坊银行'
+        },
+        {
+          value: 'JJBANK',
+          text: '九江银行'
+        },
+        {
+          value: 'JXRCU',
+          text: '江西省农村信用'
+        },
+        {
+          value: 'HNRCU',
+          text: '河南省农村信用'
+        },
+        {
+          value: 'GSRCU',
+          text: '甘肃省农村信用'
+        },
+        {
+          value: 'SCRCU',
+          text: '四川省农村信用'
+        },
+        {
+          value: 'GXRCU',
+          text: '广西省农村信用'
+        },
+        {
+          value: 'SXRCCU',
+          text: '陕西信合'
+        },
+        {
+          value: 'WHRCB',
+          text: '武汉农村商业银行'
+        },
+        {
+          value: 'YBCCB',
+          text: '宜宾市商业银行'
+        },
+        {
+          value: 'KSRB',
+          text: '昆山农村商业银行'
+        },
+        {
+          value: 'SZSBK',
+          text: '石嘴山银行'
+        },
+        {
+          value: 'HSBK',
+          text: '衡水银行'
+        },
+        {
+          value: 'XYBANK',
+          text: '信阳银行'
+        },
+        {
+          value: 'NBYZ',
+          text: '鄞州银行'
+        },
+        {
+          value: 'ZJKCCB',
+          text: '张家口市商业银行'
+        },
+        {
+          value: 'XCYH',
+          text: '许昌银行'
+        },
+        {
+          value: 'JNBANK',
+          text: '济宁银行'
+        },
+        {
+          value: 'CBKF',
+          text: '开封市商业银行'
+        },
+        {
+          value: 'WHCCB',
+          text: '威海市商业银行'
+        },
+        {
+          value: 'HBC',
+          text: '湖北银行'
+        },
+        {
+          value: 'BOCD',
+          text: '承德银行'
+        },
+        {
+          value: 'BODD',
+          text: '丹东银行'
+        },
+        {
+          value: 'JHBANK',
+          text: '金华银行'
+        },
+        {
+          value: 'BOCY',
+          text: '朝阳银行'
+        },
+        {
+          value: 'LSBC',
+          text: '临商银行'
+        },
+        {
+          value: 'BSB',
+          text: '包商银行'
+        },
+        {
+          value: 'LZYH',
+          text: '兰州银行'
+        },
+        {
+          value: 'BOZK',
+          text: '周口银行'
+        },
+        {
+          value: 'DZBANK',
+          text: '德州银行'
+        },
+        {
+          value: 'SCCB',
+          text: '三门峡银行'
+        },
+        {
+          value: 'AYCB',
+          text: '安阳银行'
+        },
+        {
+          value: 'ARCU',
+          text: '安徽省农村信用社'
+        },
+        {
+          value: 'HURCB',
+          text: '湖北省农村信用社'
+        },
+        {
+          value: 'HNRCC',
+          text: '湖南省农村信用社'
+        },
+        {
+          value: 'NYNB',
+          text: '广东南粤银行'
+        },
+        {
+          value: 'LYBANK',
+          text: '洛阳银行'
+        },
+        {
+          value: 'NHQS',
+          text: '农信银清算中心'
+        },
+        {
+          value: 'CBBQS',
+          text: '城市商业银行资金清算中心'
+        }
+      ],
+      isAlert: false,
+      alertContent: '',
+      cardholder: '',
+      IDCardNo: '',
+      BankCardNo: '',
+      BankName: '',
+      phonenumber: '',
+      canCash:""
     }
   },
-  methods:{
-    _chechCHNCardId(sNo){if(!this.regExpTest(sNo,/^[0-9]{17}[X0-9]$/)){return false}sNo=sNo.toString();var a,b,c;a=parseInt(sNo.substr(0,1))*7+parseInt(sNo.substr(1,1))*9+parseInt(sNo.substr(2,1))*10;a=a+parseInt(sNo.substr(3,1))*5+parseInt(sNo.substr(4,1))*8+parseInt(sNo.substr(5,1))*4;a=a+parseInt(sNo.substr(6,1))*2+parseInt(sNo.substr(7,1))*1+parseInt(sNo.substr(8,1))*6;a=a+parseInt(sNo.substr(9,1))*3+parseInt(sNo.substr(10,1))*7+parseInt(sNo.substr(11,1))*9;a=a+parseInt(sNo.substr(12,1))*10+parseInt(sNo.substr(13,1))*5+parseInt(sNo.substr(14,1))*8;a=a+parseInt(sNo.substr(15,1))*4+parseInt(sNo.substr(16,1))*2;b=a%11;if(b==2){c=sNo.substr(17,1).toUpperCase()}else{c=parseInt(sNo.substr(17,1))}switch(b){case 0:if(c!=1){return false}break;case 1:if(c!=0){return false}break;case 2:if(c!="X"){return false}break;case 3:if(c!=9){return false}break;case 4:if(c!=8){return false}break;case 5:if(c!=7){return false}break;case 6:if(c!=6){return false}break;case 7:if(c!=5){return false}break;case 8:if(c!=4){return false}break;case 9:if(c!=3){return false}break;case 10:if(c!=2){return false}}return true}
-    ,
-    _chechCHNBankCardId(){
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      vm.canCash=to.query.canCash
+    })
+},
+  created(){
+    console.log(this.canCash)
+    // this.canCash=this._GetQueryString('canCash');
+    // console.log(this._GetQueryString('canCash'))
+  },
+  methods: {
+    _chechCHNCardId(sNo) {
+      let IDpattern = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+      return IDpattern.test(sNo);
+    },
+    _chechCHNBankCardId(bNo) {
+      let Bpattern = /^([1-9]{1})(\d{14}|\d{18})$/;
+      return Bpattern.test(bNo);
+    },
+    testCardholder(holder) {
+      let uPattern = /^[\u4E00-\u9FA5]{2,4}$/;
+      return uPattern.test(holder);
+    },
+    testPhoneNumber(code) {
+      let mPattern = /^1[34578]\d{9}$/; //http://caibaojian.com/regexp-example.html
+      return mPattern.test(code);
+    },
+    testBankName(bankName) {
+      let cnPattern = /[\u4E00-\u9FA5]/;
+      return cnPattern.test(bankName);
+    },
+    submitCardInfo() {
+      if (!this.testCardholder(this.cardholder)) {
+        this.alertContent = "请输入真实的持卡人姓名"
+        this.isAlert = true;
+      } else if (!this._chechCHNCardId(this.IDCardNo)) {
+        this.alertContent = "身份证号不符合规则,请输入正确的身份证号"
+        this.isAlert = true;
+      } else if (!this.__chechCHNBankCardId(this.BankCardNo)) {
+        this.alertContent = "银行卡号不符合规则,请输入正确的银行卡号"
+        this.isAlert = true;
+      } else if (!this.testBankName(this.BankName)) {
+        this.alertContent = "请选择开户银行"
+        this.isAlert = true;
+      } else if (!this.testPhoneNumber(this.phonenumber)) {
+        this.alertContent = "请填写正确的手机号"
+        this.isAlert = true;
+      } else {
+        new Request("/bonus/cash/bindcard.json", "POST", {
+          name: this.cardholder,
+          bankcardNo: this.BankCardNo,
+          idcardNo: this.IDCardNo,
+          bank: this.BankName,
+          phone: this.phonenumber
+        }).returnJson().then(res => {
+          if (res.rc == 0) {
+            this.alertContent = "银行卡信息填写成功,正在跳转到提现页面"
+            let _this=this
+            setTimeout(function() {
+               _this.$router.push({name:'ToWallet',params: {canCash:_this.canCash }})
+            }, 3000)
+          }
+        })
+      }
 
     }
-
   }
 }
 </script>
@@ -101,4 +831,13 @@ export default {
   .weui-cells{margin-top: 0}
   .submit_button{width: 8.75rem;height: 2.5rem;text-align: center;color: #fff;background-color: #ffa922;line-height: 2.5rem;border-radius: 20px;margin: 1.56rem auto 0;}
   .info{width: 17.81rem;margin: auto;color: #a3a3a3;margin-top: 1rem}
+
+  .weui-mask{position:fixed;z-index:1000;top:0;right:0;left:0;bottom:0;background:rgba(0,0,0,.6)}
+.weui-dialog{position:fixed;z-index:5000;width:80%;max-width:300px;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);background-color:#FFF;text-align:center;border-radius:3px;overflow:hidden}
+.weui-dialog__bd:first-child{padding:2.7em 20px 1.7em;color:#353535}
+.weui-dialog__bd{padding:0 1.6em .8em;min-height:40px;font-size:15px;line-height:1.3;word-wrap:break-word;word-break:break-all;color:grey}
+.weui-dialog__ft{position:relative;line-height:48px;font-size:18px;display:-webkit-box;display:-webkit-flex;display:flex}
+.weui-dialog__btn_primary{color:#09BB07}
+.weui-dialog__btn{display:block;-webkit-box-flex:1;-webkit-flex:1;flex:1;color:#09BB07;text-decoration:none;-webkit-tap-highlight-color:transparent;position:relative}
+.weui-dialog__ft:after{content:" ";position:absolute;left:0;top:0;right:0;height:1px;border-top:1px solid #D5D5D6;color:#D5D5D6;-webkit-transform-origin:0 0;transform-origin:0 0;-webkit-transform:scaleY(.5);transform:scaleY(.5)}
 </style>

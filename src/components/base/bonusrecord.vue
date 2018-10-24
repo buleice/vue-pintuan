@@ -7,25 +7,10 @@
           <th>提现金额</th>
           <th>提现状态</th>
       </tr>
-      <tr>
-          <td>2018-10-23</td>
-          <td>100.01元</td>
-          <td>已提现</td>
-      </tr>
-      <tr>
-          <td>2018-10-23</td>
-          <td>100.01元</td>
-          <td>已提现</td>
-      </tr>
-      <tr>
-          <td>2018-10-23</td>
-          <td>100.01元</td>
-          <td>已提现</td>
-      </tr>
-      <tr>
-          <td>2018-10-23</td>
-          <td>100.01元</td>
-          <td>已提现</td>
+      <tr v-if="recordList.length>0" v-for="item in recordList">
+          <td>{{item.date}}</td>
+          <td>{{item.sum}}</td>
+          <td>{{computedStatus(item.status)}}</td>
       </tr>
   </table>
   </div>
@@ -35,6 +20,23 @@
 <script>
 import {Request} from '../../api/request'
 export default {
+  data(){
+    return{
+      recordList:[],
+    }
+  },
+  created(){
+    this.$nextTick(function(){
+      new Request("/bonus/cash/record.json","GET").returnJson().then(res=>{
+        this.recordList=res.list;
+      })
+    })
+  },
+  methods:{
+    computedStatus(status){
+      return status==1?"已提现":"发放中"
+    }
+  }
 }
 </script>
 

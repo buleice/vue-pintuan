@@ -2,27 +2,79 @@
     <div>
       <ul class="top">
         <li>可提金额（元）</li>
-        <li>100.02</li>
-        <li>提现</li>
+        <li>{{canCash}}</li>
+        <li @click="gotoRightPage()">提现</li>
         <li>提现金额将于每月10日发放</li>
-        <li>提现规则</li>
+        <li @click="showGuize=true">提现规则</li>
       </ul>
-      <ul class="middle">
-        <li class="draw_status"><span>107.23元</span>正在提现</li>
+      <ul class="middle" v-if="cashing>0">
+        <li class="draw_status"><span>{{cashing}}元</span>正在提现</li>
         <li class="detail_info">提现详情 ></li>
       </ul>
       <div class="banke_card">
-        <div class="card_info"><img src="//udata.youban.com/webimg/wxyx/puintuan/money.svg" alt=""><span>招商银行</span></div>
-        <div  class="card_id">**** **** **** 2193</div>
-        <div class="card_edit">修改信息</div>
+        <div class="card_info"><img src="//udata.youban.com/webimg/wxyx/puintuan/money.svg" alt=""><span>{{bankCard.bank}}</span></div>
+        <div  class="card_id">**** **** **** {{bankCard.number}}</div>
+        <div class="card_edit" @click="$router.push({path:'/bindcard'})">修改信息</div>
       </div>
+       <transition name="fade">
+      <div class="rule" v-if="showGuize">
+        <div class="closeBtn" @click="showGuize=false"></div>
+         <h2>提现规则</h2>
+         <ul>
+           <li>
+             <h3></h3>
+             <p><b>1. </b>目前奖学金只能通过银行卡转账方式提现，请确保您录入的银行卡、身份证等信息真实有效，信息错误将无法转账提现。</p>
+           </li>
+           <li>
+             <h3></h3>
+             <p><b> 2.</b>奖学金提现比例为100:1。</p>
+           </li>
+          <li>
+            <h3></h3>
+            <p><b>3. </b>奖学金满50元才可提现。</p>
+          </li>
+          <li>
+            <h3></h3>
+            <p><b>4. </b>奖学金每月只可提现一次，提交提现申请后，奖学金将无法再用于兑换课程和专属福利。</p>
+          </li>
+          <li>
+            <h3></h3>
+            <p><b>5. </b>提现转账将在每月10日统一进行</p>
+          </li>
+        </ul>
+      </div>
+      </transition>
     </div>
 </template>
-
 <script>
 import {Request} from '../../api/request'
     export default {
-        name: "myBonusCanDraw"
+        name: "myBonusCanDraw",
+        data(){
+          return{
+            canCash:'',
+            cashing:'',
+            bankCard:{},
+            showGuize:false,
+          }
+        },
+        created(){
+          this.$nextTick(function(){
+            new Request('/bonus/cash/center.json',"GET").returnJson().then(res=>{
+              this.canCash=res.canCash;
+              this.cashing=res.cashing;
+              this.bankCard=res.bankCard;
+            })
+          })
+        },
+        methods:{
+          gotoRightPage(){
+            this.bankCard.number!=""?
+            this.$router.push({name:'ToWallet',params: {canCash:this.canCash  }})
+            :
+            this.$router.push({path:'/bindcard', query:{canCash:this.canCash}})
+          }
+        }
     }
 </script>
 
@@ -36,10 +88,26 @@ import {Request} from '../../api/request'
 .top li:last-child{padding: .38rem 1rem;color: #fff;border-radius:2rem;border:1px solid currentColor;position: absolute;top: .5rem;right: .63rem;font-size: .75rem}
 .draw_status span{color:rgb(249, 11, 11)}
 .detail_info{color: #a3a3a3}
-.banke_card{width: 22.31rem;height: 9.63rem;background: #fff;border-radius: 6px;box-shadow: -2px 2px 8px 1px rgba(0,0,0,.1);margin: auto;margin-top: 2.13rem;padding: .5rem;box-sizing: border-box;}
+.banke_card{width: 22.31rem;height: 6.63rem;background: #fff;border-radius: 6px;box-shadow: -2px 2px 8px 1px rgba(0,0,0,.1);margin: auto;margin-top: 2.13rem;padding: .5rem;box-sizing: border-box;}
 .banke_card .card_info{display: flex;align-items: center;}
 .card_info img{width: 34px;height: auto;}
 .card_info span{margin-left: .31rem}
-.card_id{font-size: 1.13rem;text-align: center;margin-top: 1.13rem;font-weight: 700;vertical-align: bottom;}
-.card_edit{height: 2.25rem;border-top: 1px solid #a3a3a3;color:#a3a3a3; line-height: 2.25rem;margin-top: 2rem;text-align: right;}
+.card_id{font-size: 2.13rem;text-align: left;margin-top: .88rem;font-weight: 700;vertical-align: bottom;box-sizing: border-box;padding-left: 2rem}
+.card_edit{height: 2.25rem;color:#a3a3a3; line-height: 2.25rem;margin-top: -6rem;text-align: right;}
+
+.rule{position: fixed;top:0;left:0;height: 100%;background:#fff;z-index: 5;}
+.rule>.closeBtn{position: fixed;border-radius: 50%;width: 2.5rem;height: 2.5rem;top: 1.56rem;right:.63rem;}
+.rule>.closeBtn::before{content:"";position: absolute;width:4px;height: 80%;background:#000;border-radius: 4px;left:50%;top:50%;transform: translate(-50%,-50%) rotate(45deg);-webkit-transform: translate(-50%,-50%) rotate(45deg);}
+.rule>.closeBtn::after{content:"";position: absolute;width:4px;height: 80%;background:#000;border-radius: 4px;left:50%;top:50%;transform: translate(-50%,-50%) rotate(-45deg);-webkit-transform: translate(-50%,-50%) rotate(-45deg);}
+.rule>ul{padding:0 .63rem;}
+.rule>h2{text-align: center;font-size: 1.25rem;color:#333;line-height: 4.06rem;}
+.rule h3{color: #333;font-size: 1.06rem;line-height: 1.88rem;}
+.rule p{font-size: .94rem;line-height:1.5rem;padding: 0 1.13rem;margin-bottom: .63rem;}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 </style>

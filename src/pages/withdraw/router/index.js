@@ -9,16 +9,18 @@ Vue.use(Router);
 
 export default new Router({
   routes: [
-    { path: '/', redirect: '/bindcard' },
+    { path: '/', redirect: '/mybonuscandraw' },
     {
       path: '/bindcard',
       name: 'BindCard',
-      component: BindCard
+      component: BindCard,
+      props: (route) => ({ query: route.query.q })
     },
     {
-      path: '/towallet',
+      path: '/towallet/:canCash',
       name: 'ToWallet',
-      component: ToWallet
+      component: ToWallet,
+      props: true
     },
     {
       path:'/bonusrecord',
