@@ -7,9 +7,9 @@
         <li>提现金额将于每月10日发放</li>
         <li @click="showGuize=true">提现规则</li>
       </ul>
-      <ul class="middle" v-if="cashing>0">
+      <ul class="middle" >
         <li class="draw_status"><span>{{cashing}}元</span>正在提现</li>
-        <li class="detail_info">提现详情 ></li>
+        <li class="detail_info"> <a href="#/bonusrecord">提现详情 ></a> </li>
       </ul>
       <div class="banke_card">
         <div class="card_info"><img src="//udata.youban.com/webimg/wxyx/puintuan/money.svg" alt=""><span>{{bankCard.bank}}</span></div>
@@ -87,7 +87,7 @@ import {Request} from '../../api/request'
 }
 .top li:last-child{padding: .38rem 1rem;color: #fff;border-radius:2rem;border:1px solid currentColor;position: absolute;top: .5rem;right: .63rem;font-size: .75rem}
 .draw_status span{color:rgb(249, 11, 11)}
-.detail_info{color: #a3a3a3}
+.detail_info a{color: #a3a3a3}
 .banke_card{width: 22.31rem;height: 6.63rem;background: #fff;border-radius: 6px;box-shadow: -2px 2px 8px 1px rgba(0,0,0,.1);margin: auto;margin-top: 2.13rem;padding: .5rem;box-sizing: border-box;}
 .banke_card .card_info{display: flex;align-items: center;}
 .card_info img{width: 34px;height: auto;}

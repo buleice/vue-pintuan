@@ -761,11 +761,6 @@ export default {
       vm.canCash=to.query.canCash
     })
 },
-  created(){
-    console.log(this.canCash)
-    // this.canCash=this._GetQueryString('canCash');
-    // console.log(this._GetQueryString('canCash'))
-  },
   methods: {
     _chechCHNCardId(sNo) {
       let IDpattern = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
@@ -794,7 +789,7 @@ export default {
       } else if (!this._chechCHNCardId(this.IDCardNo)) {
         this.alertContent = "身份证号不符合规则,请输入正确的身份证号"
         this.isAlert = true;
-      } else if (!this.__chechCHNBankCardId(this.BankCardNo)) {
+      } else if (!this._chechCHNBankCardId(this.BankCardNo)) {
         this.alertContent = "银行卡号不符合规则,请输入正确的银行卡号"
         this.isAlert = true;
       } else if (!this.testBankName(this.BankName)) {
@@ -812,11 +807,12 @@ export default {
           phone: this.phonenumber
         }).returnJson().then(res => {
           if (res.rc == 0) {
-            this.alertContent = "银行卡信息填写成功,正在跳转到提现页面"
+            this.alertContent = "银行卡信息填写成功,正在跳转到提现页面";
+            this.isAlert = true;
             let _this=this
             setTimeout(function() {
                _this.$router.push({name:'ToWallet',params: {canCash:_this.canCash }})
-            }, 3000)
+            }, 300)
           }
         })
       }
