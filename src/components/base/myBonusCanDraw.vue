@@ -44,6 +44,15 @@
         </ul>
       </div>
       </transition>
+      <div class="js_dialog" id="iosDialog2" v-if="isAlert" style="opacity: 1;">
+                  <div class="weui-mask" @click="isAlert=false"></div>
+                  <div class="weui-dialog">
+                      <div class="weui-dialog__bd">{{alertContent}}</div>
+                      <div class="weui-dialog__ft">
+                          <a @click="isAlert=false" class="weui-dialog__btn weui-dialog__btn_primary">知道了</a>
+                      </div>
+                  </div>
+      </div>
     </div>
 </template>
 <script>
@@ -56,6 +65,8 @@ import {Request} from '../../api/request'
             cashing:'',
             bankCard:{},
             showGuize:false,
+            isAlert:false,
+            alertContent:''
           }
         },
         created(){
@@ -69,10 +80,20 @@ import {Request} from '../../api/request'
         },
         methods:{
           gotoRightPage(){
-            this.bankCard.number!=""?
-            this.$router.push({name:'ToWallet',params: {canCash:this.canCash  }})
-            :
-            this.$router.push({path:'/bindcard', query:{canCash:this.canCash}})
+            if(this.canCash<50){
+              this.isAlert=true;
+              this.alertContent="不足50元无法提现!";
+              return false
+            }else if (this.cashing>0) {
+              this.isAlert=true;
+              this.alertContent="本月已发起过提现，请下个月再尝试。!";
+              return false
+            }else{
+              this.bankCard.number!=""?
+              this.$router.push({name:'ToWallet',params: {canCash:this.canCash  }})
+              :
+              this.$router.push({path:'/bindcard', query:{canCash:this.canCash}})
+            }
           }
         }
     }

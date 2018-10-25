@@ -17,6 +17,7 @@ export default {
 </script>
 
 <style lang="css">
+@import "../../common/css/weui.min.css";
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

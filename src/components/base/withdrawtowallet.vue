@@ -11,6 +11,15 @@
     </div>
   </div>
   <div class="submit_button" @click="cashMoney()">确定</div>
+  <div class="js_dialog" id="iosDialog2" v-if="isAlert" style="opacity: 1;">
+              <div class="weui-mask" @click="isAlert=false"></div>
+              <div class="weui-dialog">
+                  <div class="weui-dialog__bd">{{alertContent}}</div>
+                  <div class="weui-dialog__ft">
+                      <a @click="isAlert=false" class="weui-dialog__btn weui-dialog__btn_primary">知道了</a>
+                  </div>
+              </div>
+  </div>
 </div>
 </template>
 <script>
@@ -20,7 +29,9 @@ export default {
   data(){
     return{
       wantCash:'0',
-      maxCash:''
+      maxCash:'',
+      isAlert:false,
+      alertContent:''
     }
   },
   created(){
@@ -28,11 +39,28 @@ export default {
   },
   methods:{
     cashMoney(){
-      new Request("/bonus/cash/out.json","POST",{sum:this.wantCash}).returnJson().then(res=>{
-        if(res.rc==0){
-          this.$push({path:'/bonusrecord'});
-        }
-      })
+      // new Request("/bonus/cash/out.json","POST",{sum:this.wantCash}).returnJson().then(res=>{
+      //   if(res.rc==0){
+      //     this.$push({path:'/bonusrecord'});
+      //   }
+      // })
+      if(this.wantCash<this.maxCash&&this.wantCash>0){
+        this.$http.post("/bonus/cash/out.json",{sum:this.wantCash},{emulateJSON:true}).then(res=>{
+            if (res.rc == 0) {
+              this.alertContent = "提现成功，将于下月10日到账,敬请关注！";
+              this.isAlert = true;
+              let _this=this
+              setTimeout(function() {
+                 _this.$router.push({name:'ToWallet',params: {canCash:_this.canCash }})
+              }, 500)
+            }
+        })
+      }else{
+        this.alertContent = "账户最多可提取"+this.maxCash+"元";
+        this.isAlert = true;
+        this.wantCash=this.maxCash;
+        return false;
+      }
     }
   }
 }
