@@ -4,6 +4,8 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueLazyLoad from 'vue-lazyload'
+import VueResource from 'vue-resource'
+Vue.use(VueResource);
 Vue.use(VueLazyLoad,{
     error:'//udata.youban.com/webimg/wxyx/puintuan/default_img.jpg',
     loading:'//udata.youban.com/webimg/wxyx/puintuan/default_img.jpg'

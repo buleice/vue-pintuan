@@ -29,7 +29,9 @@ export default {
   methods:{
     cashMoney(){
       new Request("/bonus/cash/out.json","POST",{sum:this.wantCash}).returnJson().then(res=>{
-        console.log(res)
+        if(res.rc==0){
+          this.$push({path:'/bonusrecord'});
+        }
       })
     }
   }

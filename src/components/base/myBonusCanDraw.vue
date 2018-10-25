@@ -7,11 +7,11 @@
         <li>提现金额将于每月10日发放</li>
         <li @click="showGuize=true">提现规则</li>
       </ul>
-      <ul class="middle" >
+      <ul class="middle" v-if="cashing>0">
         <li class="draw_status"><span>{{cashing}}元</span>正在提现</li>
         <li class="detail_info"> <a href="#/bonusrecord">提现详情 ></a> </li>
       </ul>
-      <div class="banke_card">
+      <div class="banke_card" v-if="bankCard.bank">
         <div class="card_info"><img src="//udata.youban.com/webimg/wxyx/puintuan/money.svg" alt=""><span>{{bankCard.bank}}</span></div>
         <div  class="card_id">**** **** **** {{bankCard.number}}</div>
         <div class="card_edit" @click="$router.push({path:'/bindcard'})">修改信息</div>

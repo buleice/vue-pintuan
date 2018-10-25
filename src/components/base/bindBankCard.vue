@@ -798,25 +798,70 @@ export default {
       } else if (!this.testPhoneNumber(this.phonenumber)) {
         this.alertContent = "请填写正确的手机号"
         this.isAlert = true;
-      } else {
-        new Request("/bonus/cash/bindcard.json", "POST", {
-          name: this.cardholder,
-          bankcardNo: this.BankCardNo,
-          idcardNo: this.IDCardNo,
-          bank: this.BankName,
-          phone: this.phonenumber
-        }).returnJson().then(res => {
-          if (res.rc == 0) {
-            this.alertContent = "银行卡信息填写成功,正在跳转到提现页面";
-            this.isAlert = true;
-            let _this=this
-            setTimeout(function() {
-               _this.$router.push({name:'ToWallet',params: {canCash:_this.canCash }})
-            }, 300)
-          }
+      }else{
+        let obj={
+              name: this.cardholder,
+              bankcardNo: this.BankCardNo,
+              idcardNo: this.IDCardNo,
+              bank: this.BankName,
+              phone: this.phonenumber
+        }
+        this.$http.post("/bonus/cash/bindcard.json",obj,{emulateJSON:true}).then(res=>{
+            if (res.rc == 0) {
+              this.alertContent = "银行卡信息填写成功,正在跳转到提现页面";
+              this.isAlert = true;
+              let _this=this
+              setTimeout(function() {
+                 _this.$router.push({name:'ToWallet',params: {canCash:_this.canCash }})
+              }, 500)
+            }
         })
+
+        // new Request("/bonus/cash/bindcard.json", "POST", {
+        //   name: this.cardholder,
+        //   bankcardNo: this.BankCardNo,
+        //   idcardNo: this.IDCardNo,
+        //   bank: this.BankName,
+        //   phone: this.phonenumber
+        // }).returnJson().then(res => {
+        //   if (res.rc == 0) {
+        //     this.alertContent = "银行卡信息填写成功,正在跳转到提现页面";
+        //     this.isAlert = true;
+        //     let _this=this
+        //     setTimeout(function() {
+        //        _this.$router.push({name:'ToWallet',params: {canCash:_this.canCash }})
+        //     }, 300)
+        //   }
+        // })
       }
 
+    },
+    MyAjax(method,url,callBack,data){
+      var oAjax=window.XMLHttpRequest?new XMLHttpRequest():new ActiveXObject("Microsoft.XMLHTTP");
+      if(oAjax!=null&&oAjax!=undefined){
+        oAjax.open(method,url,true);
+        if(method.toUpperCase()=="POST"){
+          oAjax.setRequestHeader("Content-Type"," application/x-www-form-urlencoded");
+        }
+        oAjax.onreadystatechange=function(){
+          if(oAjax.readyState==4&&oAjax.status=="200"){
+             callBack(oAjax.responseText);
+           }
+        }
+        if(method.toUpperCase()=="POST"&&data!=null&&data!=undefined){
+           oAjax.send(data);
+        }
+        else if(method.toUpperCase()=="GET"){
+           oAjax.send();
+        }
+      }
+    },
+   _addQueryString(params) {
+        let paramsData = '';
+        for (var Key in params) {
+            paramsData +=Key + "=" + params[Key] + "&";
+        }
+        return paramsData;
     }
   }
 }
