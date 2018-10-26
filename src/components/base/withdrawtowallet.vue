@@ -44,22 +44,30 @@ export default {
       //     this.$push({path:'/bonusrecord'});
       //   }
       // })
-      if(this.wantCash<this.maxCash&&this.wantCash>0){
-        this.$http.post("/bonus/cash/out.json",{sum:this.wantCash},{emulateJSON:true}).then(res=>{
-            if (res.rc == 0) {
-              this.alertContent = "提现成功，将于下月10日到账,敬请关注！";
-              this.isAlert = true;
-              let _this=this
-              setTimeout(function() {
-                 _this.$router.push({name:'ToWallet',params: {canCash:_this.canCash }})
-              }, 500)
-            }
-        })
+      if(this.wantCash<=this.maxCash){
+        if(this.wantCash>=50){
+          this.$http.post("/bonus/cash/out.json",{sum:this.wantCash},{emulateJSON:true}).then(res=>{
+              if (res.body.rc == 0) {
+                this.alertContent = "提现成功，将于下月10日到账,敬请关注！";
+                this.isAlert = true;
+                let _this=this
+                setTimeout(function() {
+                   _this.$router.push({path:'/mybonuscandraw'})
+                }, 500)
+              }else{
+                this.alertContent = "抱歉！提现失败，请联系小伴龙微信公众号客服！";
+                this.isAlert = true;
+              }
+          })
+        }else{
+          this.alertContent = "每次至少50元才可提现";
+          this.isAlert = true;
+          this.wantCash=this.maxCash;
+          return false;
+        }
       }else{
         this.alertContent = "账户最多可提取"+this.maxCash+"元";
         this.isAlert = true;
-        this.wantCash=this.maxCash;
-        return false;
       }
     }
   }

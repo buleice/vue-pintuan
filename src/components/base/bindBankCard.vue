@@ -32,7 +32,7 @@
         <label class="weui-label">收款银行卡号</label>
       </div>
       <div class="weui-cell__bd ">
-        <input class="weui-input"  v-model="BankCardNo" type="number" placeholder="">
+        <input class="weui-input"  v-model="BankCardNo" type="number" placeholder="" @change="_checkBank">
       </div>
     </div>
   </div>
@@ -41,12 +41,12 @@
           <label for="" class="weui-label">开户银行</label>
       </div>
       <div class="weui-cell__bd">
-          <select class="weui-select" v-model="BankName" name="select2">
+          <select class="weui-select" v-model="BankName" name="select2" :disabled="BankNameDiable">
               <option v-for="item in bankList" :value="item.text">{{item.text}}</option>
           </select>
       </div>
   </div>
-  <div class="" style="margin-top:-0.875rem">
+  <div class="" style="margin-top:-1.19rem">
     <group>
       <x-address @on-hide="logHide" @on-show="logShow" :title="title" v-model="value" :list="addressData" @on-shadow-change="onShadowChange" placeholder="请选择地址" :show.sync="showAddress"></x-address>
     </group>
@@ -72,7 +72,6 @@
       <div class="weui-cell__bd ">
         <input class="weui-input" v-model="checkCode" type="tel" placeholder="请输入短信验证码">
       </div>
-      <button class="checkCode"  @click="sendCode">验证</button>
     </div>
   </div>
   <div class="submit_button" @click="submitCardInfo">提交</div>
@@ -784,17 +783,55 @@ export default {
       value3: ['广东省', '中山市', '--'],
       addressData: ChinaAddressV4Data,
       value4: [],
-      value5: ['广东省', '深圳 市', '南山区'],
+      value5: [],
       showAddress: false,
-
+      BankNameDiable:true,
+      pickStatus:false,
+      id:''
     }
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      vm.canCash = to.query.canCash
+      vm.id=to.query.id;
+      console.log(vm.id)
+      vm.canCash = to.query.canCash;
+      console.log(vm.id);
+      if(vm.id){
+        vm.$http.get("/bonus/cash/bindcard.json?id="+vm.id).then(response=>{
+          let res=response.body;
+          vm.canCash=res.canCash;
+          vm.cashing=res.cashing;
+          vm.BankCardNo=res.cardInfo.FbankcardNo;
+          vm.IDCardNo=res.cardInfo.FidcardNo;
+          vm.BankName=res.cardInfo.Fbank;
+          vm.phone=res.cardInfo.Fphone;
+          vm.cardholder=res.cardInfo.Fname;
+          vm.phonenumber=res.cardInfo.Fphone;
+          vm.value=[res.cardInfo.FbankProvince,res.cardInfo.FbankCity,res.cardInfo.FbankDistrict]
+        })
+        // new Request('/bonus/cash/center.json?id='+vm.id,"GET").returnJson().then(res=>{
+        //   vm.canCash=res.canCash;
+        //   vm.cashing=res.cashing;
+        //   vm.BankCardNo=res.cardInfo.FbankcardNo;
+        //   vm.IDCardNo=res.cardInfo.FidcardNo;
+        //   vm.BankName=res.cardInfo.Fbank;
+        //   vm.phone=res.cardInfo.Fphone;
+        //   vm.name=res.cardInfo.Fname;
+        // })
+      }
     })
   },
+  created(){
+
+  },
   methods: {
+    subOptionText(e){
+      console.log(e)
+    },
+    _checkBank(){
+      console.log(this._bankCardAttribution(this.BankCardNo))
+            this._bankCardAttribution(this.BankCardNo)!="error"? this.BankName= this._bankCardAttribution(this.BankCardNo).bankName:this.BankNameDiable=false;
+    },
     _chechCHNCardId(code) {
       var city = {
         11: "北京",
@@ -2381,23 +2418,36 @@ export default {
       return cnPattern.test(bankName);
     },
     submitCardInfo() {
-      console.log(  this._bankCardAttribution(this.BankCardNo))
+      console.log((this.value5).toString())
       if (!this.testCardholder(this.cardholder)) {
         this.alertContent = "请输入真实的持卡人姓名"
         this.isAlert = true;
-      } else if (this._bankCardAttribution(this.BankCardNo)=="error") {
+        return false;
+      } else if (this._chechCHNCardId(this.IDCardNo)==false) {
         this.alertContent = "身份证号不符合规则,请输入正确的身份证号"
         this.isAlert = true;
-      } else if (!this._chechCHNBankCardId(this.BankCardNo)) {
+        return false;
+      } else if (this._bankCardAttribution(this.BankCardNo)=="error") {
         this.alertContent = "银行卡号不符合规则,请输入正确的银行卡号"
         this.isAlert = true;
+        return false;
       } else if (!this.testBankName(this.BankName)) {
         this.alertContent = "请选择开户银行"
         this.isAlert = true;
-      } else if (!this.testPhoneNumber(this.phonenumber)) {
+        return false;
+      } else if(!this.pickStatus){
+        this.alertContent = "请选择开户行地址"
+        this.isAlert = true;
+        return false;
+      }else if (!this.testPhoneNumber(this.phonenumber)) {
         this.alertContent = "请填写正确的手机号"
         this.isAlert = true;
-      } else {
+        return false;
+      } else if((this.checkCode).length != 4){
+        this.alertContent = "请输入4位验证码";
+        this.isAlert = true;
+        return false;
+      }else {
         let obj = {
           name: this.cardholder,
           bankcardNo: this.BankCardNo,
@@ -2407,11 +2457,13 @@ export default {
           bankProvince: this.value5[0],
           bankCity: this.value5[1],
           bankDistrict: this.value5[2],
+          code:this.checkCode
         }
         this.$http.post("/bonus/cash/bindcard.json", obj, {
           emulateJSON: true
         }).then(res => {
-          if (res.rc == 0) {
+          console.log(res);
+          if (res.body.rc == 0) {
             this.alertContent = "银行卡信息填写成功,正在跳转到提现页面";
             this.isAlert = true;
             let _this = this
@@ -2423,6 +2475,9 @@ export default {
                 }
               })
             }, 500)
+          }else{
+            this.alertContent = "保存失败,请检查验证码是否正确";
+            this.isAlert = true;
           }
         })
       }
@@ -2439,6 +2494,7 @@ export default {
       if (this.testPhoneNumber(this.phonenumber)) {
         this.showCheck = true
         this._settime()
+        this.sendCode();
       } else {
         this.alertContent = "请填写正确的手机号"
         this.isAlert = true;
@@ -2459,25 +2515,11 @@ export default {
       }, 1000)
     },
     sendCode() {
-      if ((this.checkCode).length == 4) {
-        this.$http.post("/bonus/cash/sendcode.json", {
-          phone: this.phonenumber,
-          code: this.checkCode
+        this.$http.post("/bonus/cash/sendcode.json?", {
+          phone: this.phonenumber
         }, {
           emulateJSON: true
-        }).then(res => {
-          if (res.rc == 0) {
-            this.alertContent = "验证成功";
-            this.isAlert = true;
-          } else {
-            this.alertContent = "验证失败,请重新验证";
-            this.isAlert = true;
-          }
         })
-      } else {
-        this.alertContent = "请输入验证码"
-        this.isAlert = true;
-      }
     },
     doShowAddress() {
       this.showAddress = true
@@ -2501,11 +2543,12 @@ export default {
       return value2name(value, ChinaAddressV4Data)
     },
     logHide(str) {
-      console.log('on-hide', str)
+      // console.log('on-hide', str)
     },
     logShow(str) {
-      console.log('on-show')
+      this.pickStatus=true
     }
+
   },
   computed: {
     processAddress() {
