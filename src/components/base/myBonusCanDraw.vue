@@ -2,7 +2,7 @@
     <div>
       <ul class="top">
         <li>可提金额（元）</li>
-        <li>{{canCash}}</li>
+        <li>{{cancash}}</li>
         <li @click="gotoRightPage()">提现</li>
         <li>提现金额将于每月10日发放</li>
         <li @click="showGuize=true">提现规则</li>
@@ -11,12 +11,12 @@
         <li class="draw_status"><span>{{cashing}}元 </span>正在提现</li>
         <li class="detail_info"> <a href="#/bonusrecord">提现详情 ></a> </li>
       </ul>
-      <div class="banke_card" v-if="bankCard.bank">
-        <div class="card_info"><img src="//udata.youban.com/webimg/wxyx/puintuan/money.svg" alt=""><span>{{bankCard.bank}}</span></div>
-        <div  class="card_id">**** **** **** {{bankCard.number}}</div>
-        <div class="card_edit" @click="$router.push({path:'/bindcard', query:{id:id}})">修改信息</div>
+      <div class="banke_card" v-if="cardinfo.Fbank">
+        <div class="card_info"><img src="//udata.youban.com/webimg/wxyx/puintuan/money.svg" alt=""><span>{{cardinfo.Fbank}}</span></div>
+        <div  class="card_id">**** **** **** {{lastFour}}</div>
+        <div class="card_edit" @click="$router.push({path:'/bindcard', query:{action:'edit'}})">修改信息</div>
       </div>
-      <div @click="$router.push({path:'/bindcard', query:{canCash:canCash}})" class="banke_card" v-if="!bankCard.bank">
+      <div @click="$router.push({path:'/bindcard'})" class="banke_card" v-if="!cardinfo.Fbank">
         <div class="card_info"><img src="//udata.youban.com/webimg/wxyx/puintuan/money.svg" alt=""><span>未绑定银行卡</span></div>
         <div  class="card_id2">绑定银行卡信息才可进行提现</div>
       </div>
@@ -62,44 +62,30 @@
     </div>
 </template>
 <script>
+import {mapGetters,mapActions} from 'vuex'
 import {Request} from '../../api/request'
     export default {
         name: "myBonusCanDraw",
         data(){
           return{
-            canCash:'',
-            cashing:'',
-            bankCard:{},
             showGuize:false,
             isAlert:false,
             alertContent:'',
             id:''
           }
         },
-        beforeRouteEnter (to, from, next) {
-          next(vm => {
-            new Request('/bonus/cash/center.json',"GET").returnJson().then(res=>{
-              vm.canCash=res.canCash;
-              vm.cashing=res.cashing;
-              vm.bankCard=res.bankCard;
-              vm.id=res.bankCard.id;
-            })
-            // 通过 `vm` 访问组件实例
-          })
-        },
         created(){
           this.$nextTick(function(){
             new Request('/bonus/cash/center.json',"GET").returnJson().then(res=>{
-              this.canCash=res.canCash;
-              this.cashing=res.cashing;
-              this.bankCard=res.bankCard;
-              this.id=res.bankCard.id;
+              this.setCardInfo(res.bankCard);
+              this.setCashing(res.cashing);
+              this.setCanCash(res.canCash);
             })
           })
         },
         methods:{
           gotoRightPage(){
-            if(this.canCash<50){
+            if(this.cancash<50){
               this.isAlert=true;
               this.alertContent="不足50元无法提现!";
               return false
@@ -108,12 +94,19 @@ import {Request} from '../../api/request'
               this.alertContent="本月已发起过提现，请下个月再尝试!";
               return false
             }else{
-              this.bankCard.number!=""?
-              this.$router.push({name:'ToWallet',params: {canCash:this.canCash  }})
+              this.cardinfo.FbankcardNo!=""?
+              this.$router.push({name:'ToWallet'})
               :
-              this.$router.push({path:'/bindcard', query:{canCash:this.canCash}})
+              this.$router.push({path:'/bindcard'})
             }
-          }
+          },
+          ...mapActions(['setCanCash','setCardInfo','setCashing']),
+        },
+        computed:{
+          lastFour(){
+            return this.cardinfo.FbankcardNo.substr(-4,4)
+          },
+          ...mapGetters(["cancash",'cardinfo','cashing'])
         }
     }
 </script>

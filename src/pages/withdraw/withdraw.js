@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import VueLazyLoad from 'vue-lazyload'
 import VueResource from 'vue-resource'
-
+import store from '../../store'
 Vue.use(VueResource);
 Vue.use(VueLazyLoad,{
     error:'//udata.youban.com/webimg/wxyx/puintuan/default_img.jpg',
@@ -17,6 +17,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   //只有注册 才能够使用模板 app.vue文件
   components: { App }
