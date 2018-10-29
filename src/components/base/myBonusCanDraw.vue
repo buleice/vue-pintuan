@@ -77,7 +77,7 @@ import {Request} from '../../api/request'
         created(){
           this.$nextTick(function(){
             new Request('/bonus/cash/center.json',"GET").returnJson().then(res=>{
-              this.setCardInfo(res.bankCard);
+              this.setCardInfo(res.bankCard||{});
               this.setCashing(res.cashing);
               this.setCanCash(res.canCash);
             })

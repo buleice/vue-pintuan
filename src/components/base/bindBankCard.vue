@@ -35,7 +35,7 @@
           <label for="" class="weui-label">开户银行</label>
       </div>
       <div class="weui-cell__bd">
-          <select class="weui-select" v-model="bankCardInfo.Fbank" name="select2" :disabled="BankNameDiable">
+          <select class="weui-select" v-model="BankName" name="select2" :disabled="BankNameDiable">
               <option v-for="item in bankList" :value="item.text">{{item.text}}</option>
           </select>
       </div>
@@ -781,12 +781,12 @@ export default {
       BankNameDiable: true,
       pickStatus: false,
       id: '',
-      bankCardInfo: {}
+      bankCardInfo: {},
     }
   },
   beforeRouteEnter(to, from, next) {
     next(vm => {
-      if (to.query.action != '') {
+      if (to.query.action) {
         vm.pickStatus = true
       };
       vm.value = [vm.cardinfo.FbankProvince, vm.cardinfo.FbankCity, vm.cardinfo.FbankDistrict]
@@ -795,6 +795,7 @@ export default {
   created() {
     let temp = this._deepClone(this.cardinfo);
     delete temp['_id'];
+    this.BankName=temp.Fbank;
     this.bankCardInfo = temp;
   },
   methods: {
@@ -807,8 +808,7 @@ export default {
       console.log(e)
     },
     _checkBank() {
-      console.log(this._bankCardAttribution(this.BankCardNo))
-      this._bankCardAttribution(this.BankCardNo) != "error" ? this.BankName = this._bankCardAttribution(this.BankCardNo).bankName : this.BankNameDiable = false;
+      this._bankCardAttribution(this.bankCardInfo.FbankcardNo) != "error" ? this.BankName = this._bankCardAttribution(this.bankCardInfo.FbankcardNo).bankName : this.BankNameDiable = false;
     },
     _chechCHNCardId(code) {
       var city = {
@@ -2412,7 +2412,7 @@ export default {
         this.alertContent = "银行卡号不符合规则,请输入正确的银行卡号"
         this.isAlert = true;
         return false;
-      } else if (!this.testBankName(this.bankCardInfo.Fbank)) {
+      } else if (!this.testBankName(this.BankName)) {
         this.alertContent = "请选择开户银行"
         this.isAlert = true;
         return false;
@@ -2433,6 +2433,7 @@ export default {
           FbankProvince: this.value5[0],
           FbankCity: this.value5[1],
           FbankDistrict: this.value5[2],
+          Fbank:this.BankName,
           code: this.checkCode
         }), {
           emulateJSON: true
