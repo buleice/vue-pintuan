@@ -794,6 +794,7 @@ export default {
   },
   created() {
     let temp = this._deepClone(this.cardinfo);
+    delete temp['_id'];
     this.bankCardInfo = temp;
   },
   methods: {
@@ -2429,9 +2430,9 @@ export default {
         return false;
       } else {
         this.$http.post("/bonus/cash/bindcard.json", Object.assign({}, this.bankCardInfo, {
-          FbankProvince: this.value[0],
-          FbankCity: this.value[1],
-          FbankDistrict: this.value[2],
+          FbankProvince: this.value5[0],
+          FbankCity: this.value5[1],
+          FbankDistrict: this.value5[2],
           code: this.checkCode
         }), {
           emulateJSON: true
@@ -2505,7 +2506,7 @@ export default {
       }, 2000)
     },
     onShadowChange(ids, names) {
-      // this.value5 = names;
+      this.value5 = names;
     },
     changeData() {
       this.value2 = ['430000', '430400', '430407']
