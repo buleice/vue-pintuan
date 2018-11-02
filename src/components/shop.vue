@@ -1,11 +1,13 @@
 <template lang="html">
   <div id="app">
+    <SeriesBox/>
     <NaveBar :category="category" @getListData="getListData"/>
     <LessonList :lessonList="lessonList"/>
   </div>
 </template>
 
 <script>
+import SeriesBox from './base/series-box.vue'
 import {Request} from '../api/request'
 import NaveBar from './base/navbar'
 import LessonList from './base/lesson-list'
@@ -13,7 +15,8 @@ export default {
   name: 'Shop',
   components: {
     NaveBar,
-    LessonList
+    LessonList,
+    SeriesBox
   },
   data() {
     return {
