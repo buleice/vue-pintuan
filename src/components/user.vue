@@ -31,7 +31,7 @@
   </a>
 </div>
 
-<div class="noempty" v-if="!myLesson&&!uncompletedGroups"><img src="https://udata.youban.com/webimg/other/quesheng.png"/></div>
+<div class="noempty" v-if="myLesson.length==0&&uncompletedGroups.length==0"><img src="https://udata.youban.com/webimg/other/quesheng.png"/></div>
 
   <div class="myGroup" v-for="item in myLesson">
     <a :href="item['url']" class="a_box" target="_blank">

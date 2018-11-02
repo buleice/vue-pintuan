@@ -1,6 +1,6 @@
 <template lang="html">
   <div id="app">
-    <SeriesBox/>
+    <SeriesBox :series='series'/>
     <NaveBar :category="category" @getListData="getListData"/>
     <LessonList :lessonList="lessonList"/>
   </div>
@@ -23,7 +23,8 @@ export default {
       lessonList:'',
       allList:{},
       isShowAll:true,
-      category:''
+      category:'',
+      series:[]
     }
   },
   created() {
@@ -31,6 +32,7 @@ export default {
       this.allList=res.list;
       this.lessonList=res.list;
       this.category= res.category;
+      this.series=res.seriesList
     })
   },
   methods: {

@@ -72,7 +72,7 @@ export default {
 	.Infotag{float:left;width:38%;padding-top:.625rem}
 	.price{float:right}
 	.price em{font-size:1rem;margin-right:.625rem;}
-	.detailbtn{display:inline-block;background-color:#f69f00;width:auto;height:2.75rem;padding: 0 .94rem;white-space: nowrap;text-overflow: ellipsis;border-radius:1rem;text-align:center;line-height:2.75rem;color:#fff;text-decoration:none;font-size:1rem}
+	.detailbtn{display:inline-block;background-color:#f69f00;width:auto;height:2.75rem;padding: 0 .94rem;white-space: nowrap;border-radius:1rem;text-align:center;line-height:2.75rem;color:#fff;text-decoration:none;font-size:1rem;max-width: 7.63rem;overflow: hidden;}
 	.detailbtn strong{font-size:1.31rem}
 	.Infotag span{display:inline-block;padding:3px 5px;border:1px solid #666;border-radius:1.5625rem;font-size: .75rem}
 	.Infotag span:first-child{margin-right:.375rem}

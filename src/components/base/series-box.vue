@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="course-contatiner">
-    <ul>
+    <ul v-if="series">
       <li v-for='(serie,index) in series' :key="index">
         <a :href="'/purchase/series?id='+serie.id"><img :src="serie.img" alt="图片"> </a>
       </li>
@@ -15,19 +15,7 @@ export default {
     series:{
       type:Array,
       default(){
-        return [{
-            id: "5bdaa706b3fcb12c6b0dde44",
-            img: "http://cliveimages.youban.com/20181102/2044105553Fk143dBa3vD8L4mcnMluuPKh_Exz.png"
-          },
-          {
-            id: "5bdaa706b3fcb12c6b0dde44",
-            img: "http://cliveimages.youban.com/20181102/2044105553Fk143dBa3vD8L4mcnMluuPKh_Exz.png"
-          },
-          {
-            id: "5bdaa706b3fcb12c6b0dde44",
-            img: "http://cliveimages.youban.com/20181102/2044105553Fk143dBa3vD8L4mcnMluuPKh_Exz.png"
-          }
-        ]
+        return []
       }
     }
   }
