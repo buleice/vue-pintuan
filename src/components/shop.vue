@@ -45,7 +45,7 @@ export default {
       category==99?(this.lessonList=this.allList):this._fetchData(category);
   },
   _fetchData(category){
-      // this.fetchCategory=false;
+      this.fetchCategory=false;
       new Request('/shop/category.json','GET',{"category":category}).returnJson().then(res=>{
       this.fetchCategory=true;
       this.lessonList=res.list;
