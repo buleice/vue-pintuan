@@ -5,8 +5,11 @@ import App from './App'
 import router from './router'
 import VueLazyLoad from 'vue-lazyload'
 Vue.use(VueLazyLoad,{
+    preLoad: 1.3,
     error:'//udata.youban.com/webimg/wxyx/puintuan/default_img.jpg',
-    loading:'//udata.youban.com/webimg/wxyx/puintuan/default_img.jpg'
+    loading:'//udata.youban.com/webimg/wxyx/puintuan/default_img.jpg',
+    listenEvents: ['scroll', 'wheel', 'mousewheel', 'resize', 'animationend', 'transitionend', 'touchmove']
+
 })
 Vue.config.productionTip = false
 

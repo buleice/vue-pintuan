@@ -2,7 +2,9 @@
   <div id="app">
     <SeriesBox :series='series'/>
     <NaveBar :category="category" @getListData="getListData"/>
-    <LessonList :lessonList="lessonList"/>
+    <LessonList :lessonList="lessonList" v-if="fetchCategory"/>
+    <LoadingDiv v-else/>
+
   </div>
 </template>
 
@@ -11,12 +13,14 @@ import SeriesBox from './base/series-box.vue'
 import {Request} from '../api/request'
 import NaveBar from './base/navbar'
 import LessonList from './base/lesson-list'
+import LoadingDiv from './base/loading.vue'
 export default {
   name: 'Shop',
   components: {
     NaveBar,
     LessonList,
-    SeriesBox
+    SeriesBox,
+    LoadingDiv
   },
   data() {
     return {
@@ -24,7 +28,8 @@ export default {
       allList:{},
       isShowAll:true,
       category:'',
-      series:[]
+      series:[],
+      fetchCategory:true,
     }
   },
   created() {
@@ -40,7 +45,9 @@ export default {
       category==99?(this.lessonList=this.allList):this._fetchData(category);
   },
   _fetchData(category){
+      // this.fetchCategory=false;
       new Request('/shop/category.json','GET',{"category":category}).returnJson().then(res=>{
+      this.fetchCategory=true;
       this.lessonList=res.list;
     })
   }
