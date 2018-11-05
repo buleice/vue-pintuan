@@ -45,7 +45,7 @@ export default {
       //   }
       // })
       if(this.wantCash<=this.cancash){
-        if(this.wantCash>=50){
+        if(this.wantCash>=20){
           this.$http.post("/bonus/cash/out.json",{sum:this.wantCash},{emulateJSON:true}).then(res=>{
               if (res.body.rc == 0) {
                 this.setCanCash(this.cancash-this.wantCash);
@@ -61,7 +61,7 @@ export default {
               }
           })
         }else{
-          this.alertContent = "每次至少50元才可提现";
+          this.alertContent = "每次至少20元才可提现";
           this.isAlert = true;
           this.wantCash=this.cancash;
           return false;

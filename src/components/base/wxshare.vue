@@ -13,7 +13,7 @@ export default {
       type:Object,
       default(){
         return {
-          title: '20位朋友正在小伴龙优学参与拼课，快为宝宝报名有趣的课程吧!',
+          title: `${localStorage.count||1359}位朋友正在小伴龙优学参与拼课，快为宝宝报名有趣的课程吧!`,
           link: 'https://wxyx.youban.com/shop/index',
           imgUrl: 'https://udata.youban.com/webimg/wxyx/puintuan/shop-icon.png',
           type: "link",
@@ -33,10 +33,11 @@ export default {
        'onMenuShareTimeline',
        'onMenuShareQQ',
        'onMenuShareAppMessage'
-     ],
+     ]
     }
   },
   created(){
+    let _this=this
     this.$nextTick(function(){
       new Request('/weixin/config',"POST",{"url":window.location.href}).returnJson().then(data=>{
         this.config={
@@ -47,6 +48,21 @@ export default {
             signature: data.signature,
             jsApiList: this.apilist
           }
+          wx.config({
+            debug: false,
+            appId: data.appId,
+            timestamp: data.timestamp,
+            nonceStr: data.nonceStr,
+            signature: data.signature,
+            jsApiList: this.apilist
+          });
+          wx.error(function(res) {
+            console.log('微信：', JSON.stringify(res));
+          });
+          wx.ready(function() {
+            wx.onMenuShareAppMessage(_this.WXSHDATA);
+            wx.onMenuShareTimeline(_this.WXSHDATA); //朋友圈
+          });
       })
     })
   },

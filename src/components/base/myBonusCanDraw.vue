@@ -35,7 +35,7 @@
            </li>
           <li>
             <h3></h3>
-            <p><b>3. </b>奖学金满50元才可提现。</p>
+            <p><b>3. </b>奖学金满20元才可提现。</p>
           </li>
           <li>
             <h3></h3>
@@ -85,9 +85,9 @@ import {Request} from '../../api/request'
         },
         methods:{
           gotoRightPage(){
-            if(this.cancash<50){
+            if(this.cancash<20){
               this.isAlert=true;
-              this.alertContent="不足50元无法提现!";
+              this.alertContent="不足20元无法提现!";
               return false
             }else if (this.cashing>0) {
               this.isAlert=true;

@@ -1,21 +1,25 @@
 <template>
   <div id="app">
-     <keep-alive :include="['Shop']">
+     <keep-alive :include="['Shop','usercenter']">
        <router-view></router-view>
      </keep-alive>
      <ShopNavBar/>
+     <WxShare/>
+     <ScrollToTop/>
   </div>
 </template>
 
 <script>
 import ShopNavBar from '../../components/base/shopnavbar.vue'
 import WxShare from '../../components/base/wxshare.vue';
+import ScrollToTop from '../../components/base/totop.vue'
 export default {
   name: 'App',
   components:{
     ShopNavBar,
-    WxShare
-  },
+    WxShare,
+    ScrollToTop
+  }
 }
 </script>
 

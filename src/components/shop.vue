@@ -4,7 +4,6 @@
     <NaveBar :category="category" @getListData="getListData"/>
     <LessonList :lessonList="lessonList" v-if="fetchCategory"/>
     <LoadingDiv v-else/>
-
   </div>
 </template>
 
@@ -34,6 +33,7 @@ export default {
   },
   created() {
     new Request('/shop/index.json','POST').returnJson().then(res=>{
+      localStorage.count = res.count;
       this.allList=res.list;
       this.lessonList=res.list;
       this.category= res.category;
