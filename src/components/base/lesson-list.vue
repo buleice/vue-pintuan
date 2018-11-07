@@ -19,7 +19,7 @@
 								<div class="price">
 									<em>￥<del>{{item['ForiginalPrice']}}</del></em>
 									<a class="detailbtn" :href="'/purchase/index?id='+item._id" target="_blank">
-												<span v-if="item['Fprice']>0">拼团价 ￥<strong>{{item['Fprice']}}</strong></span>
+												<span v-if="item['Fprice']>0">开团价 ￥<strong>{{item['Fprice']}}</strong></span>
                         	<span v-else>限时免费</strong></span>
 									</a>
 								</div>
