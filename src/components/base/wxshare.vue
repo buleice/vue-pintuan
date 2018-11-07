@@ -28,7 +28,6 @@ export default {
   },
   data(){
     return{
-      config:{},
       apilist:[
        'onMenuShareTimeline',
        'onMenuShareQQ',
@@ -38,24 +37,15 @@ export default {
   },
   created(){
     let _this=this
-    this.$nextTick(function(){
       new Request('/weixin/config',"POST",{"url":window.location.href}).returnJson().then(data=>{
-        this.config={
-            debug: false,
-            appId: data.appId,
-            timestamp: data.timestamp,
-            nonceStr: data.nonceStr,
-            signature: data.signature,
-            jsApiList: this.apilist
-          }
           wx.config({
-            debug: false,
-            appId: data.appId,
-            timestamp: data.timestamp,
-            nonceStr: data.nonceStr,
-            signature: data.signature,
-            jsApiList: this.apilist
-          });
+              debug: false,
+              appId: data.appId,
+              timestamp: data.timestamp,
+              nonceStr: data.nonceStr,
+              signature: data.signature,
+              jsApiList: this.apilist
+            });
           wx.error(function(res) {
             console.log('微信：', JSON.stringify(res));
           });
@@ -64,21 +54,7 @@ export default {
             wx.onMenuShareTimeline(_this.WXSHDATA); //朋友圈
           });
       })
-    })
-  },
-  mounted(){
-    this.$nextTick(
-        function(){
-          wx.config(this.config)
-          wx.error(function(res) {
-            console.log('微信：', JSON.stringify(res));
-          })
-          wx.ready(function() {
-            wx.onMenuShareAppMessage(this.WXSHDATA)
-            wx.onMenuShareTimeline(this.WXSHDATA)//朋友圈
-          })
-        }
-    )}
+  }
 }
 </script>
 
