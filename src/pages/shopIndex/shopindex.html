@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
     <script type="text/javascript" src="/js/adaptation.js?">	</script>
     <title>小伴龙优学</title>
     <style media="screen">
@@ -13,4 +13,17 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
+  <script type="text/javascript">
+  (function(){
+       var randomh=Math.random();
+       for(let i=0;i<document.getElementsByTagName("script").length-1;i++){
+        let item=document.getElementsByTagName("script")[i];
+         item.src=item.src+"?v="+randomh;
+         // item.async = true;
+         // item.defer = true;
+         // console.log(item)
+       }
+   })();
+  </script>
+
 </html>
