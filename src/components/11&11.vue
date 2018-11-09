@@ -1,10 +1,8 @@
 <template lang="html">
 <div class="festival">
-  <!-- <div class="header">
-    <img class="header-img" src="" alt="">
-  </div> -->
   <div class="festival-body">
-    <img :src="adImg" alt="">
+    <img src="//udata.youban.com/webimg/wxyx/puintuan/1111/1111ad.png" v-if="!canGet" alt="">
+    <div class="ad2" v-else>您已获得了{{coupons}}兑换券</div>
     <div class="course-box"  v-if="!canGet">
        <div :class="['course_f', myPurchases[0]&&myPurchases[0].status==1? 'course_f-bg2':'course_f-bg1']">
          <img v-if="myPurchases[0]" :src="myPurchases[0].icon" alt="">
@@ -24,7 +22,7 @@
     <div class="coupon-box">
       <img class="coupon" :src="couponImg" alt="">
       <div class="label" v-if="myPurchases[1]&&myPurchases[1].status==1&&coupons>1">
-          <span>&times</span><span>1</span>
+          <span>&times</span><span>{{coupons}}</span>
       </div>
     </div>
     <div class="ad-title2"  v-if="canGet">
@@ -103,10 +101,13 @@ export default {
           this.myPurchases=res.myPurchases;
           this.isValid=res.isValid;
           this.exchangeList=res.exchangeList;
-          if (res.myPurchases[1]&&res.myPurchases[1].status==1) {
+          this.coupons=res.voucher.length;
+          if(res.voucher.length>=1){
             this.canGet=true;
-            this.adImg="//udata.youban.com/webimg/wxyx/puintuan/1111/1111ad2.png";
             this.couponImg="//udata.youban.com/webimg/wxyx/puintuan/1111/activatedCoupon.png";
+          }
+          if (res.myPurchases[1]&&res.myPurchases[1].status==1) {
+            this.adImg="//udata.youban.com/webimg/wxyx/puintuan/1111/1111ad2.png";
           }
         })
   },
@@ -117,6 +118,7 @@ export default {
 .festival{height:90rem; background: url(//udata.youban.com/webimg/wxyx/puintuan/1111/bg.jpg) no-repeat;background-size:100% 100%}
 
 .festival-body{transform: translateY(13.44rem);}
+.ad2{background: url("//udata.youban.com/webimg/wxyx/puintuan/1111/ad-bg.png") no-repeat;background-size: 100% 100%;width:23rem;height: 6.75rem;line-height: 6.5rem;color: #4c0110;font-size: 1.75rem;}
 .course-box{margin-top: 1.13rem;font-size:0;}
 .course-box .cover-mask{width:6.63rem;height: 6.63rem;border-radius: 3.38rem;position: absolute;background-color: rgba(0,0,0,.3)}
 .course-box img{width:6.63rem;height: 6.63rem;border-radius: 3.38rem}
@@ -148,7 +150,8 @@ export default {
    	.myGroup .a_box,img{display:block;width: 100%;height:100%;position:relative;color: rgba(0,0,0.5);color: #3c3c3c;border-radius: .625rem;}
     .groupInfo{width: 100%;height:3.44rem;line-height: 3.44rem;color: #fff;padding: 0 .38rem 0 0;-webkit-box-sizing: border-box;box-sizing: border-box;border-radius:0 0 .625rem .625rem;position: absolute;left: 0;bottom: 0;background-color: rgba(6, 6, 6,.4)}
      .groupInfo__avatarbox{width: auto;padding: 0 .61rem 0 0;-webkit-box-sizing: border-box;box-sizing: border-box;height: 100%;overflow: hidden;float: left;display: inline-block;vertical-align: middle;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align: center;-ms-flex-align: center;align-items: center;position: relative;font-size: 1rem;}
-      	.groupInfo .groupInfo_buttton{display: block;position: absolute;bottom: .625rem;right: 5px;width: 6.25rem;    padding: 0 .94rem;line-height: 2.2rem;text-align: center;background: #f69f00;border-radius: 1rem;color: #fff;max-width: 7.63rem;}
+      	.groupInfo .groupInfo_buttton{display: block;position: absolute;bottom: .625rem;right: 5px;width: 6.25rem;    padding: 0 .94rem;line-height: 2.2rem;text-align: center;background: #f69f00;border-radius: 1rem;color: #fff;max-width: 7.63rem; overflow: hidden;
+    white-space: nowrap;}
       .cover-layer{position: fixed;width: 100%;height: 100%;background: rgba(0,0,0,.5);top: 0;}
       .cover-layer div{margin-top: 50%;font-size: 1.88rem;color: #fff;}
 
