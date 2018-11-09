@@ -3,7 +3,7 @@
   <ul class="item">
 				<li v-for="item in lessonList">
 							<div class="tuanimg">
-								<a :href="'/purchase/index?id='+item._id" target="_blank">
+								<a :href="'/purchase/index?id='+item._id+'&isNew='+isNew" target="_blank">
 									<img class="" v-lazy="item['Fbanner'][0]" :key="item['Fbanner'][0]">
 									<img class="tuan-label" :src="renderLabel(item['Ftag'])" alt="">
                 </a>
@@ -18,7 +18,7 @@
 																	</div>
 								<div class="price">
 									<em>￥<del>{{item['ForiginalPrice']}}</del></em>
-									<a class="detailbtn" :href="'/purchase/index?id='+item._id" target="_blank">
+									<a class="detailbtn" :href="'/purchase/index?id='+item._id+'&isNew='+isNew" target="_blank">
 												<span v-if="item['Fprice']>0">开团价 ￥<strong>{{item['Fprice']}}</strong></span>
                         	<span v-else>限时免费</strong></span>
 									</a>
@@ -32,7 +32,8 @@
 <script>
 export default {
   props:{
-    lessonList:{}
+    lessonList:{},
+    isNew:0
   },
   methods:{
     renderLabel:function(Ftag){

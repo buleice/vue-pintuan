@@ -4,7 +4,6 @@
        <router-view></router-view>
      </keep-alive>
      <ShopNavBar/>
-     <WxShare/>
      <ScrollToTop/>
   </div>
 </template>

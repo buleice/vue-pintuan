@@ -1,8 +1,8 @@
 <template lang="html">
   <div id="app">
     <SeriesBox :series='series'/>
-    <NaveBar :category="category" @getListData="getListData"/>
-    <LessonList :lessonList="lessonList" v-if="fetchCategory"/>
+    <NaveBar :isNew="isNew" :category="category" @getListData="getListData"/>
+    <LessonList :isNew="isNew" :lessonList="lessonList" v-if="fetchCategory"/>
     <LoadingDiv v-else/>
   </div>
 </template>
@@ -29,6 +29,7 @@ export default {
       category:'',
       series:[],
       fetchCategory:true,
+      isNew:0,
     }
   },
   created() {
@@ -37,7 +38,8 @@ export default {
       this.allList=res.list;
       this.lessonList=res.list;
       this.category= res.category;
-      this.series=res.seriesList
+      this.series=res.seriesList;
+      this.isNew=res.isNew;
     })
   },
   methods: {

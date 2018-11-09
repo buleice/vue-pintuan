@@ -35,9 +35,9 @@ export default {
      ]
     }
   },
-  created(){
+  mounted(){
     let _this=this
-      new Request('/weixin/config',"POST",{"url":window.location.href}).returnJson().then(data=>{
+      new Request('/weixin/config',"POST",{"url":window.location.href.split('#')[0]}).returnJson().then(data=>{
           wx.config({
               debug: false,
               appId: data.appId,

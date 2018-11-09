@@ -29,5 +29,5 @@ export default {
 .courseLabel{font-size: 1.25rem;text-align: left;line-height: 3.33rem;padding-left: .83rem;}
 .course-contatiner ul{float: left; width: 100%;overflow-x: auto;overflow-y: hidden; white-space: nowrap;margin-top: .75rem}
 .course-contatiner ul li{width: 7.81rem;height: 5.94rem;display: inline-block;margin: 0 .42rem; }
-.course-contatiner ul li img{width: 100%;height: 100%;}
+.course-contatiner ul li img{width: 100%;height: 100%;border-radius: 8px;}
 </style>

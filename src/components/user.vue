@@ -55,7 +55,7 @@ export default {
     return{
       userInfo:{},
       myLesson:{},
-      uncompletedGroups:[]
+      uncompletedGroups:[],
     }
   },
   created(){
@@ -101,7 +101,7 @@ export default {
     height: auto;
     position: absolute;
     right: 0;
-    top: 6.375rem;
+    top: 9.375rem;
     z-index: 100;
 }
 .bonus_entry img{width: 4.5rem}

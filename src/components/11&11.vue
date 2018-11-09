@@ -15,6 +15,9 @@
         <div v-if="myPurchases[1]&&myPurchases[1].status==0" class="cover-mask"></div>
        </div>
     </div>
+    <div class="buy-prompt" v-if="myPurchases[1]&&myPurchases[1].status==0">
+      完成拼团，即可获得课程兑换券
+    </div>
     <div class="buy-prompt" v-if="!canGet">
       再报名{{2-myPurchases.length}}门课程即可获得兑换券
     </div>
@@ -26,14 +29,14 @@
       </div>
     </div>
     <div class="ad-title2"  v-if="canGet">
-      购买两个课程可以再获得一张优惠券
+      购买两个课程可以再获得一张兑换券
     </div>
   </div>
 
   <div class="festival-footer" v-if="!canGet" id="goodsList">
     <img class="footer-title-img" src="//udata.youban.com/webimg/wxyx/puintuan/1111/footer-title.png" alt="">
     <div class="myGroup" v-for="item in goodsList">
-      <a :href="'/purchase/index?id='+item.id" class="a_box" target="_blank">
+      <a :href="'/purchase/index?id='+item.id+'&isNew='+isNew" class="a_box" target="_blank">
         <img  :alt="item.title" :src="item['banner'][0]">
         <div class="groupInfo">
           <div class="groupInfo__avatarbox" style="margin-left:0.63rem">
@@ -50,7 +53,7 @@
   <div class="festival-footer" v-else>
     <img class="footer-title-img" src="//udata.youban.com/webimg/wxyx/puintuan/1111/footer-title2.png" alt="">
     <div class="myGroup" v-for="item in exchangeList">
-      <a :href="'/purchase/index?id='+item.id+'&exchange=1'" class="a_box" target="_blank">
+      <a :href="'/purchase/index?id='+item.id+'&exchange=1&isNew='+isNew" class="a_box" target="_blank">
         <img  :alt="item.title" :src="item['banner'][0]">
         <div class="groupInfo">
           <div class="groupInfo__avatarbox" style="margin-left:0.63rem">
@@ -74,8 +77,11 @@
 
 <script>
 import {Request} from '../api/request'
+import wx from 'weixin-js-sdk';
 export default {
   name:"Festival",
+  components:{
+  },
   data(){
     return{
       isValid:true,
@@ -83,16 +89,24 @@ export default {
       adImg:'//udata.youban.com/webimg/wxyx/puintuan/1111/1111ad.png',
       titleImg:'//udata.youban.com/webimg/wxyx/puintuan/1111/footer-title.png',
       couponImg:'//udata.youban.com/webimg/wxyx/puintuan/1111/nonactivatedCoupon.png',
-      myPurchases:[
-        {
-          icon:"http://p9w8pmwcs.bkt.clouddn.com/20180814/2602180414Fg1Z1uFTAltihin9_h5yZr-u-Spd.png",
-          id:"5b6d0042efcba419ff63fb3a",
-          status:1
-        }
-      ],
+      myPurchases:[],
       exchangeList:[],
       canGet:false,
-      coupons:1
+      coupons:1,
+      isNew:0,
+      apilist:[
+       'onMenuShareTimeline',
+       'onMenuShareQQ',
+       'onMenuShareAppMessage'
+     ],
+      WXSHDATA:{
+        title: '小伴龙优学双十一钜惠，课程买二送一！',
+        link: 'https://wxyx.youban.com/activity/20181111',
+        imgUrl: 'https://udata.youban.com/webimg/wxyx/puintuan/1111/shareIcon.png',
+        type: "link",
+        dataUrl: "",
+        desc: '精品优质线上课程，助力宝宝更好成长！',
+      }
     }
   },
   created(){
@@ -109,8 +123,29 @@ export default {
           if (res.myPurchases[1]&&res.myPurchases[1].status==1) {
             this.adImg="//udata.youban.com/webimg/wxyx/puintuan/1111/1111ad2.png";
           }
+          this.isNew=res.isNew;
         })
   },
+  mounted(){
+  //   let _this=this
+  //     new Request('/weixin/config',"POST",{"url":location.href.split('#')[0]}).returnJson().then(data=>{
+  //         wx.config({
+  //             debug: false,
+  //             appId: data.appId,
+  //             timestamp: data.timestamp,
+  //             nonceStr: data.nonceStr,
+  //             signature: data.signature,
+  //             jsApiList: _this.apilist
+  //           });
+  //         wx.error(function(res) {
+  //           console.log('微信：', JSON.stringify(res));
+  //         });
+  //         wx.ready(function() {
+  //           wx.onMenuShareAppMessage(_this.WXSHDATA);
+  //           wx.onMenuShareTimeline(_this.WXSHDATA); //朋友圈
+  //         });
+  //     })
+  // }
 }
 </script>
 
