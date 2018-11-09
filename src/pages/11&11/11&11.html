@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script type="text/javascript" src="//wxyx.youban.com/js/adaptation.js?">	</script>
+  <title>双十一特惠活动</title>
+</head>
+<body style="background-color:#de2679">
+    <div id="app"></div>
+</body>
+<script type="text/javascript">
+(function(){
+     var randomh=new Date().getTime();
+     for(let i=0;i<document.getElementsByTagName("script").length-1;i++){
+      let item=document.getElementsByTagName("script")[i];
+       item.src=item.src+"?v="+randomh;
+       // item.async = true;
+       // item.defer = true;
+       // console.log(item)
+     }
+ })();
+</script>
+</html>
