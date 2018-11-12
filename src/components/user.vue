@@ -128,6 +128,6 @@ export default {
    .groupInfo__middleBox .tuan_label{display: inline;width: auto;max-width: 2.81rem;padding: .25rem .25rem;margin-top: .25rem;line-height: .94rem;text-align: center;background-image: url(//udata.youban.com/webimg/wxyx/youxue/_rentuanbg.png);background-repeat: no-repeat;background-size: cover;color:#fff;font-size:.625rem;-webkit-box-sizing:border-box;box-sizing:border-box;border-radius:4px 4px 4px 0;}
  	.groupInfo__middleBox .remainPeople{display: inline-block;line-height: 1.25rem;margin-left: .63rem}
  	.groupInfo::after{content: '';display: block;clear: both;}
- 	.groupInfo .groupInfo_buttton{display: block;position: absolute;bottom: .625rem;right: 5px;width: 6.25rem;line-height: 2.2rem;text-align: center;background: #f69f00;border-radius: 1rem;color: #fff;}
+ 	.groupInfo .groupInfo_buttton{display: block;position: absolute;bottom: .625rem;right: 5px;width: 5.25rem;line-height: 2.2rem;text-align: center;background: #f69f00;border-radius: 1rem;color: #fff;}
 
 </style>

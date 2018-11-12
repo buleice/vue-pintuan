@@ -1,5 +1,11 @@
 <template lang="html">
   <div id="app">
+    <!-- <carousel>
+        <a><img src="http://cliveimages.youban.com/20181108/6394192300Fj2daclE-I9EHfFIMufA3AWwmgTO.jpg"/></a>
+        <a><img src="http://cliveimages.youban.com/20181108/6394192300Fj2daclE-I9EHfFIMufA3AWwmgTO.jpg"/></a>
+        <a><img src="http://cliveimages.youban.com/20181108/6394192300Fj2daclE-I9EHfFIMufA3AWwmgTO.jpg"/></a>
+        <a><img src="http://cliveimages.youban.com/20181108/6394192300Fj2daclE-I9EHfFIMufA3AWwmgTO.jpg"/></a>
+    </carousel> -->
     <SeriesBox :series='series'/>
     <NaveBar :isNew="isNew" :category="category" @getListData="getListData"/>
     <LessonList :isNew="isNew" :lessonList="lessonList" v-if="fetchCategory"/>
@@ -8,6 +14,7 @@
 </template>
 
 <script>
+import Carousel from './base/slider/slider.vue'
 import SeriesBox from './base/series-box.vue'
 import {Request} from '../api/request'
 import NaveBar from './base/navbar'
@@ -19,7 +26,8 @@ export default {
     NaveBar,
     LessonList,
     SeriesBox,
-    LoadingDiv
+    LoadingDiv,
+    Carousel
   },
   data() {
     return {

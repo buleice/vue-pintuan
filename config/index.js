@@ -13,13 +13,13 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable:{},
     proxyTable: {
-    // '/apis':{
-    //     target:'http://wxyx.youban.com',
-    //     changeOrigin:true,
-    //     pathRewrite:{
-    //         '^/apis':'localhost:8080'
-    //     }
-    // }
+    '/apis':{
+        target:'http://wxyx.youban.com',
+        changeOrigin:true,
+        pathRewrite:{
+            '^/apis':''
+        }
+    }
 },
 
     // Various Dev Server settings
@@ -52,7 +52,7 @@ module.exports = {
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'static',
+    assetsSubDirectory: 'wxyxcommon',
     assetsPublicPath: '/',
 
     /**
