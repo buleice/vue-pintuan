@@ -72,15 +72,18 @@
       活动已结束！
     </div>
   </div>
+  <WxShare :WXSHDATA="WXSHDATA"/>
 </div>
 </template>
 
 <script>
 import {Request} from '../api/request'
 import wx from 'weixin-js-sdk';
+import WxShare from './base/wxshare.vue'
 export default {
   name:"Festival",
   components:{
+     WxShare
   },
   data(){
     return{
@@ -94,11 +97,6 @@ export default {
       canGet:false,
       coupons:1,
       isNew:0,
-      apilist:[
-       'onMenuShareTimeline',
-       'onMenuShareQQ',
-       'onMenuShareAppMessage'
-     ],
       WXSHDATA:{
         title: '小伴龙优学双十一钜惠，课程买二送一！',
         link: 'https://wxyx.youban.com/activity/20181111',
@@ -125,27 +123,7 @@ export default {
           }
           this.isNew=res.isNew;
         })
-  },
-  mounted(){
-  //   let _this=this
-  //     new Request('/weixin/config',"POST",{"url":location.href.split('#')[0]}).returnJson().then(data=>{
-  //         wx.config({
-  //             debug: false,
-  //             appId: data.appId,
-  //             timestamp: data.timestamp,
-  //             nonceStr: data.nonceStr,
-  //             signature: data.signature,
-  //             jsApiList: _this.apilist
-  //           });
-  //         wx.error(function(res) {
-  //           console.log('微信：', JSON.stringify(res));
-  //         });
-  //         wx.ready(function() {
-  //           wx.onMenuShareAppMessage(_this.WXSHDATA);
-  //           wx.onMenuShareTimeline(_this.WXSHDATA); //朋友圈
-  //         });
-  //     })
-  // }
+  }
 }
 </script>
 

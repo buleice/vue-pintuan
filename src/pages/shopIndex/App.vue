@@ -5,6 +5,7 @@
      </keep-alive>
      <ShopNavBar/>
      <ScrollToTop/>
+     <WxShare/>
   </div>
 </template>
 

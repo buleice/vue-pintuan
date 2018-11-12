@@ -34,8 +34,7 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
-  <script type="text/javascript" src="/js/wx-sdk-1.2.0.js"></script>
-<script src="//apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script type="text/javascript" src="//res2.wx.qq.com/open/js/jweixin-1.4.0.js "></script>
   <script type="text/javascript">
   (function(){
        var randomh=Math.random();
@@ -48,54 +47,4 @@
        }
    })();
   </script>
-  <script type="text/javascript">
-  function WXshare() {
-    var WXSHDATA = {
-      title: '<?=$count?>位朋友正在小伴龙优学参与拼课，快为宝宝报名有趣的课程吧！',
-      link: 'https://wxyx.youban.com/shop/index',
-      imgUrl: 'https://udata.youban.com/webimg/wxyx/puintuan/shop-icon.png',
-      type: "link",
-      dataUrl: "",
-      desc: '这里的课程生动有趣，快来小伴龙优学陪伴孩子快乐成长吧！',
-      success: function() {
-        $.get('/common/record.json?wxschool=detail', {}, function(data) {});
-      },
-      cancel: function() {}
-    };
-    $.post('/weixin/config', {
-      url: location.href.split('#')[0],
-    }, function(data) {
-      console.log(data)
-      data = JSON.parse(data);
-      var apilist = [
-        'onMenuShareTimeline',
-        'onMenuShareQQ',
-        'onMenuShareAppMessage'
-      ];
-      wx.config({
-        debug: false,
-        appId: data.appId,
-        timestamp: data.timestamp,
-        nonceStr: data.nonceStr,
-        signature: data.signature,
-        jsApiList: [
-         'onMenuShareTimeline',
-         'onMenuShareQQ',
-         'onMenuShareAppMessage'
-       ]
-      });
-      wx.error(function(res) {
-        console.log('微信：', JSON.stringify(res));
-      });
-      wx.ready(function() {
-        wx.onMenuShareAppMessage(WXSHDATA);
-        wx.onMenuShareTimeline(WXSHDATA); //朋友圈
-      });
-    });
-  }
-    $(function(){
-      WXshare()
-    })
-  </script>
-
 </html>
