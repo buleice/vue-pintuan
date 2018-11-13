@@ -42,9 +42,9 @@ export default {
   },
   created() {
     new Request('/shop/index.json','POST').returnJson().then(res=>{
+      this.lessonList=res.list;
       localStorage.count = res.count;
       this.allList=res.list;
-      this.lessonList=res.list;
       this.category= res.category;
       this.series=res.seriesList;
       this.isNew=res.isNew;
@@ -57,8 +57,8 @@ export default {
   _fetchData(category){
       this.fetchCategory=false;
       new Request('/shop/category.json','GET',{"category":category}).returnJson().then(res=>{
-      this.fetchCategory=true;
       this.lessonList=res.list;
+      this.fetchCategory=true;
     })
   }
 },

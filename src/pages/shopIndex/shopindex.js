@@ -3,12 +3,6 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import VueLazyLoad from 'vue-lazyload'
-Vue.use(VueLazyLoad,{
-    preLoad: 1.3,
-    error:'//udata.youban.com/webimg/wxyx/puintuan/default_img.jpg',
-    loading:'//udata.youban.com/webimg/wxyx/puintuan/default_img.jpg',
-})
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

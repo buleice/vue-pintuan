@@ -4,7 +4,7 @@
 				<li v-for="item in lessonList">
 							<div class="tuanimg">
 								<a :href="'/purchase/index?id='+item._id+'&isNew='+isNew" target="_blank">
-									<img class="" v-lazy="item['Fbanner'][0]" :key="item['Fbanner'][0]">
+									<img class="" ref="lazy" :data-src="item['Fbanner'][0]" :key="item['Fbanner'][0]" src="//udata.youban.com/webimg/wxyx/puintuan/default_img.jpg">
 									<img class="tuan-label" :src="renderLabel(item['Ftag'])" alt="">
                 </a>
 								<div class="people">已有
@@ -30,11 +30,23 @@
 </template>
 
 <script>
+import {LazyImage} from '../../common/js/lazy'
 export default {
   props:{
     lessonList:{},
     isNew:0
   },
+  data(){
+    return{
+      observer:''
+    }
+  },
+  mounted(){
+    this.$nextTick(async function(){
+      this.observer=new LazyImage(this.$refs.lazy)
+    })
+  },
+
   methods:{
     renderLabel:function(Ftag){
       switch(Ftag){
@@ -54,8 +66,16 @@ export default {
       return str.split('/');
     }
   },
-  computed:{
 
+  watch:{
+   lessonList:{ //深度监听，可监听到对象、数组的变化
+      handler (newV, oldV) {
+        this.$nextTick(function(){
+          this.observer=new LazyImage(this.$refs.lazy)
+        })
+      },
+      deep:true
+     }
   }
 }
 </script>
