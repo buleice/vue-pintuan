@@ -4,7 +4,7 @@
 				<li v-for="item in lessonList">
 							<div class="tuanimg">
 								<a :href="'/purchase/index?id='+item._id+'&isNew='+isNew" target="_blank">
-									<img class="" ref="lazy" :data-src="item['Fbanner'][0]" :key="item['Fbanner'][0]" src="//udata.youban.com/webimg/wxyx/puintuan/default_img.jpg">
+									<img class="" ref="lazy" v-view="item['Fbanner'][0]" :key="item['Fbanner'][0]" >
 									<img class="tuan-label" :src="renderLabel(item['Ftag'])" alt="">
                 </a>
 								<div class="people">已有
@@ -42,9 +42,9 @@ export default {
     }
   },
   mounted(){
-    this.$nextTick(async function(){
-      this.observer=new LazyImage(this.$refs.lazy)
-    })
+    // this.$nextTick(function(){
+    //   this.observer=new LazyImage(this.$refs.lazy)
+    // })
   },
 
   methods:{
@@ -68,14 +68,14 @@ export default {
   },
 
   watch:{
-   lessonList:{ //深度监听，可监听到对象、数组的变化
-      handler (newV, oldV) {
-        this.$nextTick(function(){
-          this.observer=new LazyImage(this.$refs.lazy)
-        })
-      },
-      deep:true
-     }
+  //  lessonList:{ //深度监听，可监听到对象、数组的变化
+  //     handler (newV, oldV) {
+  //       this.$nextTick(function(){
+  //         this.observer=new LazyImage(this.$refs.lazy)
+  //       })
+  //     },
+  //     deep:true
+  //    }
   }
 }
 </script>
@@ -103,6 +103,6 @@ export default {
 	.courcard span{display: inline-block;
 		 position:absolute;bottom:.625rem;right:15px;width: 5.25rem;padding:.3rem 0 .4rem; text-align: center;background:#f69f00;border-radius:1rem;color:#fff;font-size: 1rem}
 	.myGroup{display:block;height:auto;padding:0 .625rem;margin:.88rem auto;position:relative}
-	.myGroup .a_box,img{display:block;width: 100%;height:100%;position:relative;color: rgba(0,0,0.5);color: #3c3c3c;border-radius: .625rem .625rem 0 0;}
+	.myGroup .a_box,img{display:block;width: 22.19rem;height:11.88rem;position:relative;color: rgba(0,0,0.5);color: #3c3c3c;border-radius: .625rem .625rem 0 0;}
 	.groupInfo{width: 100%;height:3.44rem;line-height: 3.44rem;color: #fff;padding: 0 .38rem 0 0;-webkit-box-sizing: border-box;box-sizing: border-box;border-radius:0 0 .625rem .625rem;position: absolute;left: 0;bottom: 0;background-color: rgba(6, 6, 6,.4)}
 </style>

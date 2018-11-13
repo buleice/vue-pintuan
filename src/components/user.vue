@@ -13,7 +13,7 @@
 
   <div class="myGroup" v-if="uncompletedGroups"  v-for="item in uncompletedGroups">
   <a :href="'/purchase/detail?buyingid='+item.Fbuyingid+'&groupid='+item.Fgroupid+'&from=from'" class="a_box">
-        <img :data-src="item['Fbanner'][0]" ref="lazy" alt="" src="//udata.youban.com/webimg/wxyx/puintuan/default_img.jpg">
+        <img v-view="item['Fbanner'][0]" ref="lazy" alt="">
       <div class="groupInfo">
         <div class="groupInfo__avatarbox">
           <i v-for="(ava,index) in item['userList']" class="avatar" :style="computedAvatarStyle(index,ava,item.Fmode)"></i>
@@ -33,7 +33,7 @@
 <div class="noempty" v-if="myLesson.length==0&&uncompletedGroups.length==0"><img src="https://udata.youban.com/webimg/other/quesheng.png"/></div>
   <div class="myGroup" v-for="item in myLesson">
     <a :href="item['url']" class="a_box" target="_blank">
-			<img :data-src="item['banner']" ref="lazy"  alt="" src="//udata.youban.com/webimg/wxyx/puintuan/default_img.jpg">
+			<img v-view="item['banner']" ref="lazy"  alt="" >
 			<div class="groupInfo" :style="{background:item['total']!=0?'rgba(6,6,6,.4)':'rgba(6,6,6,0)'}">
 				<div class="groupInfo__avatarbox" style="margin-left:0.63rem">
           <div v-if="item['total']!=0">
@@ -95,13 +95,13 @@ export default {
       return Rhtml
     }
   },
-  watch:{
-      myLesson(){
-        this.$nextTick(function(){
-          this.observer=new LazyImage(this.$refs.lazy)
-        })
-      }
-  }
+  // watch:{
+  //     myLesson(){
+  //       this.$nextTick(function(){
+  //         this.observer=new LazyImage(this.$refs.lazy)
+  //       })
+  //     }
+  // }
 }
 </script>
 
@@ -131,7 +131,7 @@ export default {
  .noempty img{width:40%;height:auto;overflow:hidden;display:block;margin:10px auto 0}
  	.myGroup{display:block;height:auto;padding:0 .625rem;margin:.88rem auto;position:relative}
  	.learning_progress{position: absolute;top: 10px;left: 0.625rem;min-width: 3.25rem;padding: .5rem;border-radius: 0 .88rem 0.88rem 0;background: #fff;text-align: center;color: #3c3c3c}
- 	.myGroup .a_box,.myGroup .a_box img{display:block;width: 22.19rem;height:10.63rem;position:relative;color: rgba(0,0,0.5);color: #3c3c3c;border-radius: .625rem;}
+ 	.myGroup .a_box,.myGroup .a_box img{display:block;width: 22.19rem;height:10.63rem;position:relative;background: rgba(0,0,0,.1);color: #3c3c3c;border-radius: .625rem;}
  	.groupInfo{width: 100%;height:3.44rem;line-height: 3.44rem;color: #fff;padding: 0 .38rem 0 0;-webkit-box-sizing: border-box;box-sizing: border-box;border-radius:0 0 .625rem .625rem;position: absolute;left: 0;bottom: 0;background-color: rgba(6, 6, 6,.4)}
    .groupInfo__avatarbox{width: auto;padding: 0 .61rem 0 0;-webkit-box-sizing: border-box;box-sizing: border-box;height: 100%;overflow: hidden;float: left;display: inline-block;vertical-align: middle;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align: center;-ms-flex-align: center;align-items: center;position: relative;font-size: 1rem;}
  	.groupInfo__avatarbox >>> .avatar{display: inline-block;position: relative;width: 2.5rem;height: 2.5rem;margin-left: .31rem;float: left;border: 2px solid #fff;border-radius: 50%;background-image: url('https://avatar.youban.com/weixin/20180918/5ba0a2716fcf812493');background-repeat: no-repeat;background-size: 100% 100%;}

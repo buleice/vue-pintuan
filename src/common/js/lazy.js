@@ -6,6 +6,9 @@ class LazyImage{
     }
 
     inViewShow() {
+      if(!this.lazyImages){
+        return
+      }
       // 不支持IntersectionObserver api的情况下判断图片是否出现在可视区域内
       let len = this.lazyImages.length
       for(let i = 0; i < len; i++) {
@@ -62,6 +65,9 @@ class LazyImage{
             }
           })
         })
+        if(!this.lazyImages){
+          return
+        }
         this.lazyImages.forEach(function(lazyImage) {
           lazyImageObserver.observe(lazyImage);
         })

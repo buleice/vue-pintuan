@@ -5,7 +5,7 @@
   "author": "blueice",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --host 0.0.0.0",
     "start": "npm run dev",
     "build": "node build/build.js"
   },
@@ -22,6 +22,7 @@
     "vue": "^2.5.2",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.1",
+    "vue-viewload": "^1.0.15",
     "vuex": "^3.0.1",
     "vux": "^2.9.2",
     "vux-loader": "^1.2.9",
