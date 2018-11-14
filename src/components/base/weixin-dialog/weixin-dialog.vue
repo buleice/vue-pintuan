@@ -1,0 +1,199 @@
+<template lang="html">
+<div class="dialogs">
+  <div class="prompt-dialog" v-if="showPromptDialog">
+            <div class="weui-mask"></div>
+            <div class="weui-dialog">
+                <div class="weui-dialog__hd"><strong class="weui-dialog__title">{{promptTitle}}</strong></div>
+                <div class="weui-dialog__bd">{{promptDesc}}</div>
+                <div class="weui-dialog__ft">
+                    <a  class="weui-dialog__btn weui-dialog__btn_default" @click="$emit('PCancle')">{{cancleText}}</a>
+                    <a  class="weui-dialog__btn weui-dialog__btn_primary" @click="emitPOk">{{okText}}</a>
+                </div>
+            </div>
+  </div>
+  <div class="alert_dialog" v-if="showtAlertDialog">
+        <div class="weui-mask"></div>
+        <div class="weui-dialog">
+            <div class="weui-dialog__bd">{{alertDesc}}</div>
+            <div class="weui-dialog__ft">
+                <a @click="emitAOk" class="weui-dialog__btn weui-dialog__btn_primary" >知道了</a>
+            </div>
+        </div>
+    </div>
+</div>
+</template>
+
+<script>
+export default {
+  name: 'Dialog',
+  props: {
+    showPromptDialog: {
+      type: Boolean,
+      default: false
+    },
+    showtAlertDialog: {
+      type: Boolean,
+      default: false
+    },
+    alertTitle: {
+      type: String,
+      default: '温馨提示'
+    },
+    alertDesc: '',
+    promptTitle: {
+      type: String,
+      default: '温馨提示'
+    },
+    promptDesc: '',
+    cancleText: {
+      type: String,
+      default: '取消'
+    },
+    okText: {
+      type: String,
+      default: '确定'
+    },
+  },
+  methods:{
+    emitPCancel(){
+      this.$emit('PCancle')
+    },
+    emitPOk(){
+      this.$emit('POk')
+    },
+    emitAOk(){
+      this.$emit('AOk')
+    }
+  }
+
+}
+</script>
+
+<style lang="scss" scoped>
+.prompt-dialog {
+    .weui-mask {
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+    }
+    .weui-dialog {
+        position: fixed;
+        z-index: 5000;
+        width: 80%;
+        max-width: 300px;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        background-color: #FFFFFF;
+        text-align: center;
+        border-radius: 3px;
+        overflow: hidden;
+        .weui-dialog__hd {
+            padding: 1.3em 1.6em 0.5em;
+            .weui-dialog__title {
+                font-weight: 400;
+                font-size: 18px;
+            }
+        }
+        .weui-dialog__bd {
+            padding: 0 1.6em 0.8em;
+            min-height: 40px;
+            font-size: 15px;
+            line-height: 1.3;
+            word-wrap: break-word;
+            word-break: break-all;
+            color: #808080;
+        }
+        .weui-dialog__ft {
+            position: relative;
+            line-height: 48px;
+            font-size: 18px;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            .weui-dialog__btn {
+                display: block;
+                -webkit-box-flex: 1;
+                -webkit-flex: 1;
+                flex: 1;
+                color: #09BB07;
+                text-decoration: none;
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+                position: relative;
+            }
+            .weui-dialog__btn_default {
+                color: #353535;
+            }
+            .weui-dialog__btn_primary {
+                color: #09BB07;
+            }
+        }
+    }
+}
+.alert_dialog {
+    .weui-mask {
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+    }
+    .weui-dialog {
+        position: fixed;
+        z-index: 5000;
+        width: 80%;
+        max-width: 300px;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        background-color: #FFFFFF;
+        text-align: center;
+        border-radius: 3px;
+        overflow: hidden;
+    }
+    .weui-dialog__bd:first-child {
+        padding: 2.7em 20px 1.7em;
+        color: #353535;
+    }
+
+    .weui-dialog__bd {
+        padding: 0 1.6em 0.8em;
+        min-height: 40px;
+        font-size: 15px;
+        line-height: 1.3;
+        word-wrap: break-word;
+        word-break: break-all;
+        color: #808080;
+    }
+    .weui-dialog__ft {
+        position: relative;
+        line-height: 48px;
+        font-size: 18px;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        .weui-dialog__btn_primary {
+            color: #09BB07;
+        }
+
+        .weui-dialog__btn {
+            display: block;
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+            color: #09BB07;
+            text-decoration: none;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            position: relative;
+        }
+    }
+}
+</style>

@@ -140,7 +140,7 @@ export default {
       this.$refs.slideGroup.style.width = width + 'px'
     },
     _initSlide() {
-      console.log(this.threshold)
+      console.log(this.$refs.slide)
       this.slide = new BScroll(this.$refs.slide, {
         scrollX: true,
         scrollY: false,

@@ -77,9 +77,8 @@
 </template>
 
 <script>
-import {Request} from '../api/request'
-import wx from 'weixin-js-sdk';
-import WxShare from './base/wxshare.vue'
+import {Request} from '../../api/request'
+import WxShare from '../base/wxshare.vue'
 export default {
   name:"Festival",
   components:{
