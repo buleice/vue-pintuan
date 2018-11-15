@@ -11,7 +11,7 @@
                 </div>
             </div>
   </div>
-  <div class="alert_dialog" v-if="showtAlertDialog">
+  <div class="alert_dialog" v-if="showAlertDialog">
         <div class="weui-mask"></div>
         <div class="weui-dialog">
             <div class="weui-dialog__bd">{{alertDesc}}</div>
@@ -31,7 +31,7 @@ export default {
       type: Boolean,
       default: false
     },
-    showtAlertDialog: {
+    showAlertDialog: {
       type: Boolean,
       default: false
     },

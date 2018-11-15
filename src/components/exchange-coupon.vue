@@ -1,5 +1,8 @@
 <template lang="html">
 <div class="use-coupon">
+  <div class="exchange-info">
+    您可以使用优惠券兑换以下课程
+  </div>
   <div class="myGroup" v-for="item in exchangeList">
     <a class="a_box" @click="exchangeCourse(item.id)">
       <img class="a_box_img" :alt="item.title" :src="item['banner'][0]">
@@ -18,14 +21,17 @@
     @AOk="delAOk"
     @PCancle="delPCancle"
     :showPromptDialog="showPromptDialog"
+    :showAlertDialog="showAlertDialog"
     :promptDesc="promptDesc"
     :pcancleText="pcancleText"
     :alertDesc="alertDesc"
+    :alertTitle="alertTitle"
     />
 </div>
 </template>
 
 <script>
+import {axiosPost} from '../api/axios-data'
 import Dialog from './base/weixin-dialog/weixin-dialog.vue'
 export default {
   name: 'UseCoupon',
@@ -35,13 +41,14 @@ export default {
   data() {
     return {
       showPromptDialog:false,
-      showtAlertDialog:false,
+      showAlertDialog:false,
       promptTitle:'',
       promptDesc:'您可以使用优惠券免费兑换该课程，是否兑换？',
       pcancleText:'',
       okText:'',
-      alertTitle:'您已成功兑换该课程，可以上课喽哦！',
-      alertDesc:'',
+      alertTitle:'温馨提示',
+      alertDesc:'您已成功兑换该课程，可以上课喽哦！',
+      goodsId:'',
       exchangeList: [{
           "banner": [
             "http://cliveimages.youban.com/20181108/6394192300Fj2daclE-I9EHfFIMufA3AWwmgTO.jpg",
@@ -65,6 +72,7 @@ export default {
   methods:{
     delPOk(){
       this.showPromptDialog=false;
+      this._postGoodId()
     },
     delPCancle(){
       this.showPromptDialog=false;
@@ -72,10 +80,20 @@ export default {
     delAOk(){
       this.showAlertDialog=false;
     },
-    exchangeCourse(){
+    exchangeCourse(goodsId){
       this.showPromptDialog=true;
+      this.goodsId=goodsId;
+    },
+    _postGoodId(){
+      axiosPost('/voucher/use.json',{id:this.goodsId}).then(res=>{
+        if(res.data.rc==0){
+          this.showAlertDialog=true;
+        }else{
+          this.showAlertDialog=true;
+          this.alertDesc="对不起，兑换失败，请联系客服处理！"
+        }
+      })
     }
-
   }
 }
 </script>
@@ -87,6 +105,11 @@ export default {
     background: #de2679;
     padding-bottom: 100%;
     padding-top: .75rem;
+    .exchange-info{
+      padding: 10px 0;
+      color: #fff;
+      font-size: 18px;
+    }
     .myGroup {
         display: block;
         height: auto;

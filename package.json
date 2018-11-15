@@ -10,6 +10,8 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.8",
+    "@fortawesome/vue-fontawesome": "^0.1.2",
     "axios": "^0.18.0",
     "babel-plugin-import": "^1.10.0",
     "better-scroll": "^1.13.2",

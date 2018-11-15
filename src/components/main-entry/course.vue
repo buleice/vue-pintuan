@@ -1,5 +1,17 @@
 <template lang="html">
 <div class="">
+  <div class="miniProgram" v-if="showMiniQrcode">
+      <img class="qrcode" src="//udata.youban.com/webimg/wxyx/puintuan/miniQrcode(1)@3x.png" alt="">
+      <div class="mini-text">
+        <p>您报名的课程也可在小程序进行打卡学习</p>
+        <div class="info">
+          —长按识别二维码 —
+        </div>
+      </div>
+      <div class="closeMini" @click="showMiniQrcode=false">
+        &times;
+      </div>
+  </div>
   <div class="myGroup" v-if="uncompletedGroups"  v-for="item in uncompletedGroups">
   <a :href="'/purchase/detail?buyingid='+item.Fbuyingid+'&groupid='+item.Fgroupid+'&from=from'" class="a_box">
         <img v-view="item['Fbanner'][0]" ref="lazy" alt="" class="course-img">
@@ -51,10 +63,11 @@ export default {
       myLesson: {},
       uncompletedGroups: [],
       observer: '',
+      showMiniQrcode:true,
     }
   },
   created() {
-    new Request("/shop/mine.json", "POST").returnJson().then(res => {
+    new Request("/shop/mycourse.json", "POST").returnJson().then(res => {
       this.userInfo = {
         nick: res.nick,
         wid: res.wid,
@@ -100,6 +113,32 @@ export default {
 
 
 <style media="screen" lang="scss" scoped>
+.miniProgram{
+  width: 100%;
+  height: 8.75rem;
+  background: #fffbcb;
+  position: relative;
+  box-sizing: border-box;
+  padding-top: 1rem;
+  .qrcode{
+    width: 6.88rem;
+    height: 6.88rem;
+    border-radius: 10px;
+    vertical-align: middle;
+  }
+  .mini-text{
+    display: inline-block;
+    width: 9.38rem;
+    height: 4.69rem;
+    margin-left: 2.25rem;
+    vertical-align: middle;
+    .info{
+      margin-top: 1rem;
+      color: #b8b594;
+    }
+  }
+  .closeMini{position: absolute;right: 0;top: 0;width: 2.5rem;height: 1.75rem;line-height: 1.75rem;border-radius: .88rem 0 0 .88rem;text-align: center;font-size: 2.25rem;background: #f69f00;color: #fff;}
+}
 .id-card {
     background: url("//udata.youban.com/webimg/wxyx/puintuan/common/shopIndex/userbg.png");
     background-repeat: no-repeat;
