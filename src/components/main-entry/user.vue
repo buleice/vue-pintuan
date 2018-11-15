@@ -35,7 +35,7 @@
     <a :href="item['url']" class="a_box" target="_blank">
 			<img v-view="item['banner']" ref="lazy"  alt=""  class="course-img">
 			<div class="groupInfo" :style="{background:item['total']!=0?'rgba(6,6,6,.4)':'rgba(6,6,6,0)'}">
-				<div class="groupInfo__avatarbox" style="margin-left:0.63rem">
+				<div class="groupInfo__avatarbox">
           <div v-if="item['total']!=0">
              进度&nbsp;：<progress v-if="item['total']!=0" class="mypro" :value="setProgressValue(item['learned'],item['total'])" max="100"></progress><span>{{item['learned']}}/{{item['total']}}</span>
           </div>
@@ -50,10 +50,10 @@
 <script>
 import {
   LazyImage
-} from '../common/js/lazy'
+} from '../../common/js/lazy'
 import {
   Request
-} from '../api/request'
+} from '../../api/request'
 export default {
   name: 'usercenter',
   data() {
@@ -84,17 +84,17 @@ export default {
     },
     computedAvatarStyle(index, ava, Fmode) {
       if (index == 0) {
-        return 'background-image:url(' + ava['headimg'] + ');z-index:' + parseInt(10 - index);
+        return 'background-image:url(' + ava['headimg'] + ');z-index:' + parseInt(10 - index)+'display:inline-block;position:relative;width:2.5rem;height:2.5rem;margin-left:.31rem;float:left;border:2px solid #fff;border-radius:50%;background-repeat:no-repeat;background-size:100% 100%';
       } else {
         let marginLeft = 0.31 - (Fmode - 3) * 8 / 16;
-        return 'background-image:url(' + ava['headimg'] + ');margin-left:' + marginLeft + 'rem;z-index:' + parseInt(10 - index);
+        return 'background-image:url(' + ava['headimg'] + ');margin-left:' + marginLeft + 'rem;z-index:' + parseInt(10 - index)+'display:inline-block;position:relative;width:2.5rem;height:2.5rem;float:left;border:2px solid #fff;border-radius:50%;background-repeat:no-repeat;background-size:100% 100%';
       }
     },
     addvatar(count, mode) {
       let Rhtml = '';
       for (let i = 0; i < (mode - count); i++) {
-        let style = 'background-image:url(//udata.youban.com/webimg/wxyx/puintuan/common/shopIndex/what@2x.png);margin-left:' + (0.31 - (mode - 3) * 8 / 16) + 'rem;z-index:' + (8 - i);
-        Rhtml += '<i class="avatar" style="' + style + '"></i>';
+        let style = 'background-image:url(//udata.youban.com/webimg/wxyx/puintuan/common/shopIndex/what@2x.png);margin-left:' + (0.31 - (mode - 3) * 8 / 16) + 'rem;z-index:' + (8 - i)+'display:inline-block;position:relative;width:2.5rem;height:2.5rem;float:left;border:2px solid #fff;border-radius:50%;background-repeat:no-repeat;background-size:100% 100%';
+        Rhtml += '<i style="' + style + '"></i>';
       }
       return Rhtml
     }
@@ -109,13 +109,8 @@ export default {
 }
 </script>
 
+
 <style media="screen" lang="scss" scoped>
-::-webkit-progress-bar {
-    background: transparent;
-}
-::-webkit-progress-value {
-    background: #eb6100;
-}
 .id-card {
     background: url("//udata.youban.com/webimg/wxyx/puintuan/common/shopIndex/userbg.png");
     background-repeat: no-repeat;
@@ -212,19 +207,7 @@ export default {
                 align-items: center;
                 position: relative;
                 font-size: 1rem;
-                .avatar {
-                    display: inline-block;
-                    position: relative;
-                    width: 2.5rem;
-                    height: 2.5rem;
-                    margin-left: 0.31rem;
-                    float: left;
-                    border: 2px solid #fff;
-                    border-radius: 50%;
-                    background-image: url("https://avatar.youban.com/weixin/20180918/5ba0a2716fcf812493");
-                    background-repeat: no-repeat;
-                    background-size: 100% 100%;
-                }
+                margin-left:0.63rem;
                 .mypro {
                     background: rgba(6, 6, 6,.4);
                     border: 2px solid #fff;
@@ -314,4 +297,25 @@ export default {
         margin: 10px auto 0;
     }
 }
+</style>
+<style media="screen" lang="css">
+::-webkit-progress-bar {
+    background: transparent;
+}
+::-webkit-progress-value {
+    background: #eb6100;
+}
+/* .groupInfo__avatarbox >>> .avatar {
+    display: inline-block;
+    position: relative;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-left: 0.31rem;
+    float: left;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background-image: url("https://avatar.youban.com/weixin/20180918/5ba0a2716fcf812493");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+} */
 </style>

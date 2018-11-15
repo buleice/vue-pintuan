@@ -1,7 +1,9 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Shop from '../../../components/shop.vue';
-import Mine from '../../../components/user.vue';
+import Shop from '../../../components/main-entry/shop.vue';
+import Mine from '../../../components/main-entry/user.vue';
+import Bonus from '../../../components/main-entry/bonus.vue';
+import Course from '../../../components/main-entry/course.vue'
 
 Vue.use(Router);
 
@@ -17,6 +19,16 @@ export default new Router({
       path: '/mine',
       name: 'mine',
       component: Mine
+    },
+    {
+      path:'/course',
+      name:'Course',
+      component: Course
+    },
+    {
+      path:'/bonus',
+      name:'Bonus',
+      component:Bonus
     }
   ]
 });

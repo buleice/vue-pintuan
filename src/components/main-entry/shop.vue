@@ -14,12 +14,12 @@
 </template>
 
 <script>
-import Carousel from './base/slider/slider.vue'
-import SeriesBox from './base/series-box.vue'
-import {Request} from '../api/request'
-import NaveBar from './base/navbar'
-import LessonList from './base/lesson-list'
-import LoadingDiv from './base/loading.vue'
+import Carousel from '../base/slider/slider.vue'
+import SeriesBox from '../base/series-box.vue'
+import {Request} from '../../api/request'
+import NaveBar from '../base/navbar'
+import LessonList from '../base/lesson-list'
+import LoadingDiv from '../base/loading.vue'
 export default {
   name: 'Shop',
   components: {
