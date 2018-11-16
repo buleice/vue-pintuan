@@ -6,7 +6,7 @@ Vue.use(Router);
 
 export default new Router({
   routes: [
-    { path: '/', redirect: '/usecoupon' },
+    { path: '/', redirect: '/usercoupon' },
     {
       path: '/usercoupon',
       name: 'UserCoupon',

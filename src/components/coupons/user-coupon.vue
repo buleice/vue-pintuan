@@ -1,8 +1,8 @@
 <template lang="html">
   <div class="">
-    <div v-if="coupons.length>0">
-      <img src="//udata.youban.com/webimg/wxyx/puintuan/double11_gift_noget.png" alt="">
-      <p style="font-size:2rem;">当前没有优惠券~~</p>
+    <div v-if="coupons.length<=0">
+      <img src="//udata.youban.com/webimg/wxyx/puintuan/double11_gift_noget.png" style="margin-top:33%;" alt="">
+      <p style="font-size:1.25rem;">当前没有优惠券~~</p>
     </div>
     <ul class="coupons" v-else >
       <li class="coupon" v-for="coupon in coupons">
@@ -35,13 +35,13 @@ export default {
     }
   },
   created() {
+    console.log("发起请求")
     new Request('/voucher/list.json', "POST").returnJson().then(res => {
       this.coupons = res.list;
     })
   }
 }
 </script>
-
 <style lang="scss" scoped>
 .coupons {
     margin: 1.13rem;

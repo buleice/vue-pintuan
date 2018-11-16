@@ -6,7 +6,6 @@
       <li :class="['tab-all',{navClick:navClick &&  clickIndex==99}]" @click="emitAndsetActive(99)" :key='99'>
         全部
       </li>
-      <li v-if="isNew==1" style="color:red;font-weight:bold"  @click="emitAndsetActive(98)" :key='98'>0.01元</li>
       <li v-for="(nav,index) in category" :class="['tab-all',{navClick:navClick &&  clickIndex==nav.id},{last_nav:index==category.length-1}]" @click="emitAndsetActive(nav.id)" :key='index+1'>
         {{nav.title}}
       </li>

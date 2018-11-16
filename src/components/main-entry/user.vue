@@ -57,18 +57,18 @@ export default {
 .id-card {
   width: 100%;
     height: 8.75rem;
-    background: url(//udata.youban.com/webimg/wxyx/puintuan/bonus-bg.png) no-repeat;
+    background: #fffbcb;
     background-size: 100% 100%;
     position: relative;
     border-bottom: 1px solid rgba(0,0,0,.1);
     .userIcon {
-        width: 16vw;
-        height: 16vw;
+        width: 4.63rem;
+        height: 4.63rem;
         border-radius: 50%;
         border: 3px solid #fff;
         position: absolute;
         left: 20%;
-        top: 19%;
+        top: 2.31rem;
     }
     .bonus_entry {
         width: auto;
@@ -84,17 +84,15 @@ export default {
     .spans {
         display: inline-block;
         position: absolute;
-        top: 27%;
+        font-size: 1rem;
+        max-width: 9rem;
+        top:3.38rem;
         left: 45%;
-        span {
-            font-size: 1rem;
-            max-width: 9rem;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            font-weight: 500;
-            text-align: left;
-        }
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-weight: 500;
+        text-align: left;
     }
 }
 .lists{

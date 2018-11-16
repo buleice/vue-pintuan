@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="cash"><div>
-  <span class="ok-icon"><span class="test2"></span></span>可提现&nbsp;<span>{{bonus/100}}</span>元</div> <a href="/bonus/cash/center">立即提现</a>
+  <img src="//udata.youban.com/webimg/wxyx/puintuan/duigou.png" alt="">可提现&nbsp;<span>{{bonus/100}}</span>元</div> <a href="/bonus/cash/center">立即提现</a>
  </div>
  <div class="share_ad">
    分享课程获取更多奖学金
@@ -25,8 +25,7 @@
       <div class="infos">
         <div class="title" v-text="item.title"></div>
         <div class="subtitle" v-html="item.subtitle"></div>
-        <div class="bonus">预计可得奖学金：
-          <span>{{Number(item.bonus)}}&nbsp
+        <div class="bonus">预计可得奖学金：<span>{{Number(item.bonus)}}&nbsp
             <b>优币</b>
           </span>
         </div>
@@ -89,57 +88,27 @@ export default {
 
 <style media="screen">
 .subtitle p {
+  display: block;
+  height: 1.88rem;
   max-height: 2.19rem;
   overflow-y: hidden;
   text-overflow: ellipsis;
-  display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical
 }
-.ok-icon {
-  display: inline-block;
-  line-height: 1.5625rem;
-  width: 1.5625rem;
-  height: 1.5625rem;
-  border: 1px solid #13d799;
-  border-radius: 50%;
-  margin-right: .625rem
-}
-.test2 {
-  display: inline-block;
-  width: .38rem;
-  height: .1875rem;
-  background: #13d799;
-  line-height: 0;
-  font-size: 0;
-  vertical-align: middle;
-  -webkit-transform: rotate(45deg);
-  position: relative;
-  top: .13rem;
-  left: -.38rem;
-  margin-left: .4375rem
-}
-.test2:after {
-  content: '/';
-  display: block;
-  width: .75rem;
-  height: .1875rem;
-  background: #13d799;
-  -webkit-transform: rotate(-90deg) translateY(-50%) translateX(50%)
-}
+
 .share_ad{background: #f5f5f5;height: 2.5rem;line-height: 2.5rem;font-size: .88rem;border-bottom: 1px solid #f5f5f5;}
 </style>
 <style lang="scss" scoped>
 .myAcount {
     height: 10.31rem;
-    background: url("//udata.youban.com/webimg/wxyx/puintuan/bonus-bg.png") no-repeat;
+    background:#fffbcb;
     background-size: 100% 100%;
     .rule {
         img {
             float: right;
             margin: 0.75rem 15px 0 0;
             width: 4.88rem;
-            height: 0.81rem;
         }
         &::after {
             content: '';
@@ -149,25 +118,27 @@ export default {
     }
     .balance {
         border-top: 1px solid rgba(0,0,0,0);
-        margin-top: 2.38rem;
+        margin-top: 1.53rem;
         span {
-            font-size: 1.88rem;
+            font-size: 2.06rem;
             color: #ff4e09;
             margin-right: 0.19rem;
+           font-weight: 700;
         }
         sub {
             color: #ff4e09;
         }
     }
     .btn {
-        width: 3.88rem;
+        width: 7rem;
         margin: 0.94rem auto 0;
         height: 2.13rem;
+        font-size: 1rem;
         background-color: #ff4e09;
         line-height: 2.13rem;
         text-align: center;
         border-radius: 1.06rem;
-        padding: 0 0.63rem;
+        // padding: 0 0.63rem;
         color: #fff;
     }
 }
@@ -181,8 +152,13 @@ export default {
     font-size: 0.88rem;
     box-sizing: border-box;
     padding: 0 0.31rem;
-    letter-spacing: 1px;
     position: relative;
+    img{
+      width: .94rem;
+      vertical-align: sub;
+      padding-bottom: 1px;
+      padding-right: .31rem;
+    }
     a {
         color: #656565;
         display: block;
@@ -213,8 +189,8 @@ export default {
             &::after {
                 content: "";
                 position: absolute;
-                width: 16px;
-                height: 16px;
+                width: 0.5rem;
+                height: 0.5rem;
                 top: 50%;
                 right: 0.94rem;
                 border-top: 1px solid #656565;
@@ -234,15 +210,16 @@ export default {
                 position: absolute;
                 left: 8.13rem;
                 width: 13rem;
-                height: 7.81rem;
-                padding: 0.63rem 0;
+                height: 8rem;
                 box-sizing: border-box;
                 text-align: left;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
                 .title {
                     font-size: 0.88rem;
                     line-height: 1.56rem;
                     font-weight: bold;
-                    margin-bottom: 0.13rem;
                 }
                 .subtitle {
                     font-size: 0.81rem;
@@ -250,7 +227,6 @@ export default {
                     color: #666;
                     max-height: 2.19rem;
                     overflow-y: hidden;
-                    margin-bottom: 0.63rem;
                 }
                 .bonus {
                     height: 1.88rem;

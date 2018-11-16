@@ -24,6 +24,8 @@ export default {
         this.clickedTab = 0;
       } else if (to.path == "/mine") {
         this.clickedTab = 1;
+      }else if(to.path == "/bonus"){
+        his.clickedTab = 3;
       }
     },
   },
@@ -55,7 +57,10 @@ export default {
       if (this._GetQueryString('source') == "mine") {
         this.$router.push('/mine');
         this.clickedTab = 1;
-      } else {
+      }else if(this._GetQueryString('to') == "bonus"){
+        this.$router.push('/bonus/center');
+        this.clickedTab = 3;
+      }else {
         this.$router.push('/shop');
         this.clickedTab = 0;
       }
