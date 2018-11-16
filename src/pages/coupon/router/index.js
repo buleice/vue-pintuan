@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import UserCoupon from '../../../components/user-coupon.vue'
-import UseCoupon from '../../../components/exchange-coupon.vue'
+import UserCoupon from '../../../components/coupons/user-coupon.vue'
+import UseCoupon from '../../../components/coupons/exchange-coupon.vue'
 Vue.use(Router);
 
 export default new Router({
@@ -13,9 +13,10 @@ export default new Router({
       component:UserCoupon
     },
     {
-      path:'/usecoupon',
+      path:'/usecoupon/:couponId',
       name:'UseCoupon',
-      component:UseCoupon
+      component:UseCoupon,
+      props:true
     }
   ]
 });

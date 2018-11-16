@@ -137,7 +137,7 @@ export default {
       color: #b8b594;
     }
   }
-  .closeMini{position: absolute;right: 0;top: 0;width: 2.5rem;height: 1.75rem;line-height: 1.75rem;border-radius: .88rem 0 0 .88rem;text-align: center;font-size: 2.25rem;background: #f69f00;color: #fff;}
+  .closeMini{position: absolute;right: 0;top: 0.25rem;width: 2.5rem;height: 1.75rem;line-height: 1.75rem;border-radius: .88rem 0 0 .88rem;text-align: center;font-size: 2.25rem;background: #f69f00;color: #fff;}
 }
 .id-card {
     background: url("//udata.youban.com/webimg/wxyx/puintuan/common/shopIndex/userbg.png");

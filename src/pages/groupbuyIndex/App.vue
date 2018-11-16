@@ -7,13 +7,13 @@
 
 <script>
 import NaveBar from '../../components/base/navbar'
-import HelloWorld from '../../components/HelloWorld'
+// import HelloWorld from '../../components/HelloWorld'
 import LessonList from '../../components/base/lesson-list'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
+    // HelloWorld,
     NaveBar,
     LessonList
   }

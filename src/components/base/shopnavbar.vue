@@ -60,7 +60,24 @@ export default {
         this.clickedTab = 0;
       }
     }
-  }
+  },
+  watch: {
+    $route: {
+       handler: function(val, oldVal){
+         if(/mine/.test(val.path)){
+           this.clickedTab = 1;
+         }else if(/course/.test(val.path)){
+           this.clickedTab = 2;
+         }else if(/bonus/.test(val.path)){
+           this.clickedTab = 3;
+         }else{
+           this.clickedTab = 0;
+         }
+       },
+       // 深度观察监听
+       deep: true
+     }
+},
 }
 </script>
 

@@ -1,26 +1,32 @@
 <template lang="html">
-<ul class="coupons">
-  <li class="coupon" v-for="coupon in coupons">
-    <div class="value">
-      <sub>&yen;</sub><span>{{coupon.value}}</span>
+  <div class="">
+    <div v-if="coupons.length>0">
+      <img src="//udata.youban.com/webimg/wxyx/puintuan/double11_gift_noget.png" alt="">
+      <p style="font-size:2rem;">当前没有优惠券~~</p>
     </div>
-    <div class="expiration">
-      <span>有效期：至{{coupon.expiration}}</span>
-    </div>
-    <div class="info">
-      可兑换小伴龙优学{{coupon.value}}元以下的任意课程
-    </div>
-    <a @click="$router.push({path:'/usecoupon'})" class="exchange-btn">
-      去使用
-    </a>
-  </li>
-</ul>
+    <ul class="coupons" v-else >
+      <li class="coupon" v-for="coupon in coupons">
+        <div class="value">
+          <sub>&yen;</sub><span>{{coupon.value}}</span>
+        </div>
+        <div class="expiration">
+          <span>有效期：至{{coupon.expiration}}</span>
+        </div>
+        <div class="info">
+          可兑换小伴龙优学{{coupon.value}}元以下的任意课程
+        </div>
+        <a @click="$router.push({name:'UseCoupon',params:{couponId:coupon.id}})" class="exchange-btn">
+          去使用
+        </a>
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
 import {
   Request
-} from '../api/request'
+} from '../../api/request'
 export default {
   name: 'MyCoupons',
   data() {
@@ -30,7 +36,6 @@ export default {
   },
   created() {
     new Request('/voucher/list.json', "POST").returnJson().then(res => {
-      console.log(res)
       this.coupons = res.list;
     })
   }

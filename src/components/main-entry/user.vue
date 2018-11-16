@@ -9,10 +9,13 @@
   </div>
   <ul class="lists">
     <li >
-        <a href="#"><span class="title">奖学金</span><span class="about"></span></a>
+        <a href="#/bonus/center"><span class="title">奖学金</span><span class="about"></span></a>
     </li>
     <li>
-      <a href="#"><span class="title">我的优惠券</span><span class="about">{{voucherCount}}张优惠券待使用&nbsp;&nbsp;</span></a>
+      <a href="/voucher/list"><span class="title">优惠券</span>
+        <span v-if="voucherCount>0" class="about">{{voucherCount}}张优惠券可用&nbsp;&nbsp;</span>
+        <span v-else class="about">&nbsp;&nbsp;</span>
+      </a>
     </li>
   </ul>
 </div>

@@ -47,8 +47,6 @@
           </li>
         </ul>
       </div>
-
-      <!-- <a v-if="bankCard.bank" class="add_bankcard" href="#/bindcard"></a> -->
       </transition>
       <div class="js_dialog" id="iosDialog2" v-if="isAlert" style="opacity: 1;">
                   <div class="weui-mask" @click="isAlert=false"></div>

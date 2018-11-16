@@ -5,7 +5,7 @@
   </div>
   <div class="myGroup" v-for="item in exchangeList">
     <a class="a_box" @click="exchangeCourse(item.id)">
-      <img class="a_box_img" :alt="item.title" :src="item['banner'][0]">
+      <img class="a_box_img" :alt="item.title" v-view="item['banner'][0]">
       <div class="groupInfo">
         <div class="groupInfo__avatarbox" style="">
           <div>
@@ -31,8 +31,8 @@
 </template>
 
 <script>
-import {axiosPost} from '../api/axios-data'
-import Dialog from './base/weixin-dialog/weixin-dialog.vue'
+import {axiosPost} from '../../api/axios-data'
+import Dialog from '../base/weixin-dialog/weixin-dialog.vue'
 export default {
   name: 'UseCoupon',
   components:{
@@ -49,25 +49,19 @@ export default {
       alertTitle:'温馨提示',
       alertDesc:'您已成功兑换该课程，可以上课喽哦！',
       goodsId:'',
-      exchangeList: [{
-          "banner": [
-            "http://cliveimages.youban.com/20181108/6394192300Fj2daclE-I9EHfFIMufA3AWwmgTO.jpg",
-            "http://cliveimages.youban.com/20181108/5856192303FjsiHY8ZPzkWQz4blFyp3cN2mopu.jpg"
-          ],
-          "title": "小伴龙英语启蒙之常见食物",
-          "price": "12.9",
-          "id": "5be41d00efcba4401a3bcbb3"
-        },
-        {
-          "banner": [
-            "http://cliveimages.youban.com/20181024/5323151353FuXYsna9iN40yVQba8p9_ifamps5.jpg"
-          ],
-          "title": "情商培养课",
-          "price": "12.9",
-          "id": "5bd01bd7efcba424e169fc0f"
-        },
-      ],
+      couponId:'',
+      exchangeList: [],
     }
+  },
+  // beforeRouteUpdate (to, from, next) {
+  //   this.couponId=to.param.couponId;
+  //   console.log(this.couponId)
+  //   next()
+  //  },
+  beforeRouteEnter (to, from, next) {
+    axiosPost('/shop/exchange.json',{id:to.params.couponId}).then(res=>{
+         next(vm => vm.setData(res.data.exchangeList,to.params.couponId))
+    })
   },
   methods:{
     delPOk(){
@@ -85,14 +79,21 @@ export default {
       this.goodsId=goodsId;
     },
     _postGoodId(){
-      axiosPost('/voucher/use.json',{id:this.goodsId}).then(res=>{
+      axiosPost('/voucher/redeem.json',{buyingid:this.goodsId,voucherid:this.couponId}).then(res=>{
         if(res.data.rc==0){
           this.showAlertDialog=true;
         }else{
           this.showAlertDialog=true;
-          this.alertDesc="对不起，兑换失败，请联系客服处理！"
+          this.alertDesc=res.data.msg;
         }
       })
+    },
+    setData (err, post) {
+      if (err) {
+        this.exchangeList = err
+      } else {
+        this.couponId = post
+      }
     }
   }
 }
