@@ -10,8 +10,12 @@
     <div class="btn" @click="$router.push({path:'bill'})">
       查看明细
     </div>
+    <div class="danmaku-box">
+      <DanMaku :lists="barrage"/>
+    </div>
   </div>
-  <div class="cash"><div>
+  <div class="cash" v-if="bonus>0">
+  <div>
   <img src="//udata.youban.com/webimg/wxyx/puintuan/duigou.png" alt="">可提现&nbsp;<span>{{bonus/100}}</span>元</div> <a href="/bonus/cash/center">立即提现</a>
  </div>
  <div class="share_ad">
@@ -61,14 +65,19 @@
 import {
   Request
 } from '../../../api/request';
+import DanMaku from '../danmaku/danmaku'
 export default {
   name: 'BonusIndex',
+  components:{
+    DanMaku
+  },
   data() {
     return {
       canGetCourses: [],
       bonus: 0,
       count: 0,
-      showGuize: false
+      showGuize: false,
+      barrage:[]
     }
   },
   created() {
@@ -76,6 +85,7 @@ export default {
       this.canGetCourses = res.data;
       this.bonus = res.bonus;
       this.count = res.count;
+      this.barrage=res.barrage;
     })
   },
   methods: {
@@ -104,6 +114,7 @@ export default {
     height: 10.31rem;
     background:#fffbcb;
     background-size: 100% 100%;
+    position: relative;
     .rule {
         img {
             float: right;
@@ -140,6 +151,14 @@ export default {
         border-radius: 1.06rem;
         // padding: 0 0.63rem;
         color: #fff;
+    }
+    .danmaku-box{
+      position: absolute;
+      top: 1rem;
+      left: 0rem;
+      z-index: 100;
+      width: 100%;
+      height: 2.5rem;
     }
 }
 .cash {

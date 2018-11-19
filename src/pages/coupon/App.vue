@@ -23,5 +23,5 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-*{list-style-type: none;padding: none;margin: 0};
+*{list-style-type: none;padding:0;margin: 0};
 </style>

@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Shop from '../../../components/main-entry/shop.vue';
-import Mine from '../../../components/main-entry/user.vue';
-import Bonus from '../../../components/main-entry/bonus.vue';
-import Course from '../../../components/main-entry/course.vue';
-import BonusBill from '../../../components/base/bonus-bill/bonus-bill.vue';
-import BonusIndex from '../../../components/base/bonus-index/bonus-index.vue';
+const Shop=()=>import('../../../components/main-entry/shop.vue');
+const Mine=()=>import('../../../components/main-entry/user.vue');
+const Bonus=()=>import('../../../components/main-entry/bonus.vue');
+const Course=()=>import('../../../components/main-entry/course.vue');
+const BonusBill=()=>import('../../../components/base/bonus-bill/bonus-bill.vue');
+const BonusIndex=()=>import('../../../components/base/bonus-index/bonus-index.vue');
 
 Vue.use(Router);
 

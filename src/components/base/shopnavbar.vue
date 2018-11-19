@@ -17,17 +17,7 @@ export default {
   },
   created() {
     this._goPath();
-  },
-  watch: {
-    $route(to, from) {
-      if (to.path == "/shop") {
-        this.clickedTab = 0;
-      } else if (to.path == "/mine") {
-        this.clickedTab = 1;
-      }else if(to.path == "/bonus"){
-        his.clickedTab = 3;
-      }
-    },
+    // window._hmt.push(['_trackEvent', 'shopIndex'])
   },
   methods: {
     routerTo(index) {
@@ -60,6 +50,8 @@ export default {
       }else if(this._GetQueryString('to') == "bonus"){
         this.$router.push('/bonus/center');
         this.clickedTab = 3;
+      }else if(this._GetQueryString('to') == "course"){
+        this.$router.push('/course');
       }else {
         this.$router.push('/shop');
         this.clickedTab = 0;
@@ -97,7 +89,7 @@ export default {
     position: fixed;
     display: block;
     width: 100%;
-    height: 3.13rem;
+    height: 3.44rem;
     bottom: 0;
     background: #fff;
     -webkit-box-shadow: -.125rem 0 0.5rem 0 rgba(0,0,0,.2);
@@ -115,7 +107,7 @@ export default {
         span {
             display: inline-block;
             position: absolute;
-            bottom: 0.25rem;
+            bottom: .38rem;
             left: 50%;
             -webkit-transform: translateX(-50%);
             transform: translateX(-50%);

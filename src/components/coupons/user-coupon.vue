@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="">
+  <div class="coupon-page">
     <div v-if="coupons.length<=0">
       <img src="//udata.youban.com/webimg/wxyx/puintuan/double11_gift_noget.png" style="margin-top:33%;" alt="">
       <p style="font-size:1.25rem;">当前没有优惠券~~</p>
@@ -43,50 +43,53 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.coupons {
-    margin: 1.13rem;
-    .coupon {
-        width: 21.44rem;
-        height: 6.25rem;
-        background: url("//udata.youban.com/webimg/wxyx/puintuan/coupon-bg.png") no-repeat;
-        background-size: 100% 100%;
-        position: relative;
-        margin-bottom: 1.25rem;
-        div {
-            box-sizing: border-box;
-            padding-left: 5.31rem;
-            text-align: left;
-            color: #9e9e9e;
-            font-size: .75rem;
-            &.value {
-                color: #f49500;
-                font-size: 1rem;
-                text-align: left;
-                padding-top: .75rem;
-                span {
-                    font-size: 2rem;
-                    margin-left: 0.19rem;
-                }
-            }
-            &.expiration{
-              margin-top: .25rem;
-            }
-            &.info{
-              margin-top: .25rem;
-            }
-        }
-        .exchange-btn{
-          display: inline-block;
-          color: #f49500;
-          border: 1px solid currentColor;
-          border-radius: 1.75rem;
-          line-height: 1.63rem;
-          padding: 0 .88rem;
-          position: absolute;
-          right: 10px;
-          top: 50%;
-          transform: translateY(-50%);
-        }
-    }
+.coupon-page{
+  .coupons {
+      margin: 0 auto;
+      .coupon {
+          width: 21.44rem;
+          height: 6.25rem;
+          background: url("//udata.youban.com/webimg/wxyx/puintuan/coupon-bg.png") no-repeat;
+          background-size: 100% 100%;
+          position: relative;
+          margin-bottom: 1.25rem;
+          div {
+              box-sizing: border-box;
+              padding-left: 5.31rem;
+              text-align: left;
+              color: #9e9e9e;
+              font-size: .75rem;
+              &.value {
+                  color: #f49500;
+                  font-size: 1rem;
+                  text-align: left;
+                  padding-top: .75rem;
+                  span {
+                      font-size: 2rem;
+                      margin-left: 0.19rem;
+                  }
+              }
+              &.expiration{
+                margin-top: .25rem;
+              }
+              &.info{
+                margin-top: .25rem;
+              }
+          }
+          .exchange-btn{
+            display: inline-block;
+            color: #f49500;
+            border: 1px solid currentColor;
+            border-radius: 1.75rem;
+            line-height: 1.63rem;
+            padding: 0 .88rem;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+          }
+      }
+  }
 }
+
 </style>
