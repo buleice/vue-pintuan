@@ -46,7 +46,7 @@
 // }
 
 
-import {ROOT,DEBUG} from '../config/urlConfig';
+import {ROOT} from '../config/urlConfig';
 import 'whatwg-fetch';
 function addQueryString(params) {
     let paramsData = '';
@@ -60,7 +60,7 @@ class Request{
   constructor(url, method = "GET", data = {}) {
     this.url = ROOT + url+"?",
     this.method = method,
-    this.data = Object.assign({},data,DEBUG)
+    this.data = Object.assign({},data)
   }
   returnJson(){
     return new Promise((resolve,reject)=>{
