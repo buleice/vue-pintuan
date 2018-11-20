@@ -14,7 +14,7 @@
       <DanMaku :lists="barrage"/>
     </div>
   </div>
-  <div class="cash" v-if="bonus>0">
+  <div class="cash">
   <div>
   <img src="//udata.youban.com/webimg/wxyx/puintuan/duigou.png" alt="">可提现&nbsp;<span>{{bonus/100}}</span>元</div> <a href="/bonus/cash/center">立即提现</a>
  </div>

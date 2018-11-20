@@ -26,7 +26,6 @@ export default {
   },
   watch:{
     lists(){
-      console.log("开启循环")
       if (this.lists.length > 0) {
         this.showDanMaku=true;
         let initIndex=0;
