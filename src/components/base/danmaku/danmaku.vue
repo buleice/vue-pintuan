@@ -26,16 +26,17 @@ export default {
   },
   watch:{
     lists(){
+      console.log("开启循环")
       if (this.lists.length > 0) {
         this.showDanMaku=true;
+        let initIndex=0;
         let interval = setInterval(() => {
-          this.danmakuText = this.lists[this.activeNum];
-          if (this.activeNum == this.lists.length-1) {
-            this.activeNum = 0;
-          }else{
-            this.activeNum = this.activeNum++;
+          this.danmakuText = this.lists[initIndex];
+          initIndex++;
+          if (initIndex>=this.lists.length) {
+            initIndex=0;
           }
-        }, 3000)
+        }, 4000)
       }
     }
   }

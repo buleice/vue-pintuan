@@ -2,13 +2,12 @@
   <table v-if="bill.length>0">
     <tr  v-for="item in bill">
       <td align="center" valign="middle">
-        <img :src="item.icon" :alt="item.title">
+        {{item.time}}
       </td>
       <td>
-        <span>《{{item.title}}》</span><br>
-        <span class="date">{{item.time}}</span>
+        <span>{{item.title}}</span><br>
       </td>
-      <td>+{{item.bonus}}</td>
+      <td>{{item.bonus}}</td>
     </tr>
   </table>
   <div v-else>
@@ -43,21 +42,15 @@ table{
     border-bottom: 1px solid rgba(0,0,0,.1);
     td{
       &:first-child{
-        width: 4.88rem;
+        width: 10rem;
         img{
           width: 2.81rem;
           border-radius: 50%;
         }
       }
       &:nth-child(2){
-        width: 13.13rem;
+        width: 7rem;
         font-size: .88rem;
-        text-align: left;
-        .date{
-          color: rgba(0,0,0,.5);
-          font-size: .75rem;
-          margin-left: .38rem;
-        }
       }
       &:last-child{
         font-size: .88rem;

@@ -14,7 +14,7 @@ module.exports = {
     proxyTable:{},
     proxyTable: {
     '/apis':{
-        target:'http://dylan.wxyx.youban.com',
+        target:'http://ben.wxyx.youban.com',
         changeOrigin:true,
         pathRewrite:{
             '^/apis':''

@@ -3,7 +3,7 @@
   <div class="withdraw">
     <h3>提现金额</h3>
     <div class="input_box">
-      <input type="number" v-model="wantCash" :max="cancash" min="0" name="" value="">
+      <input type="number" v-model="wantCash" :max="cancash" min="0" name="" value="" @change="isNumber(wantCash)">
       <div class="withdraw-all" @click="wantCash=cancash">全部提现</div>
     </div>
     <div class="info">
@@ -23,58 +23,75 @@
 </div>
 </template>
 <script>
-import {mapGetters,mapActions} from 'vuex'
-import {Request} from '../../api/request'
+import {
+  mapGetters,
+  mapActions
+} from 'vuex'
+import {
+  Request
+} from '../../api/request'
 export default {
-  name:'withdrawtowallet',
-  data(){
-    return{
-      wantCash:0,
-      isAlert:false,
-      alertContent:''
+  name: 'withdrawtowallet',
+  data() {
+    return {
+      wantCash: 0,
+      isAlert: false,
+      alertContent: ''
     }
   },
-  created(){
-    // this.cancash=this.$route.params.canCash;
-  },
-  methods:{
-    cashMoney(){
-      // new Request("/bonus/cash/out.json","POST",{sum:this.wantCash}).returnJson().then(res=>{
-      //   if(res.rc==0){
-      //     this.$push({path:'/bonusrecord'});
-      //   }
-      // })
-      if(this.wantCash<=this.cancash){
-        if(this.wantCash>=20){
-          this.$http.post("/bonus/cash/out.json",{sum:this.wantCash},{emulateJSON:true}).then(res=>{
+  methods: {
+    cashMoney() {
+      if (typeof this.wantCash === 'number' && !isNaN(this.wantCash)) {
+        if (this.wantCash <= this.cancash) {
+          if (this.wantCash >= 20) {
+            this.$http.post("/bonus/cash/out.json", {
+              sum: this.wantCash
+            }, {
+              emulateJSON: true
+            }).then(res => {
               if (res.body.rc == 0) {
-                this.setCanCash(this.cancash-this.wantCash);
+                this.setCanCash(this.cancash - this.wantCash);
                 this.alertContent = "提现成功，将于12月10日到账,敬请关注！";
                 this.isAlert = true;
-                let _this=this
+                let _this = this
                 setTimeout(function() {
-                   _this.$router.push({path:'/mybonuscandraw'})
+                  _this.$router.push({
+                    path: '/mybonuscandraw'
+                  })
                 }, 500)
-              }else{
+              } else {
                 this.alertContent = "抱歉！提现失败，请联系小伴龙微信公众号客服！";
                 this.isAlert = true;
               }
-          })
-        }else{
-          this.alertContent = "每次至少20元才可提现";
+            })
+          } else {
+            this.alertContent = "每次至少20元才可提现";
+            this.isAlert = true;
+            this.wantCash = this.cancash;
+            return false;
+          }
+        } else {
+          this.alertContent = "账户最多可提取" + this.cancash + "元";
           this.isAlert = true;
-          this.wantCash=this.cancash;
-          return false;
         }
-      }else{
-        this.alertContent = "账户最多可提取"+this.cancash+"元";
+      } else {
+        this.alertContent = "请输入正确的数字";
         this.isAlert = true;
+        this.wantCash = 0;
+      }
+
+    },
+    isNumber(obj) {
+      if(typeof obj === 'number' && !isNaN(obj)){
+        this.alertContent = "请输入正确的数字";
+        this.isAlert = true;
+        this.wantCash = 0;
       }
     },
     ...mapActions(['setCanCash'])
   },
-  computed:{
-      ...mapGetters(["cancash"])
+  computed: {
+    ...mapGetters(["cancash"])
   }
 }
 </script>
