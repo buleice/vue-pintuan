@@ -5,7 +5,7 @@
   </div>
   <div class="myGroup" v-for="item in exchangeList">
     <a class="a_box" :href="'/purchase/index?exchange=1&id='+item.id">
-      <img class="a_box_img" :alt="item.title" v-view="item['banner'][0]">
+      <img class="a_box_img" :alt="item.title" :src="item['banner'][0]">
       <div class="groupInfo">
         <div class="groupInfo__avatarbox" style="">
           <div>

@@ -4,7 +4,7 @@
 				<li v-for="item in lessonList">
 							<div class="tuanimg">
 								<a :href="'/purchase/index?id='+item._id+'&isNew='+isNew" target="_blank">
-									<img class="course-img" ref="lazy" v-view="item['Fbanner'][0]" :key="item['Fbanner'][0]" >
+									<img class="course-img" ref="lazy" :src="item['Fbanner'][0]" :key="item['Fbanner'][0]" >
 									<img class="tuan-label" :src="renderLabel(item['Ftag'])" alt="">
                 </a>
 								<div class="people">已有

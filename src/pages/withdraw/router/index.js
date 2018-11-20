@@ -1,15 +1,11 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import BindCard from '../../../components/base/bindBankCard.vue';
-import ToWallet from '../../../components/base/withdrawtowallet.vue';
-import BonusRecord from '../../../components/base/bonusrecord';
+
 import  MyBonusCanDraw from '../../../components/base/myBonusCanDraw';
-// 
-// const BindCard=()=>import('../../../components/base/bindBankCard.vue');
-// const BindCard=()=>import('../../../components/base/withdrawtowallet.vue')
-// const BindCard=()=>import('')
-// const BindCard=()=>import('')
-// const BindCard=()=>import('')
+
+const BindCard=()=>import('../../../components/base/bindBankCard.vue')
+const  ToWallet=()=>import('../../../components/base/withdrawtowallet.vue')
+const BonusRecord=()=>import('../../../components/base/bonusrecord')
 
 Vue.use(Router);
 

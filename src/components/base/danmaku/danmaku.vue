@@ -1,5 +1,5 @@
 <template lang="html">
-    <ul class="danmaku" v-if="lists.length>0">
+    <ul class="danmaku" v-if="showDanMaku">
         <li class="danmaku_box danmaku_tip">
             <p v-html="danmakuText"></p>
         </li>
@@ -20,21 +20,25 @@ export default {
   data() {
     return{
       activeNum: 0,
-      danmakuText: '',
+      danmakuText: 'JIMI 获得了￥0.3奖学金',
+      showDanMaku:false
     }
   },
-  mounted() {
-    if (this.lists.length > 0) {
-      let interval = setInterval(() => {
-        this.danmakuText = this.lists[this.activeNum];
-        if (this.activeNum == this.lists.length-1) {
-          this.activeNum = 0;
-        }else{
-          this.activeNum = this.activeNum++;
-        }
-      }, 3000)
+  watch:{
+    lists(){
+      if (this.lists.length > 0) {
+        this.showDanMaku=true;
+        let interval = setInterval(() => {
+          this.danmakuText = this.lists[this.activeNum];
+          if (this.activeNum == this.lists.length-1) {
+            this.activeNum = 0;
+          }else{
+            this.activeNum = this.activeNum++;
+          }
+        }, 3000)
+      }
     }
-  },
+  }
 
 }
 </script>

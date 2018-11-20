@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import UserCoupon from '../../../components/coupons/user-coupon.vue'
-import UseCoupon from '../../../components/coupons/exchange-coupon.vue'
+const UserCoupon=()=>import( '../../../components/coupons/user-coupon.vue');
+const UseCoupon=()=>import('../../../components/coupons/exchange-coupon.vue');
 Vue.use(Router);
 
 export default new Router({

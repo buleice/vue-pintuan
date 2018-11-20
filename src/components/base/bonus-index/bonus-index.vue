@@ -39,7 +39,7 @@
 </ul>
 <transition name="fade">
 <div class="rule-pultop" v-if="showGuize">
- <div class="closeBtn" @click="showGuize=false"></div>
+ <div class="closeBtn"@click="showGuize=false"></div>
   <h2>提现规则</h2>
   <ul>
     <li>
@@ -156,8 +156,8 @@ export default {
       position: absolute;
       top: 1rem;
       left: 0rem;
-      z-index: 100;
-      width: 100%;
+      z-index: 5;
+      width: 50%;
       height: 2.5rem;
     }
 }
