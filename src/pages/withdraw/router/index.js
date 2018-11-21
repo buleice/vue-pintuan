@@ -19,10 +19,9 @@ export default new Router({
       props: (route) => ({ query: route.query.q })
     },
     {
-      path: '/towallet/:canCash',
+      path: '/towallet',
       name: 'ToWallet',
       component: ToWallet,
-      props: true
     },
     {
       path:'/bonusrecord',

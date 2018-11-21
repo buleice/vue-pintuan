@@ -6,7 +6,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueResource from 'vue-resource'
-import store from '../../store'
+import store from './store'
 Vue.use(VueResource);
 const bugsnagVue = require('bugsnag-vue')
 bugsnagClient.use(bugsnagVue(Vue))

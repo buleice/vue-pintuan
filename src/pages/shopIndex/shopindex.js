@@ -6,6 +6,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import 'babel-polyfill';
+import store from './store'
 const bugsnagVue = require('bugsnag-vue')
 bugsnagClient.use(bugsnagVue(Vue))
 // bugsnagClient.notify(new Error('Test error'))
@@ -15,6 +16,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   //只有注册 才能够使用模板 app.vue文件
   components: { App }

@@ -86,4 +86,5 @@ a:-webkit-any-link{-webkit-tap-highlight-color:transparent;text-decoration:none;
 }
 .slide-right-leave-to {
   transform: translateX(100%);}
+
 </style>

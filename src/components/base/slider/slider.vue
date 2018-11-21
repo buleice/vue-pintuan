@@ -46,6 +46,10 @@ export default {
     speed: {
       type: Number,
       default: 400
+    },
+    slideDatas:{
+      type:Array,
+      default:[]
     }
   },
   data() {
@@ -140,7 +144,6 @@ export default {
       this.$refs.slideGroup.style.width = width + 'px'
     },
     _initSlide() {
-      console.log(this.$refs.slide)
       this.slide = new BScroll(this.$refs.slide, {
         scrollX: true,
         scrollY: false,
@@ -174,7 +177,10 @@ export default {
       }
     },
     _initDots() {
-      this.dots = new Array(this.children.length)
+      this.dots = this.children.length>=2? new Array(this.children.length):[];
+      if(this.children.length<=2){
+        // this.autoPlay=false;
+      }
     },
     _play() {
       clearTimeout(this.timer)
@@ -194,6 +200,9 @@ export default {
       this.update()
     },
     threshold() {
+      this.update()
+    },
+    slideDatas(){
       this.update()
     }
   }
@@ -243,7 +252,7 @@ export default {
             border-radius: 50%;
             background: white;
             &.active {
-                width: 20px;
+                // width: 20px;
                 border-radius: 5px;
                 background: lightgray;
             }
