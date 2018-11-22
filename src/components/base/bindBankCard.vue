@@ -1,4 +1,5 @@
 <template lang="html">
+
 <div>
   <div class="weui-cells">
     <div class="weui-cell">
@@ -26,34 +27,24 @@
         <label class="weui-label">收款银行卡号</label>
       </div>
       <div class="weui-cell__bd ">
-        <input class="weui-input"  v-model="bankCardInfo.FbankcardNo" type="number" placeholder="" @change="_checkBank">
+        <input class="weui-input"  v-model="bankCardInfo.FbankcardNo" type="number" placeholder="" @focus="BankNameDiable=true" @change="_checkBank">
       </div>
     </div>
   </div>
-  <div class="weui-cell weui-cell_select weui-cell_select-after" style="background:#fff" v-if="!BankNameDiable">
+  <div class="weui-cell weui-cell_select weui-cell_select-after" style="background:#fff" >
       <div class="weui-cell__hd">
           <label for="" class="weui-label">开户银行</label>
       </div>
       <div class="weui-cell__bd">
-          <select class="weui-select" v-model="BankName" name="select2">
+          <select class="weui-select" v-model="SWIFTCode" name="select2" :disabled="BankNameDiable">
               <option disabled value="" selected>请选择</option>
-              <option v-for="item in bankList" :value="item.text">{{item.text}}</option>
+              <option v-for="item in bankList" :value="item.value">{{item.text}}</option>
           </select>
       </div>
   </div>
-  <div class="weui-cells" v-if="BankNameDiable" style="background:#fff">
-    <div class="weui-cell">
-      <div class="weui-cell__hd">
-        <label class="weui-label">开户银行</label>
-      </div>
-      <div class="weui-cell__bd ">
-        <input class="weui-input" v-model="BankName" type="text" placeholder="" disabled>
-      </div>
-    </div>
-  </div>
-  <div class="" style="margin-top:-0.8125rem">
+  <div class="address-box">
     <group>
-      <x-address @on-hide="logHide" @on-show="logShow" :title="title" v-model="value" :list="addressData" @on-shadow-change="onShadowChange" placeholder="请选择地址" :show.sync="showAddress"></x-address>
+      <x-address @on-hide="logHide" @on-show="logShow" :title="title" v-model="Geocode" :list="addressData" @on-shadow-change="onShadowChange" placeholder="请选择地址" :show.sync="showAddress"></x-address>
     </group>
   </div>
   <div class="weui-cells weui-cells_form">
@@ -117,6 +108,7 @@ export default {
     XButton,
     Cell,
   },
+
   data() {
     return {
       bankList: [{
@@ -774,20 +766,19 @@ export default {
       ],
       isAlert: false,
       alertContent: '',
-      cardholder: '',
       IDCardNo: '',
       BankCardNo: '',
-      BankName: '中国工商银行',
+      BankName: '',
       phonenumber: '',
       countdown: 60,
       checkContent: '获取验证码',
       checkCode: '',
       showCheck: false,
       title: '开户行地址',
-      value: [],
-      value2: ['天津市', '市辖区', '和平区'],
+      SWIFTCode: '',
+      Geocode:[],
       addressData: ChinaAddressV4Data,
-      value5: [],
+      bankAddress: [],
       showAddress: false,
       BankNameDiable: true,
       pickStatus: false,
@@ -808,7 +799,9 @@ export default {
       delete temp['_id'];
       this.BankName=temp.Fbank;
       this.bankCardInfo = temp;
-      this.value = [this.cardinfo.FbankProvince, this.cardinfo.FbankCity,this.cardinfo.FbankDistrict]
+      this.value = [this.cardinfo.FbankProvince, this.cardinfo.FbankCity,this.cardinfo.FbankDistrict];
+      this.Geocode=this.cardinfo.FgeoCode;
+      this.SWIFTCode=this.cardinfo.FSWIFTCode;
     }
   },
   methods: {
@@ -821,7 +814,12 @@ export default {
       console.log(e)
     },
     _checkBank() {
-      this._bankCardAttribution(this.bankCardInfo.FbankcardNo) != "error" ? this.BankName = this._bankCardAttribution(this.bankCardInfo.FbankcardNo).bankName : this.BankNameDiable = false;
+      if(this._bankCardAttribution(this.bankCardInfo.FbankcardNo) != "error" ){
+        this.BankName = this._bankCardAttribution(this.bankCardInfo.FbankcardNo).bankName;
+        this.SWIFTCode = this._bankCardAttribution(this.bankCardInfo.FbankcardNo).bankCode;
+      }else{
+        this.BankNameDiable = false;
+      }
     },
     _chechCHNCardId(code) {
       var city = {
@@ -2443,15 +2441,16 @@ export default {
         return false;
       } else {
         this.$http.post("/bonus/cash/bindcard.json", Object.assign({}, this.bankCardInfo, {
-          FbankProvince: this.value5[0],
-          FbankCity: this.value5[1],
-          FbankDistrict: this.value5[2],
+          FbankProvince: this.bankAddress[0],
+          FbankCity: this.bankAddress[1],
+          FbankDistrict: this.bankAddress[2],
           Fbank:this.BankName,
-          code: this.checkCode
+          code: this.checkCode,
+          FSWIFTCode:this.SWIFTCode,
+          FgeoCode:this.Geocode,
         }), {
           emulateJSON: true
         }).then(res => {
-          console.log(res);
           if (res.body.rc == 0) {
             this.setCardInfo({
 
@@ -2468,7 +2467,7 @@ export default {
               })
             }, 500)
           } else {
-            this.alertContent = "保存失败,请检查验证码是否正确";
+            this.alertContent = res.body.msg;
             this.isAlert = true;
           }
         })
@@ -2520,16 +2519,7 @@ export default {
       }, 2000)
     },
     onShadowChange(ids, names) {
-      this.value5 = names;
-    },
-    changeData() {
-      this.value2 = ['430000', '430400', '430407']
-    },
-    changeDataByLabels() {
-      this.value2 = ['广东省', '广州市', '天河区']
-    },
-    changeDataByLabels2() {
-      this.value2 = ['广东省', '中山市', '--']
+      this.bankAddress = names;
     },
     getName(value) {
       return value2name(value, ChinaAddressV4Data)
@@ -2545,7 +2535,7 @@ export default {
   },
   computed: {
     ...mapGetters(['cardinfo'])
-  }
+  },
 }
 </script>
 
@@ -2554,5 +2544,12 @@ export default {
   .weui-cells{margin-top: 0}
   .submit_button{width: 8.75rem;height: 2.5rem;text-align: center;color: #fff;background-color: #ffa922;line-height: 2.5rem;border-radius: 20px;margin: 1.56rem auto 0;font-size: 1rem;}
   .info{width: 17.81rem;margin: auto;color: #a3a3a3;margin-top: 1rem}
-  .checkCode{height: auto;padding: 5px 10px;background: #ffa800;border-radius: 15px;color: #fff;font-size: .75rem;outline: none;border: none;width: 5rem;text-align: center}
+  .checkCode{height: auto;padding: 5px 10px;background: #ffa800;border-radius: 15px;color: #fff;font-size: .75rem;outline: none;border: none;text-align: center}
+  .address-box{
+    width: 100%;
+    height:2.81rem;
+    overflow: hidden;
+    position: relative;
+  }
+  .address-box >>>.vux-no-group-title{position: absolute;bottom: 0;left: 0;width: 100%;height: 100%;margin-top: 0!important}
 </style>

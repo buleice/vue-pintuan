@@ -2,9 +2,9 @@
 <div class="">
   <div class="withdraw">
     <h3>提现金额</h3>
-    <div class="input_box">
+    <div class="input_box" @click="ChangeShowKeyBoard">
       <!-- <input type="number" v-model="wantCash" :max="cancash" pattern="[0-9]*" name="" value="" disabled> -->
-        <div class='input-box' @click="showKeyBoard=true">{{wantCash}}</div>
+        <div class='input-box'>{{wantCash}}</div>
       <div class="withdraw-all" @click="changeWantCash">全部提现</div>
     </div>
     <div class="info">
@@ -107,6 +107,9 @@ export default {
     },
     changeWantCash(){
       this.setWantCash(this.cancash)
+    },
+    ChangeShowKeyBoard(){
+      this.showKeyBoard=true
     },
     ...mapActions(['setCanCash','setWantCash'])
   },
