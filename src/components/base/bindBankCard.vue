@@ -30,17 +30,28 @@
       </div>
     </div>
   </div>
-  <div class="weui-cell weui-cell_select weui-cell_select-after" style="background:#fff">
+  <div class="weui-cell weui-cell_select weui-cell_select-after" style="background:#fff" v-if="!BankNameDiable">
       <div class="weui-cell__hd">
           <label for="" class="weui-label">开户银行</label>
       </div>
       <div class="weui-cell__bd">
-          <select class="weui-select" v-model="BankName" name="select2" :disabled="BankNameDiable">
+          <select class="weui-select" v-model="BankName" name="select2">
+              <option disabled value="" selected>请选择</option>
               <option v-for="item in bankList" :value="item.text">{{item.text}}</option>
           </select>
       </div>
   </div>
-  <div class="" style="margin-top:-1.19rem">
+  <div class="weui-cells" v-if="BankNameDiable" style="background:#fff">
+    <div class="weui-cell">
+      <div class="weui-cell__hd">
+        <label class="weui-label">开户银行</label>
+      </div>
+      <div class="weui-cell__bd ">
+        <input class="weui-input" v-model="BankName" type="text" placeholder="" disabled>
+      </div>
+    </div>
+  </div>
+  <div class="" style="margin-top:-0.8125rem">
     <group>
       <x-address @on-hide="logHide" @on-show="logShow" :title="title" v-model="value" :list="addressData" @on-shadow-change="onShadowChange" placeholder="请选择地址" :show.sync="showAddress"></x-address>
     </group>
@@ -766,7 +777,7 @@ export default {
       cardholder: '',
       IDCardNo: '',
       BankCardNo: '',
-      BankName: '',
+      BankName: '中国工商银行',
       phonenumber: '',
       countdown: 60,
       checkContent: '获取验证码',
@@ -789,14 +800,16 @@ export default {
       if (to.query.action) {
         vm.pickStatus = true
       };
-      vm.value = [vm.cardinfo.FbankProvince, vm.cardinfo.FbankCity, vm.cardinfo.FbankDistrict]
     })
   },
   created() {
-    let temp = this._deepClone(this.cardinfo);
-    delete temp['_id'];
-    this.BankName=temp.Fbank;
-    this.bankCardInfo = temp;
+    if(JSON.stringify(this.cardinfo)!=='{}'){
+      let temp = this._deepClone(this.cardinfo);
+      delete temp['_id'];
+      this.BankName=temp.Fbank;
+      this.bankCardInfo = temp;
+      this.value = [this.cardinfo.FbankProvince, this.cardinfo.FbankCity,this.cardinfo.FbankDistrict]
+    }
   },
   methods: {
     _deepClone(obj) {

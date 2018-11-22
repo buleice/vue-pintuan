@@ -75,7 +75,9 @@ import {Request} from '../../api/request'
         created(){
           this.$nextTick(function(){
             new Request('/bonus/cash/center.json',"GET").returnJson().then(res=>{
-              this.setCardInfo(res.bankCard||{});
+              if(res.bankCard!=null){
+                  this.setCardInfo(res.bankCard||{});
+              }
               this.setCashing(res.cashing);
               this.setCanCash(res.canCash);
             })
@@ -83,16 +85,16 @@ import {Request} from '../../api/request'
         },
         methods:{
           gotoRightPage(){
-            if(this.cancash<20){
-              this.isAlert=true;
-              this.alertContent="不足20元无法提现!";
-              return false
-            }else if (this.cashing>0) {
+            if (this.cashing>0) {
               this.isAlert=true;
               this.alertContent="本月已发起过提现，请下个月再尝试!";
               return false
+            }else if(this.cancash<20){
+              this.isAlert=true;
+              this.alertContent="不足20元无法提现!";
+              return false
             }else{
-              this.cardinfo.FbankcardNo!=""?
+              JSON.stringify(this.cardinfo) !== '{}'?
               this.$router.push({name:'ToWallet'})
               :
               this.$router.push({path:'/bindcard'})
