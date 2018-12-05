@@ -4,7 +4,7 @@
     您可以使用优惠券兑换以下课程
   </div>
   <div class="myGroup" v-for="item in exchangeList">
-    <a class="a_box" :href="'/purchase/index?exchange=1&id='+item.id">
+    <a class="a_box" @click="exchangeCourse(item.id)">
       <img class="a_box_img" :alt="item.title" :src="item['banner'][0]">
       <div class="groupInfo">
         <div class="groupInfo__avatarbox" style="">

@@ -35,7 +35,6 @@ export default {
     }
   },
   created() {
-    console.log("发起请求")
     new Request('/voucher/list.json', "POST").returnJson().then(res => {
       this.coupons = res.list;
     })
@@ -45,7 +44,10 @@ export default {
 <style lang="scss" scoped>
 .coupon-page{
   .coupons {
-      margin: 0 auto;
+    width: 100%;
+    padding: 0 1rem;
+    box-sizing: border-box;
+    margin-top: 1rem;
       .coupon {
           width: 21.44rem;
           height: 6.25rem;
