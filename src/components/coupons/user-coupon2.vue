@@ -1,8 +1,8 @@
 <template lang="html">
   <div class="coupon-page">
     <ul class="nav">
-      <li :class="[tabIndex==0?'tabactive':'','tab']" @click='toggleTabs(0)'>已使用({{canuse.length}})</li>
-      <li :class="[tabIndex==1?'tabactive':'','tab']" @click='toggleTabs(1)'>未使用({{hasused.length}})</li>
+      <li :class="[tabIndex==0?'tabactive':'','tab']" @click='toggleTabs(0)'>未使用({{canuse.length}})</li>
+      <li :class="[tabIndex==1?'tabactive':'','tab']" @click='toggleTabs(1)'>已使用({{hasused.length}})</li>
       <li :class="[tabIndex==2?'tabactive':'','tab']" @click='toggleTabs(2)'>已过期({{useless.length}})</li>
     </ul>
     <div v-if="coupons.length<=0">

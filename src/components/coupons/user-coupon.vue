@@ -2,7 +2,7 @@
   <div class="coupon-page">
     <div v-if="coupons.length<=0">
       <img src="//udata.youban.com/webimg/wxyx/puintuan/double11_gift_noget.png" style="margin-top:33%;" alt="">
-      <p style="font-size:1.25rem;">当前没有优惠券~~</p>
+      <p style="font-size:1.25rem;">当前没有兑换券~~</p>
     </div>
     <ul class="coupons" v-else >
       <li class="coupon" v-for="coupon in coupons">

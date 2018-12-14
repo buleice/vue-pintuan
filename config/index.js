@@ -13,7 +13,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
     '/apis':{
-        target:'http://ben.wxyx.youban.com',
+        target:'http://dylan.wxyx.youban.com',
         changeOrigin:true,
         pathRewrite:{
             '^/apis':''
