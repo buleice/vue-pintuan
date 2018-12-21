@@ -4,7 +4,7 @@
     您可以使用优惠券兑换以下课程
   </div>
   <div class="myGroup" v-for="item in exchangeList">
-    <a class="a_box" @click="exchangeCourse(item.id)">
+    <a class="a_box" @click="exchangeCourse(item.id,item.title)">
       <img class="a_box_img" :alt="item.title" :src="item['banner'][0]">
       <div class="groupInfo">
         <div class="groupInfo__avatarbox" style="">
@@ -53,15 +53,14 @@ export default {
       exchangeList: [],
     }
   },
-  // beforeRouteUpdate (to, from, next) {
-  //   this.couponId=to.param.couponId;
-  //   console.log(this.couponId)
-  //   next()
-  //  },
   beforeRouteEnter (to, from, next) {
-    axiosPost('/shop/exchange.json',{id:to.params.couponId}).then(res=>{
-         next(vm => vm.setData(res.data.exchangeList,to.params.couponId))
-    })
+    if(to.params.couponId!=undefined){
+      axiosPost('/shop/exchange.json',{id:to.params.couponId}).then(res=>{
+        next(vm => vm.setData(res.data.exchangeList,to.params.couponId))
+      })
+    }else{
+      this.$router.go(-2);
+    }
   },
   methods:{
     delPOk(){
@@ -74,7 +73,8 @@ export default {
     delAOk(){
       this.showAlertDialog=false;
     },
-    exchangeCourse(goodsId){
+    exchangeCourse(goodsId,title){
+      this.promptDesc=`您可以使用优惠券免费兑换课程《${title}》,是否兑换？`
       this.showPromptDialog=true;
       this.goodsId=goodsId;
     },
@@ -89,11 +89,8 @@ export default {
       })
     },
     setData (err, post) {
-      if (err) {
-        this.exchangeList = err
-      } else {
-        this.couponId = post
-      }
+        this.exchangeList = err;
+        this.couponId = post;
     }
   }
 }
