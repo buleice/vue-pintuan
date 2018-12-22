@@ -11,6 +11,7 @@
       <div class="course-hint">本课程包含实物商品，需要填写收获地址</div>
     </li>
   </ul>
+  <!--<img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2…8c.4.4.6 1 .6 1.4 0 .5-.2 1-.6 1.4l-8 8c-.4.4-1 .6-1.4.6z%22/%3E%3C/svg%3E" alt="">-->
   <div class="address-manage">
     <AddressBox></AddressBox>
     <AddAddress></AddAddress>

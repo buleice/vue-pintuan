@@ -22,6 +22,7 @@
             <li><span class="tag tag_red">默认</span> hellohellohellohellohellohellohellohellohellohellohellohello</li>
             <li class="edit" adid="137622567" type="1">编辑</li>
           </ul>
+          <p class="act" adid="826076208" type="1"><span class="del">删除</span></p>
           </div>
         <div class="address">
           <ul adid="137622567" type="1" upgrade="0" addrid="17_1387_1389_51713" addrname="湖北_黄石市_黄石港区_城区"
@@ -170,6 +171,16 @@
             background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyBAMAAADsEZWCAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAhUExURUdwTJycnJmZmZqampmZmZubm5mZmZmZmZmZmZmZmZmZmXES5I0AAAAKdFJOUwAU+FG8KKVz540ZLfSqAAABHklEQVQ4y2NggAHhKR1KHZ6GDOiAsURrFQgschdAk8hapVIcyCBq7rRqGYoU46RFyRABRjMtTWQpi1WpcHbYqmaEBPsqVyRlIasK4Oys5SiWVi2DsVgWGaDIMGs5wLS0onkhAqqJfVEAmgyrFsQmq8UY/oYIMXYVYMiwrwD5iXMJAybwmgAkhJZikYlSBLksAYsMG9B1jBgug7hOgIF9GQM2kFXAwLIYq4yVA4OQIlYZoLCVA1YZoFGzCrDKsK9k8DLAKsO8hKErAKsM6wqGLgGsMowrGLQYsINFeGRwm4bbBbhdjdunuEMHd4jijgXcMYc7tnGnEDypCndKxJ16cad4PLkEd87Ckxtx52A8uR53SYGndMFdIuEpxbCUfADAKFoNusO8mAAAAABJRU5ErkJggg==) no-repeat 50%;
             background-size: 20px 20px;
           }
+          &::after {
+            content: "";
+            height: 0;
+            display: block;
+            border-top: 1px solid #ddd;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+          }
           li {
             margin-top: 4px;
             display: list-item;
@@ -183,14 +194,12 @@
               right: 0;
               z-index: 2;
               &::after {
-                right: 10px;
+                right: 0px;
                 width: 30px;
                 content: "\20";
-                width: 20px;
                 height: 20px;
                 position: absolute;
                 top: 50%;
-                right: 0;
                 margin-top: -10px;
                 background-position: -60px -30px;
                 background-image: url(//wq.360buyimg.com/fd/base/img/order/sprites_old.png?t=20160325);
@@ -233,6 +242,26 @@
             }
           }
 
+        }
+        .act {
+          background-color: #ff3b2f;
+          color: #fff;
+          width: 70px;
+          text-align: center;
+          position: absolute;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          z-index: 1;
+          .del {
+            height: 16px;
+            line-height: 16px;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 70px;
+            margin-top: -8px;
+          }
         }
       }
     }
