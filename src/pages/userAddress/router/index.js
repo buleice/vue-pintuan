@@ -4,6 +4,7 @@ import Router from 'vue-router';
 const OrderConfirmation=()=>import('../../../components/addressMange/order-confirmation')
 const EditAddressIndex=()=>import('../../../components/addressMange/editAddress.vue')
 const AddressList=()=>import('../../../components/addressMange/addressList')
+const AddAddress=()=>import('../../../components/addressMange/addAddress')
 
 Vue.use(Router);
 
@@ -25,6 +26,11 @@ export default new Router({
       path:'/addressList',
       name:'AddressLIst',
       component:AddressList
+    },
+    {
+      path:'/addAddress',
+      name:'AddAddress',
+      component:AddAddress
     }
   ]
 });

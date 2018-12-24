@@ -123,6 +123,19 @@
     },
     created() {
       this.init_prize_list();
+      let arr=[
+        {
+          name:'heelo',
+          age:'18'
+        },
+        {
+          name:'heelo',
+          age:'19'
+        },{
+          name:'heelo',
+          age:'20'
+        }
+      ]
     },
     computed: {
       toast_title() {

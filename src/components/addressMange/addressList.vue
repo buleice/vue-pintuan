@@ -1,35 +1,26 @@
 <template>
   <div class="wx_wrap">
-    <div class="m_header" style="">
+    <div class="m_header">
       <div class="m_header_bar">
-        <div class="m_header_bar_back"></div>
+        <div class="m_header_bar_back" @click="$router.back()"></div>
         <div class="m_header_bar_title">收货地址</div>
-        <div class="m_header_bar_menu" style="display:none;"></div>
-      </div>
-      <div class="m_header_nav" id="headnav" style="display: none;">
-        <div class="m_header_nav_item type_index">首页</div>
-        <div class="m_header_nav_item type_search">分类搜索</div>
-        <div class="m_header_nav_item type_shopcart">购物车</div>
-        <div class="m_header_nav_item type_my">我的京东</div>
       </div>
     </div>
-    <div style="">
+    <div>
       <div class="address_list">
         <div class="address">
-          <ul adid="137622567" type="1" upgrade="0" addrid="17_1387_1389_51713" addrname="湖北_黄石市_黄石港区_城区"
-              addrdetail="" class="selected">
+          <ul :class="{selected: selectedIndex==0}" @click="setDefaultAddress(0)">
             <li><strong>韩承吉</strong>&nbsp;<strong>176****2085</strong></li>
-            <li><span class="tag tag_red">默认</span> hellohellohellohellohellohellohellohellohellohellohellohello</li>
-            <li class="edit" adid="137622567" type="1">编辑</li>
+            <!--<li><span class="tag tag_red">默认</span>广东深圳市南山区佳嘉豪商务大厦10楼小伴龙</li>-->
+            <li>广东深圳市南山区佳嘉豪商务大厦10楼小伴龙</li>
+            <li class="edit" @click.stop="$router.push({name:'EditAddressIndex',params:{id:'001'}})">编辑</li>
           </ul>
-          <p class="act" adid="826076208" type="1"><span class="del">删除</span></p>
-          </div>
+        </div>
         <div class="address">
-          <ul adid="137622567" type="1" upgrade="0" addrid="17_1387_1389_51713" addrname="湖北_黄石市_黄石港区_城区"
-              addrdetail="" class="selected">
+          <ul :class="{selected: selectedIndex==1}" @click="setDefaultAddress(1)">
             <li><strong>韩承吉</strong>&nbsp;<strong>176****2085</strong></li>
-            <li><span class="tag tag_red">默认</span> hellohellohellohellohellohellohellohellohellohellohellohello</li>
-            <li class="edit" adid="137622567" type="1">编辑</li>
+            <li>广东深圳市南山区佳嘉豪商务大厦10楼小伴龙</li>
+            <li class="edit" @click.stop="$router.push({name:'EditAddressIndex',params:{id:'001'}})">编辑</li>
           </ul>
         </div>
       </div>
@@ -40,42 +31,34 @@
                                               class="item item_self no_top_line"><span>微信地址</span><span
               class="item_wx_select_tip">点击选择</span></a></div>
           </div>
-          <div class="address_list" tag="sq" style="display: none;">
+          <div class="address_list" style="display: none;">
             <div class="address_list_link"><a href="javascript:void(0);"
                                               class="item item_self no_top_line"><span>QQ地址</span><span
               class="item_wx_select_tip">点击选择</span></a></div>
           </div>
         </div>
       </div>
-      <div class="mod_btns fixed" tag="jd" style=""><a href="javascript:void(0);" class="mod_btn bg_1">新增收货地址</a></div>
-    </div>
-    <div id="pageAddAddress" class="address_new" style="display: none;"></div>
-    <div id="pageEditAddress" class="address_new" style="display: none;"></div>
-    <div class="invoice_list" id="invoices" style="display: none;"></div>
-    <div class="promo_list" id="itemPromoPage" style="display: none;"></div>
-    <div id="selectShip" style="display: none;"></div>
-    <div id="pickList" style="display: none;"></div>
-    <div id="shopList" style="display: none;"></div>
-    <div id="jdQuanPage" style="display: none;" class="promo_list"></div>
-    <div id="jdCartPage" style="display: none;" class="promo_list"></div>
-
-    <div class="mod_address_slide show" id="address_slide" style="display: none;"></div>
-
-    <div class="promo_list" id="newPromoPage" style="display: none;"></div>
-    <div id="bottomConfirmBar" class="mod_btns fixed" style="display: none;">
-      <a href="javascript:history.back();" class="mod_btn bg_1" id="btnBottomConfirmBar">确认</a>
+      <div class="mod_btns fixed" @click="$router.push({path:'/addAddress'})"><a href="javascript:void(0);" class="mod_btn bg_1">新增收货地址</a></div>
     </div>
 
-    <div id="totalPromo3" class="mod_btns fixed" style="display: none;">
-      <a href="javascript:void(0);" id="confirmPromot3" class="mod_btn bg_1">确认</a>
-    </div>
   </div>
 </template>
 
 <script>
-  import {mapGetters,mapActions} from 'vuex';
+  import {mapGetters, mapActions} from 'vuex';
+
   export default {
-    name: "addressList"
+    name: "addressList",
+    data(){
+      return{
+        selectedIndex:0,
+      }
+    },
+    methods:{
+      setDefaultAddress(index){
+        this.selectedIndex=index
+      }
+    }
   }
 </script>
 
@@ -265,7 +248,7 @@
         }
       }
     }
-    .mod_btns{
+    .mod_btns {
       display: -webkit-box;
       display: -webkit-flex;
       display: flex;

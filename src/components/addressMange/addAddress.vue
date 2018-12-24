@@ -1,10 +1,10 @@
 <template>
   <div class="address">
     <group>
-      <x-input title="姓名" name="username" placeholder="请输入姓名" is-type="china-name"></x-input>
+      <x-input title="姓名" name="username" placeholder="请输入姓名" v-model="Fname" is-type="china-name"></x-input>
     </group>
     <group>
-      <x-input title="手机" mask="999 9999 9999" v-model="maskValue" :max="13" is-type="china-mobile"></x-input>
+      <x-input title="手机" mask="999 9999 9999" v-model="Fphone" :max="13" is-type="china-mobile"></x-input>
     </group>
     <div class="address-box">
       <group>
@@ -14,8 +14,9 @@
     </div>
     <group>
       <!--<x-textarea :max="20" placeholder="详细地址" @on-focus="onEvent('focus')" @on-blur="onEvent('blur')"></x-textarea>-->
-      <x-textarea title="详细信息" placeholder="请填写详细信息" :show-counter="false" :rows="3"></x-textarea>
+      <x-textarea title="详细信息" v-model="Faddress" placeholder="请填写详细信息" :show-counter="false" :rows="3"></x-textarea>
     </group>
+    <div class="mod_btns"><a href="javascript:void(0);" class="mod_btn bg_1">确认</a></div>
   </div>
 </template>
 
@@ -29,20 +30,38 @@
     Cell,
     XTextarea,
     Value2nameFilter as value2name
-  } from 'vux'
+  } from 'vux';
+  import {addUserAddress} from '../../api/addressMange/addressApi';
 
   export default {
     name: "addAddress",
-    data(){
-      return{
+    data() {
+      return {
+        title:'提示',
+        show: false,
         addressData: ChinaAddressV4Data,
-        title:'收货地址',
-        Geocode:[],
+        title: '收货地址',
+        addressName: '',
+        Geocode: [],
         showAddress: false,
-        maskValue:13545678910
+        Fphone: '',
+        Fname: '',
+        Fphone: '',
+        Faddress: ''
       }
     },
-    methods:{
+    methods: {
+      addAddressSubmit() {
+        let postData = {
+          Fname: this.Fname,
+          Fphone: this.Fname,
+          Fprovince: this.Geocode[0],
+          Fcity: this.Geocode[1],
+          Fdistrict: this.Geocode[2],
+          Faddress: this.Faddress,
+          Fdefault: 0
+        }
+      },
       doShowAddress() {
         this.showAddress = true
         setTimeout(() => {
@@ -50,7 +69,7 @@
         }, 2000)
       },
       onShadowChange(ids, names) {
-        this.bankAddress = names;
+        this.addressName = names;
       },
       getName(value) {
         return value2name(value, ChinaAddressV4Data)
@@ -61,7 +80,7 @@
       logShow(str) {
         this.pickStatus = true
       },
-      onEvent (event) {
+      onEvent(event) {
         console.log('on', event)
       }
     },
@@ -76,15 +95,55 @@
   }
 </script>
 
-<style scoped>
-  .address-box{
-    width: 100%;
-    height:2.81rem;
-    overflow: hidden;
-    position: relative;
+<style lang="scss" scoped>
+  .address {
+    .address-box {
+      width: 100%;
+      height: 2.81rem;
+      overflow: hidden;
+      position: relative;
+    }
+    .mod_btns {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: flex;
+      overflow: hidden;
+      margin: 15px 10px;
+      .mod_btn {
+        border-color: #ddd;
+        display: block;
+        -webkit-box-flex: 1;
+        -webkit-flex: 1;
+        flex: 1;
+        min-width: 0;
+        height: 46px;
+        line-height: 46px;
+        text-align: center;
+        font-size: 16px;
+        border-radius: 4px;
+        position: relative;
+        border-radius: 0;
+      }
+      .mod_btn.bg_1 {
+        background: #e4393c;
+        color: #fff;
+      }
+    }
   }
-  .address >>>.weui-cells{margin-top: 0 !important;}
-  .address-box >>>.vux-no-group-title{position: absolute;bottom: 0;left: 0;width: 100%;height: 100%;margin-top: 0!important}
+</style>
+<style scoped>
+  .address >>> .weui-cells {
+    margin-top: 0 !important;
+  }
+
+  .address-box >>> .vux-no-group-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin-top: 0 !important
+  }
 </style>
 
 

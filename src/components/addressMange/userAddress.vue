@@ -1,29 +1,17 @@
 <template>
-  <!--<div class="address">-->
-  <!--<ul adid="747752113" type="1" upgrade="0" addrid="19_1607_3155_0" addrname="广东_深圳市_南山区_"-->
-  <!--addrdetail="广东深圳市南山区佳嘉豪商务大厦10楼小伴龙" class="noChoose">-->
-  <!--<li><strong>韩承吉</strong>&nbsp;<strong>176****2085</strong></li>-->
-  <!--<li> 广东深圳市南山区佳嘉豪商务大厦10楼小伴龙</li>-->
-  <!--<li>-->
-  <!--<input type="checkbox">-->
-  <!--</li>-->
-  <!--&lt;!&ndash;<li class="edit" adid="747752113" type="1">编辑</li>&ndash;&gt;-->
-  <!--</ul>-->
-  <!--</div>-->
-  <div class="address_defalut_wrap" id="topFixedDiv" style="height: 70px;">
-    <div id="addressDefault" class="address_defalut address_border" style="display: block;">
-      <ul>
+  <div class="address_defalut_wrap"  style="height: 70px;">
+    <div class="address_defalut address_border" style="display: block;">
+      <ul @click="$router.push({name:'AddressLIst'})">
         <li><strong>韩承吉 176****2085</strong></li>
-        <li><span class="tag tag_red">默认</span> 湖北黄石市黄石港区城区湖北师范大学 21栋</li>
-        <li class="error" style="display: none;">请选择乡镇/街道</li>
+        <li><span class="tag tag_red">默认</span> 广东深圳市南山区佳嘉豪商务大厦10楼小伴龙</li>
       </ul>
-      <p class="tips color_red" id="globalSalTip" style="display:none;">目的国/地区如产生关税费用，需客户自行承担，请知悉</p></div>
+    </div>
   </div>
 </template>
 
 <script>
   export default {
-    name: "userAddress"
+    name: "userAddress",
   }
 </script>
 

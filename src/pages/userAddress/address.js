@@ -5,6 +5,8 @@ import App from './App'
 import { WechatPlugin } from 'vux'
 import router from './router'
 import Store from './store'
+import _ from 'lodash'
+Vue.prototype._ = _
 Vue.use(WechatPlugin)
 Vue.config.productionTip = false
 
