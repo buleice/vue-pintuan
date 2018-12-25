@@ -1,25 +1,62 @@
 <template>
-  <div id="app">
-    <NewYear></NewYear>
-  </div>
+<div id="app">
+  <keep-alive>
+    <router-view></router-view>
+  </keep-alive>
+  <ul class="tabs">
+    <li>
+      <router-link  to="/lottery">首页</router-link>
+    </li>
+    <li>
+      <router-link to="/activitylessons">元旦礼物</router-link>
+    </li>
+    <li>
+      <router-link to="">马上参加</router-link>
+    </li>
+  </ul>
+</div>
 </template>
 
 <script>
-  import NewYear from '../../components/activity/20190101'
   export default {
-    name: 'App',
-    components: {
-      NewYear
-    }
+    name: 'App'
   }
 </script>
 
-<style>
+<style lang="scss">
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+    .tabs{
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 45px;
+      li{
+        float: left;
+        list-style-type: none;
+        width: 33.2%;
+        text-align: center;
+        line-height: 45px;
+        background: #ffd4b2;
+        a{
+          text-decoration: none;
+          color: #ff5d38;
+        }
+        &:first-child{
+          border-right: 1px #ffb08d solid;
+        }
+        &:last-child{
+          background: #ff5d38;
+          a{
+            color: #ffffff;
+          }
+        }
+      }
+    }
   }
 </style>
