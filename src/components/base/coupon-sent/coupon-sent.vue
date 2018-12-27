@@ -45,63 +45,63 @@
     .coupons-sent{
       background: url("//udata.youban.com/webimg/wxyx/puintuan/common/20190101/coupons-bg.png") no-repeat;
       background-size: 100%;
-      width: 375px;
-      height: 506px;
+      width: 23.44rem;
+      height: 31.63rem;
       margin: auto;
       h3{
         position: relative;
-        top: 280px;
+        top: 17.5rem;
         color: #fee430;
       }
       .coupon-list1{
         background: url("//udata.youban.com/webimg/wxyx/puintuan/common/20190101/coupon-bg-22.png") no-repeat;
         background-size: 100%;
-        width: 208px;
-        height: 90px;
+        width: 13rem;
+        height: 5.63rem;
         position: relative;
         margin: auto;
-        top: 300px;
+        top: 18.75rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
         li{
           list-style-type: none;
-          font-size: 12px;
+          font-size: .75rem;
           &:first-child{
             width: 40%;
           }
           &:last-child{
             width: 60%;
             color: #ce3c39;
-            font-size: 15px;
+            font-size: .94rem;
             span{
-              font-size: 30px;
+              font-size: 1.88rem;
               font-weight: bold;
             }
           }
         }
       }
       .coupon-list2{
-        width: 254px;
+        width: 15.88rem;
         margin: auto;
         display: flex;
         justify-content: space-around;
         position: relative;
-        top: 290px;
+        top: 18.13rem;
         li{
           list-style-type: none;
           box-sizing: border-box;
-          padding: 10px 0;
-          width: 78px;
-          height: 94px;
+          padding: .63rem 0;
+          width: 4.88rem;
+          height: 5.88rem;
           display: flex;
           flex-direction: column;
           justify-content: space-around;
           background: url("//udata.youban.com/webimg/wxyx/puintuan/common/20190101/1.png") no-repeat;
           background-size: 100%;
           div{
-            margin: 10px 0;
-            font-size: 12px;
+            margin: .63rem 0;
+            font-size: .75rem;
             &:first-child{
               color: #ff481d;
               span{
@@ -120,14 +120,14 @@
         text-decoration: none;
         color: #ffffff;
         margin: auto;
-        width: 230px;
-        height: 40px;
-        border-radius: 20px;
-        line-height: 40px;
+        width: 14.38rem;
+        height: 2.5rem;
+        border-radius: 1.25rem;
+        line-height: 2.5rem;
         background: #ffbc09;
         position: relative;
-        top: 320px;
-        box-shadow: 0 3px 0px 0px rgba(0, 0, 0, 0.2);
+        top: 20rem;
+        box-shadow: 0 .19rem 0px 0px rgba(0, 0, 0, 0.2);
       }
     }
   }

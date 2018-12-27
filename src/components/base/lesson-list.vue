@@ -183,7 +183,7 @@
                 img{
                   width: .75rem;
                 }
-                span{margin: 0 5px;color: #929292}
+                span{margin: 0 .31rem;color: #929292}
               }
                 .price {
                     float: right;

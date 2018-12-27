@@ -173,9 +173,9 @@
   .xbl{
     display: flex;
     position: absolute;
-    width: 68px;
-    bottom: 114px;
-    right: 10px;
+    width: 4.25rem;
+    bottom: 7.13rem;
+    right: .63rem;
   }
   .lucky-title {
     width: 100%;
@@ -188,15 +188,15 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    top: 160px;
+    top: 10rem;
   }
   .wheel-outerbg{
-    width: 344px;
-    height: 380px;
+    width: 21.5rem;
+    height: 23.75rem;
     background: url("//udata.youban.com/webimg/wxyx/puintuan/common/20190101/bg-022.png") no-repeat center top;
     background-size: 100%;
     box-sizing: border-box;
-    padding-top: 20px;
+    padding-top: 1.25rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -204,8 +204,8 @@
     /*transition: transform 3s ease;*/
   }
   .wheel-bg {
-    width: 338px;
-    height:331px;
+    width: 21.13rem;
+    height:20.69rem;
     margin: auto;
     background: url("//udata.youban.com/webimg/wxyx/puintuan/common/20190101/wheel.png") no-repeat center top;
     background-size: 100%;
@@ -228,13 +228,13 @@
     height: 5.3125rem;
   }
   .wheel-pointer {
-    width: 87px;
-    height: 118px;
+    width: 5.44rem;
+    height: 7.38rem;
     background: url("//udata.youban.com/webimg/wxyx/puintuan/common/20190101/jiantou2.png") no-repeat center top;
     background-size: 100%;
     /*transform-origin: center 60%;*/
     transform-origin: center;
-    /*margin-top: 4px;*/
+    /*margin-top: .25rem;*/
   }
   .wheel-bg div {
     text-align: center;
@@ -312,21 +312,21 @@
   }
 
   .prize-pic img {
-    width: 42px;
-    margin-top: 10px;
+    width: 2.63rem;
+    margin-top: .63rem;
     /*height: 2.5rem;*/
   }
   .prize-count {
     font-size: 0.875rem;
   }
   .prize-type {
-    margin-top: 32px;
+    margin-top: 2rem;
     font-size: 1rem;
     color: #9f090e;
   }
   .lottery_ticket{
     position: absolute;
-    bottom: 80px;
+    bottom: 5rem;
     width: 100%;
     text-align: center;
     color: #ff481d;
@@ -362,7 +362,7 @@
       rgb(252, 124, 88) 51%,
       rgb(252, 124, 88) 99%
     );
-    box-shadow: 0px 4px 0px 0px rgba(174, 34, 5, 0.7);
+    box-shadow: 0px .25rem 0px 0px rgba(174, 34, 5, 0.7);
     width: 4.6875rem;
     height: 1.875rem;
     border-radius: 1.875rem;
@@ -372,7 +372,7 @@
   }
   .close {
     position: absolute;
-    top: 30px;
+    top: 1.88rem;
     right: 0px;
     width: 2rem;
     height: 5rem;
@@ -389,29 +389,29 @@
     transform: translate(-50%, -50%);
       .toast-container{
         position: relative;
-        width: 320px ;
-        height: 372px;
+        width: 20rem ;
+        height: 23.25rem;
         background: url("//udata.youban.com/webimg/wxyx/puintuan/common/20190101/prize-bg.png") no-repeat center top;
         background-size: 100% 100%;
         box-sizing: border-box;
-        padding-top: 125px;
+        padding-top: 7.81rem;
         h3{
           color: #4c2416;
           &:nth-child(2){
-            font-size: 20px;
+            font-size: 1.25rem;
             color: #ff481d;
           }
         }
         img{
-          margin-top: 28px;
-          height: 68px;
+          margin-top: 1.75rem;
+          height: 4.25rem;
           width: auto;
         }
         .getPrize{
           display: block;
-          width: 170px;
-          height: 44px;
-          margin:  30px auto 0;
+          width: 10.63rem;
+          height: 2.75rem;
+          margin:  1.88rem auto 0;
           text-decoration: none;
           background: url("//udata.youban.com/webimg/wxyx/puintuan/common/20190101/getbtn.png") no-repeat center top;
           background-size: 100% 100%;
@@ -423,35 +423,35 @@
 .main{
   background-color: #f4f0e2;
   .myprize{
-    padding-top: 30px;
-    width: 348px;
+    padding-top: 1.88rem;
+    width: 21.75rem;
     height: auto;
     margin: auto;
     border:1px solid #ed0d00;
-    border-radius: 15px;
+    border-radius: .94rem;
     background: #ffffff;
     position: relative;
-    transform: translateY(-50px);
+    transform: translateY(-3.13rem);
     h3{
       position: absolute;
-      width: 150px;
-      line-height: 30px;
+      width: 9.38rem;
+      line-height: 1.88rem;
       background: #ed0d00;
-      border-radius: 15px;
+      border-radius: .94rem;
       color: #ffffff;
       left: 50%;
       transform: translateX(-50%);
-      top: -15px;
+      top: -.94rem;
     }
     .single-prize{
-      width: 230px;
+      width: 14.38rem;
       margin: auto;
       border-bottom: 1px dashed rgba(0,0,0,.3);
       list-style-type: none;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      height: 110px;
+      height: 6.88rem;
       &:last-child{
         border: none;
       }
@@ -461,7 +461,7 @@
           display: flex;
           align-items: center;
           img{
-            width: 80px;
+            width: 5rem;
           }
         }
         &:last-child{
@@ -472,19 +472,19 @@
             font-weight: 700;
             font-size: 1rem;
             text-align: left;
-            margin: 5px 0;
+            margin: .31rem 0;
           }
           a{
             font-weight: 700;
             text-align: center;
             display: inline-block;
-            width: 110px;
-            line-height: 22px;
+            width: 6.88rem;
+            line-height: 1.38rem;
             color: #ed0d00;
-            border-radius: 10px;
+            border-radius: .63rem;
             text-decoration: none;
             border: 1px solid currentColor;
-            margin: 5px 0;
+            margin: .31rem 0;
             position: relative;
             &::after {
               content: "";
@@ -493,8 +493,8 @@
               height: 0.5rem;
               top: 50%;
               right: 0.63rem;
-              border-top: 2px solid #ed0d00;
-              border-right: 2px solid #ed0d00;
+              border-top: .13rem solid #ed0d00;
+              border-right: .13rem solid #ed0d00;
               transform: translate(-50%,-50%) rotate(45deg);
               -webkit-transform: translateY(-50%) rotate(45deg);
             }

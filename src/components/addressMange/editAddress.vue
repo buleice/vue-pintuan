@@ -168,10 +168,10 @@
   .m_header {
     .m_header_bar {
       position: relative;
-      height: 45px;
-      line-height: 45px;
+      height: 2.81rem;
+      line-height: 2.81rem;
       text-align: center;
-      font-size: 16px;
+      font-size: 1rem;
       color: #333;
       background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#efefef));
       background: -webkit-linear-gradient(top, #fff, #efefef);
@@ -191,13 +191,13 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 42px;
-        height: 45px;
+        width: 2.63rem;
+        height: 2.81rem;
         &::after {
           content: "";
           display: block;
-          width: 12px;
-          height: 12px;
+          width: .75rem;
+          height: .75rem;
           border-top: 1px solid #848689;
           border-left: 1px solid #848689;
           -webkit-transform-origin: 50%;
@@ -206,48 +206,48 @@
           transform: rotate(-45deg);
           position: absolute;
           top: 50%;
-          left: 18px;
-          margin-top: -6px;
+          left: 1.13rem;
+          margin-top: -.38rem;
         }
       }
       .m_header_bar_menu {
         position: absolute;
         top: 0;
         right: 0;
-        width: 42px;
-        height: 45px;
+        width: 2.63rem;
+        height: 2.81rem;
         background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkAgMAAACcbnALAAAADFBMV…jUeAFFjBRTYPYyQt2CEKO/Kd+gLEagAXAx3DpK4KwZDBgAAAh+brVZ2vz9AAAAAElFTkSuQmCC) no-repeat 50%;
-        background-size: 18px;
+        background-size: 1.13rem;
       }
     }
   }
   .deleteButton{
     width: 80%;
-    height: 46px;
-    line-height: 46px;
-    border-radius: 4px;
+    height: 2.88rem;
+    line-height: 2.88rem;
+    border-radius: .25rem;
     text-align: center;
     background: #e4393c;
     color: #ffffff;
-    margin: 15px auto;
+    margin: .94rem auto;
   }
   .mod_btns {
     display: -webkit-box;
     display: -webkit-flex;
     display: flex;
     overflow: hidden;
-    margin: 15px 10px;
+    margin: .94rem .63rem;
     .mod_btn {
       display: block;
       -webkit-box-flex: 1;
       -webkit-flex: 1;
       flex: 1;
       min-width: 0;
-      height: 46px;
-      line-height: 46px;
+      height: 2.88rem;
+      line-height: 2.88rem;
       text-align: center;
-      font-size: 16px;
-      border-radius: 4px;
+      font-size: 1rem;
+      border-radius: .25rem;
       position: relative;
     }
     .bg_1 {
@@ -268,5 +268,3 @@
   .address2 >>>.weui-cells{margin-top: 0 !important;}
   .address-box2 >>>.vux-no-group-title{position: absolute;bottom: 0;left: 0;width: 100%;height: 100%;margin-top: 0!important}
 </style>
-
-

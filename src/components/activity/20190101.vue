@@ -90,19 +90,19 @@
       .banner-bg {
         display: block;
         width: 100%;
-        margin-bottom: 15px;
+        margin-bottom: .94rem;
       }
       .shop-category {
         display: flex;
         justify-content: space-around;
         padding-bottom: .5rem;
-        padding: 0 5px;
+        padding: 0 .31rem;
         li {
           list-style-type: none;
           color: #0d0d0d;
           width: 16%;
           box-sizing: border-box;
-          font-size: 12px;
+          font-size: .75rem;
           div {
             display: inline-block;
             margin: auto;
@@ -121,7 +121,7 @@
             }
             &.active{
               background: #f5f5f5;
-              border-radius: 10px;
+              border-radius: .63rem;
             }
             /*&.active::after {*/
             /*content: '';*/
@@ -140,7 +140,7 @@
         line-height: 2rem;
         box-sizing: border-box;
         padding: 0 0px 0 .625rem;
-        border-top: 3px solid #f5f5f5;
+        border-top: .19rem solid #f5f5f5;
         line-height: 2rem;
         span {
           float: left;

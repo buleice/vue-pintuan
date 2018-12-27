@@ -155,7 +155,7 @@
       display: -webkit-flex;
       display: flex;
       overflow: hidden;
-      margin: 15px 10px;
+      margin: .94rem .63rem;
       .mod_btn {
         border-color: #ddd;
         display: block;
@@ -163,11 +163,11 @@
         -webkit-flex: 1;
         flex: 1;
         min-width: 0;
-        height: 46px;
-        line-height: 46px;
+        height: 2.88rem;
+        line-height: 2.88rem;
         text-align: center;
-        font-size: 16px;
-        border-radius: 4px;
+        font-size: 1rem;
+        border-radius: .25rem;
         position: relative;
         border-radius: 0;
       }
@@ -192,5 +192,3 @@
     margin-top: 0 !important
   }
 </style>
-
-

@@ -1,5 +1,5 @@
 <template>
-  <div class="address_defalut_wrap"  style="height: 70px;">
+  <div class="address_defalut_wrap"  style="height: 4.38rem;">
     <div class="address_defalut address_border" style="display: block;">
       <ul @click="$router.push({name:'AddressLIst'})">
         <li><strong>{{defaultAddress.name}} {{defaultAddress.phone}}</strong></li>
@@ -26,42 +26,42 @@
     word-wrap: break-word;
     word-break: break-all;
     .noChoose {
-      padding-right: 50px;
+      padding-right: 3.13rem;
       background-color: #fff;
       z-index: 2;
-      padding: 7px 15px;
+      padding: .44rem .94rem;
       position: relative;
       overflow: hidden;
       li {
-        margin-top: 4px;
+        margin-top: .25rem;
         input[type="checkbox"] {
-          width: 100px;
+          width: 6.25rem;
         }
         strong {
           color: #333;
         }
         &.edit {
           color: transparent;
-          width: 50px;
+          width: 3.13rem;
           position: absolute;
-          top: 3px;
-          bottom: 3px;
+          top: .19rem;
+          bottom: .19rem;
           right: 0;
           z-index: 2;
           &::after {
-            right: 10px;
-            width: 30px;
+            right: .63rem;
+            width: 1.88rem;
             content: "\20";
-            width: 20px;
-            height: 20px;
+            width: 1.25rem;
+            height: 1.25rem;
             position: absolute;
             top: 50%;
             right: 0;
-            margin-top: -10px;
-            background-position: -60px -30px;
+            margin-top: -.63rem;
+            background-position: -3.75rem -1.88rem;
             background-image: url(//wq.360buyimg.com/fd/base/img/order/sprites_old.png?t=20160325);
             background-repeat: no-repeat;
-            background-size: 100px 100px;
+            background-size: 6.25rem 6.25rem;
           }
         }
       }
@@ -73,21 +73,21 @@
     z-index: 320;
     .address_defalut {
       background: #fff;
-      padding: 12px 10px;
+      padding: .75rem .63rem;
       position: relative;
     }
     .address_border {
-      padding-bottom: 16px;
-      background-size: 64px 5px;
+      padding-bottom: 1rem;
+      background-size: 4rem .31rem;
       border-top: 1px solid rgba(0,0,0,.2);
     }
     ul {
       position: relative;
-      padding-right: 30px;
+      padding-right: 1.88rem;
       li {
         word-wrap: break-word;
         word-break: break-all;
-        font-size: 14px;
+        font-size: .88rem;
         &.error {
           color: #e93b3d;
         }
@@ -96,13 +96,13 @@
             display: inline-block;
             position: relative;
             overflow: hidden;
-            padding: 0 5px;
+            padding: 0 .31rem;
             vertical-align: middle;
-            margin: -2px 5px 0 0;
+            margin: -.13rem .31rem 0 0;
             max-width: 8em;
-            height: 15px;
-            line-height: 15px;
-            font-size: 10px;
+            height: .94rem;
+            line-height: .94rem;
+            font-size: .63rem;
             color: #4b9bfb;
             &::after {
               content: "";
@@ -117,7 +117,7 @@
               right: 0;
               background: none;
               border-color: #4b9bfb;
-              border-radius: 2px;
+              border-radius: .13rem;
             }
           }
           .tag_red {
@@ -135,7 +135,7 @@
             right: 0;
             background: none;
             border-color: #e93b3d;
-            border-radius: 2px;
+            border-radius: .13rem;
           }
           }
         }
@@ -144,22 +144,22 @@
         content: "";
         display: inline-block;
         vertical-align: middle;
-        margin-top: -2px;
-        width: 6px;
-        height: 10px;
+        margin-top: -.13rem;
+        width: .38rem;
+        height: .63rem;
         background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 20"><path fill="#CCCCCC" fill-rule="evenodd" d="M2 20c-.8 0-1.5-.5-1.8-1.2-.3-.8-.2-1.6.4-2.2L7.2 10 .6 3.4c-.8-.8-.8-2 0-2.8.8-.8 2-.8 2.8 0l8 8c.4.4.6 1 .6 1.4 0 .5-.2 1-.6 1.4l-8 8c-.4.4-1 .6-1.4.6z"/></svg>');
         background-repeat: no-repeat;
         background-size: 100%;
         position: absolute;
         top: 50%;
         right: 0;
-        margin-top: -5px;
+        margin-top: -.31rem;
       }
     }
     p.tips {
-      line-height: 18px;
-      font-size: 12px;
-      padding: 3px 0;
+      line-height: 1.13rem;
+      font-size: .75rem;
+      padding: .19rem 0;
       &.color_red {
         color: #e93b3d;
       }

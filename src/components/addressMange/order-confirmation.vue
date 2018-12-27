@@ -42,7 +42,7 @@
     <!--<img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2…8c.4.4.6 1 .6 1.4 0 .5-.2 1-.6 1.4l-8 8c-.4.4-1 .6-1.4.6z%22/%3E%3C/svg%3E" alt="">-->
     <div class="address-manage">
       <AddressBox v-if="addressList.length>0"></AddressBox>
-      <AddAddress v-else style="margin-top: 30px"></AddAddress>
+      <AddAddress v-else style="margin-top: 1.88rem"></AddAddress>
     </div>
     <div v-if="addressList.length>0" class="mod_btns fixed"><a href="javascript:void(0);" @click="handleSubmit"
                                                                class="mod_btn bg_1">提交</a></div>
@@ -125,10 +125,10 @@
     .m_header {
       .m_header_bar {
         position: relative;
-        height: 45px;
-        line-height: 45px;
+        height: 2.81rem;
+        line-height: 2.81rem;
         text-align: center;
-        font-size: 16px;
+        font-size: 1rem;
         color: #333;
         background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#efefef));
         background: -webkit-linear-gradient(top, #fff, #efefef);
@@ -148,13 +148,13 @@
           position: absolute;
           top: 0;
           left: 0;
-          width: 42px;
-          height: 45px;
+          width: 2.63rem;
+          height: 2.81rem;
           &::after {
             content: "";
             display: block;
-            width: 12px;
-            height: 12px;
+            width: .75rem;
+            height: .75rem;
             border-top: 1px solid #848689;
             border-left: 1px solid #848689;
             -webkit-transform-origin: 50%;
@@ -163,52 +163,52 @@
             transform: rotate(-45deg);
             position: absolute;
             top: 50%;
-            left: 18px;
-            margin-top: -6px;
+            left: 1.13rem;
+            margin-top: -.38rem;
           }
         }
         .m_header_bar_menu {
           position: absolute;
           top: 0;
           right: 0;
-          width: 42px;
-          height: 45px;
+          width: 2.63rem;
+          height: 2.81rem;
           background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkAgMAAACcbnALAAAADFBMV…jUeAFFjBRTYPYyQt2CEKO/Kd+gLEagAXAx3DpK4KwZDBgAAAh+brVZ2vz9AAAAAElFTkSuQmCC) no-repeat 50%;
-          background-size: 18px;
+          background-size: 1.13rem;
         }
       }
     }
     .order_info {
-      margin-top: 15px;
-      margin-bottom: 15px;
-      padding: 0 10px;
+      margin-top: .94rem;
+      margin-bottom: .94rem;
+      padding: 0 .63rem;
       background: #fff;
       position: relative;
       ul {
         list-style: none;
         .hproduct {
           position: relative;
-          min-height: 75px;
+          min-height: 4.69rem;
           padding: 0;
-          font-size: 12px;
-          padding-top: 15px;
+          font-size: .75rem;
+          padding-top: .94rem;
           img {
             border: 0 none;
             vertical-align: top;
             &.photo {
-              width: 75px;
-              height: 75px;
+              width: 4.69rem;
+              height: 4.69rem;
               position: absolute;
-              top: 15px;
+              top: .94rem;
               left: 0;
             }
           }
           .fn {
-            padding-left: 85px;
+            padding-left: 5.31rem;
             color: #333;
-            line-height: 20px;
-            margin-bottom: 5px;
-            font-size: 14px;
+            line-height: 1.25rem;
+            margin-bottom: .31rem;
+            font-size: .88rem;
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
@@ -219,34 +219,34 @@
               &.mod_tag {
                 display: inline-block;
                 vertical-align: middle;
-                margin-top: -2px;
-                margin-right: 5px;
-                height: 14px;
+                margin-top: -.13rem;
+                margin-right: .31rem;
+                height: .88rem;
               }
             }
 
           }
           .sku_coll {
-            padding-left: 85px;
-            margin-bottom: 6px;
-            font-size: 12px;
+            padding-left: 5.31rem;
+            margin-bottom: .38rem;
+            font-size: .75rem;
             color: #999;
             line-height: 1;
           }
           .sku_price {
-            padding-left: 85px;
-            height: 30px;
-            line-height: 30px;
+            padding-left: 5.31rem;
+            height: 1.88rem;
+            line-height: 1.88rem;
             color: #e93b3d;
-            font-size: 10px;
+            font-size: .63rem;
             span {
-              font-size: 16px;
+              font-size: 1rem;
             }
           }
           .sku {
-            padding-left: 85px;
-            height: 30px;
-            margin-top: -30px;
+            padding-left: 5.31rem;
+            height: 1.88rem;
+            margin-top: -1.88rem;
             text-align: right;
             word-wrap: break-word;
             word-break: break-all;
@@ -255,27 +255,27 @@
             white-space: nowrap;
             .num_wrap {
               display: inline-block;
-              width: 107px;
+              width: 6.69rem;
               vertical-align: middle;
               span {
                 color: #333;
                 position: relative;
                 float: left;
-                width: 30px;
-                height: 30px;
-                line-height: 30px;
+                width: 1.88rem;
+                height: 1.88rem;
+                line-height: 1.88rem;
                 background: #f7f7f7;
                 text-align: center;
                 &.minus {
-                  border-radius: 2px 0 0 2px;
+                  border-radius: .13rem 0 0 .13rem;
                   &::after {
                     position: absolute;
                     left: 50%;
                     top: 50%;
                     content: "";
-                    width: 12px;
-                    height: 2px;
-                    margin: -1px 0 0 -6px;
+                    width: .75rem;
+                    height: .13rem;
+                    margin: -1px 0 0 -.38rem;
                     background: #e9e9e9;
                   }
                 }
@@ -288,54 +288,54 @@
                   top: 50%;
                   content: "";
                   background: #999;
-                  width: 2px;
-                  height: 12px;
-                  margin: -6px 0 0 -1px;
+                  width: .13rem;
+                  height: .75rem;
+                  margin: -.38rem 0 0 -1px;
                 }
                 &.plus::after {
                   position: absolute;
                   left: 50%;
                   top: 50%;
                   content: "";
-                  width: 12px;
-                  height: 2px;
-                  margin: -1px 0 0 -6px;
+                  width: .75rem;
+                  height: .13rem;
+                  margin: -1px 0 0 -.38rem;
                   background: #999;
                 }
               }
               input {
                 position: relative;
                 float: left;
-                width: 30px;
-                height: 30px;
-                line-height: 30px;
+                width: 1.88rem;
+                height: 1.88rem;
+                line-height: 1.88rem;
                 background: #f7f7f7;
                 text-align: center;
                 &.num {
                   -webkit-appearance: none;
                   border-radius: 0;
-                  width: 45px;
-                  height: 30px;
+                  width: 2.81rem;
+                  height: 1.88rem;
                   line-height: normal;
                   border: 0;
                   border-left: 1px solid #fff;
                   border-right: 1px solid #fff;
                   background: #f7f7f7;
-                  font-size: 12px;
+                  font-size: .75rem;
                   text-align: center;
                 }
               }
             }
             .sku_num {
-              line-height: 30px;
+              line-height: 1.88rem;
               color: #999;
-              font-size: 12px;
+              font-size: .75rem;
             }
           }
 
           .order_info_tips {
-            margin: 6px 0;
-            padding-left: 85px;
+            margin: .38rem 0;
+            padding-left: 5.31rem;
             overflow: hidden;
           }
           &::before {
@@ -346,8 +346,8 @@
             /*background-color: #e5e5e5;*/
             height: 1px;
             top: 0;
-            left: -10px;
-            right: -10px;
+            left: -.63rem;
+            right: -.63rem;
           }
           .hproduct.noclick:after {
             display: none;
@@ -356,9 +356,9 @@
       }
     }
     .goodsInfo {
-      padding: 5px;
+      padding: .31rem;
       box-sizing: border-box;
-      height: 200px;
+      height: 12.5rem;
       li {
         float: left;
         &.course-img {
@@ -369,7 +369,7 @@
           }
         }
         &.course-infos {
-          padding-left: 5px;
+          padding-left: .31rem;
           box-sizing: border-box;
           width: 65%;
           height: 100%;
@@ -377,7 +377,7 @@
             text-align: right;
           }
           .course-hint {
-            font-size: 12px;
+            font-size: .75rem;
             color: lightgray;
           }
         }
@@ -388,12 +388,12 @@
       display: -webkit-flex;
       display: flex;
       overflow: hidden;
-      margin: 15px 10px;
+      margin: .94rem .63rem;
     }
     .fixed {
       left: 0;
       right: 0;
-      max-width: 540px;
+      max-width: 33.75rem;
       margin: 0 auto;
       background-color: #fff;
       position: fixed;
@@ -408,11 +408,11 @@
         -webkit-flex: 1;
         flex: 1;
         min-width: 0;
-        height: 46px;
-        line-height: 46px;
+        height: 2.88rem;
+        line-height: 2.88rem;
         text-align: center;
-        font-size: 16px;
-        border-radius: 4px;
+        font-size: 1rem;
+        border-radius: .25rem;
         position: relative;
         border-radius: 0;
       }

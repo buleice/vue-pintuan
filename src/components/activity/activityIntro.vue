@@ -40,39 +40,39 @@
   .banner {
     width: 100%;
     background: url("//udata.youban.com/webimg/wxyx/puintuan/common/20190101/bg-003.png") no-repeat center top;
-    background-size: 100% 554px;
+    background-size: 100% 34.63rem;
     background-color: #f4f0e2;
-    padding-top: 214px;
+    padding-top: 13.38rem;
     box-sizing: border-box;
     .myprize {
-      padding-top: 30px;
-      width: 348px;
+      padding-top: 1.88rem;
+      width: 21.75rem;
       height: auto;
       margin: auto;
       border: 1px solid #ed0d00;
-      border-radius: 15px;
+      border-radius: .94rem;
       background: #ffffff;
       position: relative;
       h3 {
         position: absolute;
-        width: 150px;
-        line-height: 30px;
+        width: 9.38rem;
+        line-height: 1.88rem;
         background: #ed0d00;
-        border-radius: 15px;
+        border-radius: .94rem;
         color: #ffffff;
         left: 50%;
         transform: translateX(-50%);
-        top: -15px;
+        top: -.94rem;
       }
       .single-prize {
-        width: 230px;
+        width: 14.38rem;
         margin: auto;
         border-bottom: 1px dashed rgba(0, 0, 0, .3);
         list-style-type: none;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        height: 110px;
+        height: 6.88rem;
         &:last-child {
           border: none;
         }
@@ -82,7 +82,7 @@
             display: flex;
             align-items: center;
             img {
-              width: 80px;
+              width: 5rem;
             }
           }
           &:last-child {
@@ -93,10 +93,10 @@
               font-weight: 700;
               font-size: 1rem;
               text-align: left;
-              margin: 5px 0;
+              margin: .31rem 0;
             }
             .valueAndNumber{
-              font-size: 12px;
+              font-size: .75rem;
               color: #7c6660;
               span{
                 font-size: 1rem;
@@ -106,11 +106,11 @@
               font-weight: 700;
               text-align: left;
               display: inline-block;
-              width: 110px;
-              line-height: 22px;
+              width: 6.88rem;
+              line-height: 1.38rem;
               color: #ed0d00;
-              border-radius: 10px;
-              margin: 5px 0;
+              border-radius: .63rem;
+              margin: .31rem 0;
               position: relative;
             }
           }
@@ -119,7 +119,7 @@
     }
     .intro{
       img{
-        margin-top: 20px;
+        margin-top: 1.25rem;
         width: 95%;
 
       }
