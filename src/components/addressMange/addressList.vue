@@ -8,19 +8,12 @@
     </div>
     <div>
       <div class="address_list">
-        <div class="address">
-          <ul :class="{selected: selectedIndex==0}" @click="setDefaultAddress(0)">
-            <li><strong>韩承吉</strong>&nbsp;<strong>176****2085</strong></li>
+        <div class="address" v-for="(item,index) in shippingAddress">
+          <ul :class="{selected: selectedIndex==index}" @click="setAddressIndex(index)">
+            <li><strong>{{item.name}}</strong>&nbsp;<strong>{{item.phone}}</strong></li>
             <!--<li><span class="tag tag_red">默认</span>广东深圳市南山区佳嘉豪商务大厦10楼小伴龙</li>-->
-            <li>广东深圳市南山区佳嘉豪商务大厦10楼小伴龙</li>
-            <li class="edit" @click.stop="$router.push({name:'EditAddressIndex',params:{id:'001'}})">编辑</li>
-          </ul>
-        </div>
-        <div class="address">
-          <ul :class="{selected: selectedIndex==1}" @click="setDefaultAddress(1)">
-            <li><strong>韩承吉</strong>&nbsp;<strong>176****2085</strong></li>
-            <li>广东深圳市南山区佳嘉豪商务大厦10楼小伴龙</li>
-            <li class="edit" @click.stop="$router.push({name:'EditAddressIndex',params:{id:'001'}})">编辑</li>
+            <li>{{item.address}}</li>
+            <li class="edit" @click.stop="$router.push({name:'EditAddressIndex',params:{index:index}})">编辑</li>
           </ul>
         </div>
       </div>
@@ -55,9 +48,15 @@
       }
     },
     methods:{
-      setDefaultAddress(index){
-        this.selectedIndex=index
-      }
+      setAddressIndex(index){
+        this.setDefaultAddress(this.shippingAddress[index]);
+        this.selectedIndex=index;
+        this.$router.back()
+      },
+      ...mapActions(['setDefaultAddress'])
+    },
+    computed:{
+      ...mapGetters(['shippingAddress'])
     }
   }
 </script>

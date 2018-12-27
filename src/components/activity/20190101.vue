@@ -12,21 +12,27 @@
           </li>
         </ul>
         <ClassifyNormal :lessonList="lessonList"></ClassifyNormal>
+        <CouponBuy></CouponBuy>
+        <CouponSent></CouponSent>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+  import {mapGetters,mapActions} from 'vuex'
+  import CouponBuy from './couponBuy'
   import {Request} from "../../api/request";
-
   const ClassifyNormal = () => import('../base/lesson-list');
+  const CouponSent =()=>import('../base/coupon-sent/coupon-sent');
 
 
   export default {
     name: 'ShopDeault',
     components: {
-      ClassifyNormal
+      ClassifyNormal,
+      CouponBuy,
+      CouponSent
     },
     data() {
       return {
@@ -41,7 +47,7 @@
         showToTop: false,
         interest: [],
         auth: '',
-        showAd: false
+        showAd: false,
       }
     },
     created() {
@@ -64,16 +70,17 @@
       _initPageData() {
         new Request('/purchase/20190101.json').returnJson().then(res => {
           this.category = res.category;
-          this._getlessonList(this.category[0].id)
-          // this._getlessonList(1)
+          this._getlessonList(this.category[0].id);
         })
       },
       _getlessonList(category) {
         this.locationId=category
         new Request('/activity/20190101/lesson.json', 'GET', {category: category}).returnJson().then(res => {
           this.lessonList = res.list;
+          this.setUserCoupons(res.coupons);
         })
-      }
+      },
+      ...mapActions(['setUserCoupons'])
     }
   }
 </script>

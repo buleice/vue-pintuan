@@ -8,10 +8,10 @@
       <router-link  to="/lottery">首页</router-link>
     </li>
     <li>
-      <router-link to="/activitylessons">元旦礼物</router-link>
+      <router-link to="/activityIntro">元旦礼物</router-link>
     </li>
     <li>
-      <router-link to="">马上参加</router-link>
+      <router-link to="/activitylessons">马上参加</router-link>
     </li>
   </ul>
 </div>
@@ -46,6 +46,9 @@
         a{
           text-decoration: none;
           color: #ff5d38;
+          display: block;
+          width: 100%;
+          height: 100%;
         }
         &:first-child{
           border-right: 1px #ffb08d solid;

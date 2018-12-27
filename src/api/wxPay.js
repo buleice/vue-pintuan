@@ -57,7 +57,7 @@ const wxPays= {
     });
   },
   justPay(url,data){
-    wxPay(url, Object.assign({}, data, {issingle: 1,urltag:'wxyx_groupbuying_single'}));
+    wxPay(url, Object.assign({}, data, {urltag:'activity20190101'}));
   },
   bonusPay(url,data){
     axiosPost(url, data).then(response => {

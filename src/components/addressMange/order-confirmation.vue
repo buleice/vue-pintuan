@@ -2,56 +2,60 @@
   <div class="order-confirmation">
     <div class="m_header" style="">
       <div class="m_header_bar">
-        <div class="m_header_bar_back"></div>
-        <div class="m_header_bar_title">确认订单</div>
+        <!--<div class="m_header_bar_back"></div>-->
+        <div class="m_header_bar_title">领取奖品</div>
       </div>
     </div>
     <div class="order_info">
       <ul>
         <li class="hproduct noclick"><img
           class="photo"
-          src="//img10.360buyimg.com/mobilecms/s117x117_jfs/t27358/149/1063060879/191448/a131fd6f/5bc0493bNf91179ee.jpg!q70.dpg.webp">
+          :src="prizeInfo.Fimage">
           <div class="fn">
-            <strong>德芙 Dove心语巧克力礼盒 糖果 巧克力 礼品 圣诞节生日礼物150g（本产品不含礼品袋，请以收到实物为准）</strong></div>
-          <p class="sku_coll"> 0.370kg/件，德芙心语巧克力150g </p>
-          <p class="sku_price">&yen;<span>59</span>.00 </p>
+            <strong>{{prizeInfo.Fname}}（本奖品不含礼品袋，请以收到实物为准）</strong></div>
+          <!--<p class="sku_coll"> 0.370kg/件，德芙心语巧克力150g </p>-->
+          <!--<p class="sku_price">&yen;<span>59</span>.00 </p>-->
           <div class="sku">
             <div class="num_wrap">
               <!--<span class="minus disabled" ></span> -->
-              <input class="num"  type="tel" value="×1">
+              <!--<input class="num"  type="tel" value="×1">-->
               <!--<span class="plus"></span>-->
             </div>
-            <div class="sku_num">&times;1</div>
+            <!--<div class="sku_num">&times;1</div>-->
           </div>
         </li>
       </ul>
     </div>
     <!--<ul class="goodsInfo">-->
-      <!--<li class="course-img">-->
-        <!--<img-->
-          <!--src="//hiphotos.baidu.com/image/%77%3D%35%30%32%3B%63%72%6F%70%3D%30%2C%31%35%37%2C%35%30%32%2C%33%33%34/sign=c78b155c8dd6277fe91232381a037c42/b219ebc4b74543a9c2ac7b2b14178a82b80114a5.jpg"-->
-          <!--alt="">-->
-      <!--</li>-->
-      <!--<li class="course-infos">-->
-        <!--<div class="course-title">小伴龙是上的你会欸额vhi和vi会v</div>-->
-        <!--<div class="add-number">*1</div>-->
-        <!--<div class="the-price">￥69</div>-->
-        <!--<div class="course-hint">本课程包含实物商品，需要填写收获地址</div>-->
-      <!--</li>-->
+    <!--<li class="course-img">-->
+    <!--<img-->
+    <!--src="//hiphotos.baidu.com/image/%77%3D%35%30%32%3B%63%72%6F%70%3D%30%2C%31%35%37%2C%35%30%32%2C%33%33%34/sign=c78b155c8dd6277fe91232381a037c42/b219ebc4b74543a9c2ac7b2b14178a82b80114a5.jpg"-->
+    <!--alt="">-->
+    <!--</li>-->
+    <!--<li class="course-infos">-->
+    <!--<div class="course-title">小伴龙是上的你会欸额vhi和vi会v</div>-->
+    <!--<div class="add-number">*1</div>-->
+    <!--<div class="the-price">￥69</div>-->
+    <!--<div class="course-hint">本课程包含实物商品，需要填写收获地址</div>-->
+    <!--</li>-->
     <!--</ul>-->
     <!--<img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2…8c.4.4.6 1 .6 1.4 0 .5-.2 1-.6 1.4l-8 8c-.4.4-1 .6-1.4.6z%22/%3E%3C/svg%3E" alt="">-->
     <div class="address-manage">
-      <AddressBox v-if="!addAddress"></AddressBox>
+      <AddressBox v-if="addressList.length>0"></AddressBox>
       <AddAddress v-else style="margin-top: 30px"></AddAddress>
     </div>
-    <div v-if="!addAddress" class="mod_btns fixed"><a  href="javascript:void(0);" class="mod_btn bg_1">提交</a></div>
+    <div v-if="addressList.length>0" class="mod_btns fixed"><a href="javascript:void(0);" @click="handleSubmit"
+                                                               class="mod_btn bg_1">提交</a></div>
 
   </div>
 </template>
 
 <script>
+  import {mapGetters, mapActions} from 'vuex'
   import AddAddress from './addAddress';
   import AddressBox from './userAddress'
+  import {Request} from "../../api/request";
+  import {axiosPost} from "../../api/axios-data";
 
   export default {
     name: "order-confirmation",
@@ -59,15 +63,59 @@
       AddAddress,
       AddressBox
     },
-    data(){
-      return{
-        addAddress:false
+    data() {
+      return {
+        addAddress: false,
+        prizeInfo: {},
+        addressList: [],
+        choosenAddress: {}
       }
     },
-    methods:{
-      hrefTo(name,params){
-        this.$router.push({name:name,params:params})
-      }
+    created() {
+      new Request('/lottery/prize/express.json', 'GET', {
+        activityid: this._GetQueryString('activityid'),
+        prizeid: this._GetQueryString('prizeid')
+      }).returnJson().then(res => {
+        this.setShippingAddress(res.list);
+        if (res.list.length > 0) {
+          this.addressList = res.list;
+          if (!(res.list.find(item => item.default === 1))) {
+            this.choosenAddress = res.list[0]
+            this.setDefaultAddress(res.list[0]);
+          } else {
+            this.choosenAddress = res.list.find(item => item.default === 1)
+            this.setDefaultAddress(res.list.find(item => item.default === 1))
+          }
+        }
+        this.prizeInfo = res.prizeInfo
+      })
+    },
+    methods: {
+      hrefTo(name, params) {
+        this.$router.push({name: name, params: params})
+      },
+      handleSubmit() {
+        axiosPost('/lottery/prize/express.json', {
+          activityid: this._GetQueryString('activityid'),
+          prizeid: this._GetQueryString('prizeid'),
+          name: this.choosenAddress.name,
+          phone: this.choosenAddress.phone,
+          address: this.choosenAddress.address
+        }).then(res => {
+          if (res.data.rc == 0) {
+            setTimeout(() => {
+              window.location.href = "/activity/20190101"
+            }, 300)
+          }
+        })
+      },
+      _GetQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg); //search,查询？后面的参数，并匹配正则
+        if (r != null) return unescape(r[2]);
+        return '';
+      },
+      ...mapActions(['setDefaultAddress', 'setShippingAddress'])
     }
   }
 </script>
@@ -220,7 +268,7 @@
                 text-align: center;
                 &.minus {
                   border-radius: 2px 0 0 2px;
-                  &::after{
+                  &::after {
                     position: absolute;
                     left: 50%;
                     top: 50%;
@@ -244,7 +292,7 @@
                   height: 12px;
                   margin: -6px 0 0 -1px;
                 }
-                &.plus::after{
+                &.plus::after {
                   position: absolute;
                   left: 50%;
                   top: 50%;
@@ -255,7 +303,7 @@
                   background: #999;
                 }
               }
-              input{
+              input {
                 position: relative;
                 float: left;
                 width: 30px;
@@ -335,7 +383,7 @@
         }
       }
     }
-    .mod_btns{
+    .mod_btns {
       display: -webkit-box;
       display: -webkit-flex;
       display: flex;

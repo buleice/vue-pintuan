@@ -16,11 +16,16 @@
       <!--<x-textarea :max="20" placeholder="详细地址" @on-focus="onEvent('focus')" @on-blur="onEvent('blur')"></x-textarea>-->
       <x-textarea title="详细信息" v-model="Faddress" placeholder="请填写详细信息" :show-counter="false" :rows="3"></x-textarea>
     </group>
-    <div class="mod_btns"><a href="javascript:void(0);" class="mod_btn bg_1">确认</a></div>
+    <group>
+    <x-switch title="设为默认地址" :value-map="['0', '1']" v-model="Fdefault" ></x-switch>
+    </group>
+    <WxDialog :alertDesc="alertDesc" :showAlertDialog="showAlertDialog" @AOk="delPok"></WxDialog>
+    <div class="mod_btns"><a href="javascript:void(0);" @click="addAddressSubmit" class="mod_btn bg_1">确认</a></div>
   </div>
 </template>
 
 <script>
+  import WxDialog from '../base/weixin-dialog/weixin-dialog'
   import {
     Group,
     XInput,
@@ -29,9 +34,11 @@
     XButton,
     Cell,
     XTextarea,
+    XSwitch,
     Value2nameFilter as value2name
   } from 'vux';
-  import {addUserAddress} from '../../api/addressMange/addressApi';
+  import {axiosPost} from "../../api/axios-data";
+  import {Request} from "../../api/request";
 
   export default {
     name: "addAddress",
@@ -47,20 +54,56 @@
         Fphone: '',
         Fname: '',
         Fphone: '',
-        Faddress: ''
+        Faddress: '',
+        alertDesc:'',
+        showAlertDialog:false,
+        Fdefault:1
       }
     },
     methods: {
       addAddressSubmit() {
         let postData = {
           Fname: this.Fname,
-          Fphone: this.Fname,
-          Fprovince: this.Geocode[0],
-          Fcity: this.Geocode[1],
-          Fdistrict: this.Geocode[2],
+          Fphone: this.Fphone,
+          Fprovince: this.addressName[0],
+          Fcity: this.addressName[1],
+          Fdistrict: this.addressName[2],
           Faddress: this.Faddress,
-          Fdefault: 0
+          Fdefault: this.Fdefault,
+          FgeoCode:this.Geocode
         }
+        if(this.Fname.length<1){
+          this.alertDesc="请填写姓名"
+          this.showAlertDialog=true;
+          return;
+        }else if(this.Fphone==''){
+          this.alertDesc="请填写收货人手机号"
+          this.showAlertDialog=true;
+          return;
+        }
+        else if(this.Geocode.length<1){
+          this.alertDesc="请填写收货人手机号"
+          this.showAlertDialog=true;
+          return;
+        }
+        else if(this.Faddress.length<1){
+          this.alertDesc="请填写收货人详细地址"
+          this.showAlertDialog=true;
+          return;
+        }else{
+          axiosPost('/address/add.json',postData).then(res=>{
+            if(res.data.rc==0){
+              if(this.$route.name=='AddAddress'){
+                this.$router.back();
+              }else{
+                window.location.reload()
+              }
+            }
+          })
+        }
+      },
+      delPok(){
+        this.showAlertDialog=false;
       },
       doShowAddress() {
         this.showAddress = true
@@ -70,6 +113,7 @@
       },
       onShadowChange(ids, names) {
         this.addressName = names;
+        this.Faddress=names.join('');
       },
       getName(value) {
         return value2name(value, ChinaAddressV4Data)
@@ -91,11 +135,14 @@
       Cell,
       XInput,
       XTextarea,
+      WxDialog,
+      XSwitch
     },
   }
 </script>
 
 <style lang="scss" scoped>
+  @switch-checked-bg-color="#f69f00";
   .address {
     .address-box {
       width: 100%;

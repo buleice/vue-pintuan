@@ -19,7 +19,7 @@
                   <div class="course-label"><img src="../../assets/课时(1).png" alt=""><span>{{item.number}}</span><img src="../../assets/人物拷贝.png" alt=""><span>{{item.sales}}</span></div>
                     <div class="price">
                         <a class="detailbtn" href="javascript:void(0);" target="_blank">
-                            <span ><strong>立即报名</strong></span>
+                            <span @click="processPayment(item.price,item.id)" ><strong>立即报名</strong></span>
                         </a>
                     </div>
                 </div>
@@ -29,7 +29,9 @@
 </template>
 
 <script>
-    export default {
+  import {mapActions,mapGetters} from 'vuex'
+  import {wxPays} from "../../api/wxPay";
+  export default {
         name:"lesson-list",
         props: {
             lessonList: {}||[],
@@ -38,11 +40,6 @@
             return {
                 observer: ''
             }
-        },
-        mounted() {
-            this.$nextTick(function(){
-              console.log(this.lessonList)
-            })
         },
 
         methods: {
@@ -69,8 +66,32 @@
             imgLoad(){
                 this.$emit('imgLoad')
             },
+          processPayment(willPayPrice,id){
+            let filteredCoupons=this.userCoupons.filter(item=>{
+              return willPayPrice>=item.spendMoney
+            });
+            if(filteredCoupons.length>0){
+              this.setWillPayPrice(willPayPrice)
+              this.setCanUseCoupons(filteredCoupons);
+              this.setBuyingId(id);
+              this.setShowCouponBuy(true);
+            }else{
+              this.wxpay(id);
+            }
+          },
+          wxpay(id){
+            wxPays.justPay('/pay/weixin/youxue/prepare.json',{shareKey:this._GetQueryString('shareKey'),buyingId:id})
+          },
+          _GetQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg); //search,查询？后面的参数，并匹配正则
+            if (r != null) return unescape(r[2]);
+            return '';
+          },
+          ...mapActions(['setBuyingId','setShowCouponsBuy','setCanUseCoupons'])
         },
         computed: {
+          ...mapGetters(['userCoupons'])
         }
     }
 </script>

@@ -2,16 +2,20 @@
   <div class="address_defalut_wrap"  style="height: 70px;">
     <div class="address_defalut address_border" style="display: block;">
       <ul @click="$router.push({name:'AddressLIst'})">
-        <li><strong>韩承吉 176****2085</strong></li>
-        <li><span class="tag tag_red">默认</span> 广东深圳市南山区佳嘉豪商务大厦10楼小伴龙</li>
+        <li><strong>{{defaultAddress.name}} {{defaultAddress.phone}}</strong></li>
+        <li><span v-if="defaultAddress.default===1" class="tag tag_red">默认</span> {{defaultAddress.address}}</li>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
+  import  {mapActions,mapGetters} from 'vuex'
   export default {
     name: "userAddress",
+    computed:{
+      ...mapGetters(['defaultAddress'])
+    }
   }
 </script>
 
@@ -74,8 +78,8 @@
     }
     .address_border {
       padding-bottom: 16px;
-      background: #fff url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAAAKBAMAAACOO0tGAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAnUExURf///4u16Oxtbezz/J3B7NDh9vSmprjS8vGNjfjDw/vd3f7w8O57e0EOI68AAABSSURBVCjPY2CAAE4l7GACVJ4hUBArEIXJL8KuXw0mz4xdv2ABVJ77EHYDGmAGmGDXLwKT58CuX2cDTIEjdgOcYfJJ2A3Qgsmz4/CBwWgQUiMIAXzCOFELLk/nAAAAAElFTkSuQmCC) -7px bottom repeat-x;
       background-size: 64px 5px;
+      border-top: 1px solid rgba(0,0,0,.2);
     }
     ul {
       position: relative;

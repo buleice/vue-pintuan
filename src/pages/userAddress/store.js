@@ -1,10 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createLogger from 'vuex/dist/logger'
-import * as actions from "../../store/actions";
-import * as getters from "../../store/getters";
-import state from "../../store/state";
-import mutations from "../../store/mutations";
 Vue.use(Vuex);
 //设置debug
 const debug = process.env.NODE_ENV !== 'production'
@@ -13,19 +9,27 @@ const debug = process.env.NODE_ENV !== 'production'
 export default new Vuex.Store({
   state:{
     shippingAddress:[],
+    defaultAddress:{}
   },
   actions:{
     setShippingAddress({commit,state},list){
       commit('SETSHIPPINGADDRESS',list)
+    },
+    setDefaultAddress({commit,state},address){
+      commit('SETDEFAULTADDRESS',address)
     }
   },
   mutations:{
     SETSHIPPINGADDRESS(state,list){
       state.shippingAddress=list;
-    }
+    },
+    SETDEFAULTADDRESS(state,address){
+      state.defaultAddress=address;
+    },
   },
   getters:{
-    AddressList:(state)=>state.shippingAddress
+    shippingAddress:state=>state.shippingAddress,
+    defaultAddress:state=>state.defaultAddress
   },
   strict:debug,
   plugins: debug ? [createLogger()] : []
