@@ -81,7 +81,7 @@
           Fdefault: this.Fdefault,
           FgeoCode:this.Geocode
         }
-        if (!this.testCardholder(this.Fname)) {
+        if (this.Fname.length.length<=0) {
           this.alertDesc = "请输入符合姓名规范的收货人姓名"
           this.showAlertDialog=true;
           return false;
