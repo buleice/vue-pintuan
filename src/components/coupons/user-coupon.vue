@@ -63,7 +63,7 @@ export default {
               font-size: .75rem;
               &.value {
                   color: #f49500;
-                  font-size: 1rem;
+                  font-size: 1.2rem;
                   text-align: left;
                   padding-top: .75rem;
                   span {

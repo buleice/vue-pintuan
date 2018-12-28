@@ -14,50 +14,78 @@
       <router-link to="/activitylessons">马上参加</router-link>
     </li>
   </ul>
+  <WxShare :WXSHDATA="shareData"></WxShare>
 </div>
 </template>
 
 <script>
+import WxShare from '../../components/base/wxshare.vue'
   export default {
-    name: 'App'
+    name: 'App',
+    data(){
+      return{
+        shareData:{
+          title: `小伴龙元旦抽奖活动开始啦！`,
+          desc: '保温杯、图书、飞行棋……各种精彩好礼等你来拿！',
+          link: 'https://wxyx.youban.com/purchase/20190101?#/lottery',
+          imgUrl: 'https://udata.youban.com/webimg/wxyx/puintuan/common/20190101/shareicon.png',
+          success: function() {
+            new Request('/common/record.json?wxschool=20190101',"GET").returnJson()
+          },
+          cancel: function() {
+            console.log("取消分享")
+          }
+        }
+      }
+    },
+    components:{
+      WxShare
+    }
   }
 </script>
 
 <style lang="scss">
+
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
+    background-color: #f4f0e2;
+    width: 100%;
+overflow: hidden;
     .tabs{
       position: fixed;
-      bottom: 0;
+      display: flex;
+      justify-content: center;
+      bottom: -1px;
       left: 0;
       width: 100%;
-      height: 45px;
+      height: 2.81rem;
       li{
-        float: left;
+        // float: left;
         list-style-type: none;
         width: 33.2%;
         text-align: center;
-        line-height: 45px;
+        line-height: 2.81rem;
         background: #ffd4b2;
         a{
           text-decoration: none;
-          color: #ff5d38;
           display: block;
           width: 100%;
           height: 100%;
+          display: block;
+          color: #ff5d38
         }
-        &:first-child{
+        .router-link-active {
+            text-decoration: none;
+              background: #ff5d38;
+              color: #ffffff;
+        }
+        &:nth-child(2){
           border-right: 1px #ffb08d solid;
-        }
-        &:last-child{
-          background: #ff5d38;
-          a{
-            color: #ffffff;
-          }
+          border-left: 1px #ffb08d solid;
         }
       }
     }

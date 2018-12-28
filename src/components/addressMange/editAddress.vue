@@ -2,7 +2,7 @@
   <div class="address2">
     <div class="m_header">
       <div class="m_header_bar">
-        <div class="m_header_bar_back"></div>
+        <div class="m_header_bar_back" @click="$router.back()"></div>
         <div class="m_header_bar_title">修改地址</div>
       </div>
     </div>
@@ -27,7 +27,7 @@
     </group>
    <div class="deleteButton" @click="deleteAdddress">删除该地址</div>
     <div  class="mod_btns"><a  href="javascript:void(0);"  @click="editSubmit" class="mod_btn bg_1">确认修改</a></div>
-    <WxDialog :showPromptDialog="showPromptDialog" :promptDesc="promptDesc" @POk="delPok" @PCancle="delPcancle"></WxDialog>
+    <WxDialog  :alertDesc="alertDesc" :showAlertDialog="showAlertDialog" @AOk="delAok" :showPromptDialog="showPromptDialog" :promptDesc="promptDesc" @POk="delPok" @PCancle="delPcancle"></WxDialog>
   </div>
 </template>
 
@@ -57,7 +57,9 @@
         addressInfo:{},
         promptDesc:'',
         showPromptDialog:false,
-        Faddress:[]
+        Faddress:[],
+        alertDesc:'',
+        showAlertDialog:false,
 
       }
     },
@@ -68,6 +70,17 @@
       })
     },
     methods:{
+      testCardholder(holder) {
+        let uPattern = /^[\u4E00-\u9FA5]{2,4}$/;
+        return uPattern.test(holder);
+      },
+      testPhoneNumber(code) {
+        let mPattern = /^1\d{10}$/; //http://caibaojian.com/regexp-example.html
+        return mPattern.test(code);
+      },
+      delAok(){
+        this.showAlertDialog=false;
+      },
       doShowAddress() {
         this.showAddress = true
         setTimeout(() => {
@@ -75,9 +88,7 @@
         }, 2000)
       },
       onShadowChange(ids, names) {
-        this.bankAddress = names;
         this.Faddress=names;
-        this.addressInfo.address=names.join('')
       },
       getName(value) {
         return value2name(value, ChinaAddressV4Data)
@@ -119,22 +130,61 @@
             FgeoCode:this.addressInfo.Geocode
           }
         }
-        axiosPost('/address/update.json',postData).then(res=>{
-          let addressList=JSON.parse(JSON.stringify(this.shippingAddress));
-          addressList[index]=Object.assign({},this.shippingAddress[index],this.addressInfo)
-          if(res.data.rc==0){
-            this.setShippingAddress(addressList);
-            this.$router.back()
-          }
-        })
+        if (!this.testCardholder(this.addressInfo.name)) {
+          this.alertDesc = "请输入符合姓名规范的收货人姓名"
+          this.showAlertDialog=true;
+          return false;
+        } else if (!this.testPhoneNumber(this.addressInfo.phone.replace(/\s/g,""))) {
+          this.alertDesc = "请填写正确的手机号"
+          this.showAlertDialog=true;
+          return false;
+        }
+        else if(this.addressInfo.Geocode.length<1){
+          this.alertDesc="请选择省市区地址"
+          this.showAlertDialog=true;
+          return;
+        }
+        else if(this.addressInfo.address.length<5){
+          this.alertDesc="请填写收货人详细地址"
+          this.showAlertDialog=true;
+          return;
+        }else{
+          axiosPost('/address/update.json',postData).then(res=>{
+            let addressList=JSON.parse(JSON.stringify(this.shippingAddress));
+            if(this.addressInfo.default==1){
+              addressList.forEach((item,index)=>{
+                addressList[index]=Object.assign({},item,{default:0});
+              })
+            }
+            addressList[index]=Object.assign({},this.shippingAddress[index],this.addressInfo,{  province:this.Faddress[0],
+              city:this.Faddress[1],
+              district:this.Faddress[2]})
+            if(res.data.rc==0){
+              if(this.defaultAddress.id==this.shippingAddress[index].id){
+                this.setDefaultAddress(addressList[index]);
+              }
+              this.setShippingAddress(addressList);
+              this.$router.back()
+            }
+          })
+        }
       },
       delPok(){
-        let index=this.$route.params.index
-        axiosPost('/address/delete.json',{id:this.shippingAddress[index].id}).then(res=>{
+        let index=this.$route.params.index;
+        let addressId=this.shippingAddress[index].id
+        axiosPost('/address/delete.json',{id:addressId}).then(res=>{
           if(res.data.rc==0){
-            let addressList=JSON.parse(JSON.stringify(this.shippingAddress));
-            addressList.splice(index,1);
-            this.setShippingAddress(addressList);
+              let addressList=JSON.parse(JSON.stringify(this.shippingAddress));
+              addressList.splice(index,1);
+              this.setShippingAddress(addressList);
+              if(addressList.length>0){
+                console.log(this.defaultAddress)
+                if(this.defaultAddress.id==addressId){
+                  this.setDefaultAddress(addressList[0]);
+                }else{
+                  this.setDefaultAddress({});
+                }
+              }
             this.showPromptDialog=false;
             this.$router.back();
           }
@@ -147,10 +197,10 @@
         this.promptDesc="请确认是否删除该条地址？"
         this.showPromptDialog=true;
       },
-      ...mapActions(['setShippingAddress'])
+      ...mapActions(['setShippingAddress','setDefaultAddress'])
     },
     computed:{
-      ...mapGetters(['shippingAddress'])
+      ...mapGetters(['shippingAddress','defaultAddress'])
     },
     components: {
       Group,
@@ -257,14 +307,25 @@
   }
 </style>
 <style scoped>
-  *{margin-top: 0}
-  .weui-cells{margin-top: 0 !important;}
+  /* *{margin-top: 0}
+  .weui-cells{margin-top: 0 !important;} */
   .address-box2{
     width: 100%;
     height:2.81rem;
     overflow: hidden;
     position: relative;
   }
+  .address2 >>>.vux-popup-picker-select{
+    padding-left: 1rem;
+    text-align: left !important;
+  }
+  .address2 >>>.weui-input{color: #666}
   .address2 >>>.weui-cells{margin-top: 0 !important;}
   .address-box2 >>>.vux-no-group-title{position: absolute;bottom: 0;left: 0;width: 100%;height: 100%;margin-top: 0!important}
+  .address2 >>>.weui-textarea{
+        color: #666;
+  }
+.address2 >>>  .vux-cell-value{
+    color: #666;
+  }
 </style>

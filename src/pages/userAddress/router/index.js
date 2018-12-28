@@ -5,7 +5,7 @@ const OrderConfirmation=()=>import('../../../components/addressMange/order-confi
 const EditAddressIndex=()=>import('../../../components/addressMange/editAddress.vue')
 const AddressList=()=>import('../../../components/addressMange/addressList')
 const AddAddress=()=>import('../../../components/addressMange/addAddress')
-
+const ChooseAddress=()=>import('../../../components/addressMange/chooseAddress')
 Vue.use(Router);
 
 export default new Router({
@@ -21,6 +21,11 @@ export default new Router({
       path: '/editAddress',
       name: 'EditAddressIndex',
       component: EditAddressIndex,
+    },
+    {
+      path:'/chooseAddress',
+      name:'ChooseAddress',
+      component:ChooseAddress
     },
     {
       path:'/addressList',

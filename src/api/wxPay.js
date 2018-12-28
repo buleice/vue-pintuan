@@ -1,4 +1,4 @@
-import { WechatPlugin } from 'vux';
+
 // wx.chooseWXPay({
 //   timestamp: 0, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
 //   nonceStr: '', // 支付签名随机串，不长于 32 位
@@ -25,7 +25,7 @@ import { WechatPlugin } from 'vux';
 // });
 
 import {axiosPost} from "./axios-data";
-const wxPays= {
+const wxPays = {
   join(url, data) {
     wxPay(url, Object.assign({}, data, {isFounder: 0,urltag:'wxyx_groupbuying'}));
   },
@@ -74,7 +74,7 @@ const wxPays= {
 
 const wxPay=function (url,data) {
   axiosPost(url,data).then(response=>{
-    if(response.status===200){
+    if(response.data.rc==0){
       Pay(response.data.data);
     }
   }).catch(function (errors) {
@@ -82,9 +82,8 @@ const wxPay=function (url,data) {
   });
 
 }
-
 const Pay = function(params) {
-  if (typeof WechatPlugin.WeixinJSBridge === 'undefined') {
+  if (typeof window.WeixinJSBridge === 'undefined') {
     if (document.addEventListener) {
       document.addEventListener('WeixinJSBridgeReady', function () { onBridgeReady(params) }, false)
     } else if (document.attachEvent) {
@@ -97,7 +96,7 @@ const Pay = function(params) {
 }
 
 const onBridgeReady=function (params) {
-  WechatPlugin.WeixinJSBridge.invoke(
+  window.WeixinJSBridge.invoke(
     'getBrandWCPayRequest', params,
     function(res) {
       if (res.err_msg === "get_brand_wcpay_request:ok") {
@@ -113,4 +112,3 @@ const onBridgeReady=function (params) {
 export {
   wxPays
 }
-

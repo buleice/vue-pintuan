@@ -83,4 +83,8 @@ const webpackConfig = {
     child_process: 'empty'
   }
 }
-module.exports=vuxLoader.merge(webpackConfig, { plugins: ['vux-ui'] })
+  const themeConfig={
+    name: 'less-theme',
+    path: 'src/assets/less/theme.less'
+  };
+module.exports=vuxLoader.merge(webpackConfig, {plugins:[{name: 'vux-ui'}, themeConfig]})

@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="">
-        <ul class="item">
+        <ul class="item" v-if="lessonList.length>0">
             <li v-for="(item,index) in lessonList" :key="index">
                 <div class="tuanimg">
                     <a :href="item.url" target="_blank">
@@ -10,21 +10,31 @@
                         <!--{{item['sales']}}人正在学习-->
                     <!--</div>-->
                 </div>
-                <div class="tuanTitle">{{item['title']}}</div>
+                <div class="tuanTitle">
+                  <span>{{item['title']}}</span>
+                </div>
                 <div class="tuanInfo">
                     <!--<div class="Infotag" v-if="item['label'].length>0">-->
                         <!--<span>{{splitlabel(item['label'])[0]}}</span>-->
                         <!--<span>{{splitlabel(item['label'])[1]}}</span>-->
                     <!--</div>-->
-                  <div class="course-label"><img src="../../assets/课时(1).png" alt=""><span>{{item.number}}</span><img src="../../assets/人物拷贝.png" alt=""><span>{{item.sales}}</span></div>
+                  <div class="course-label">
+                    <img src="../../assets/课时(1).png" alt=""><span>{{item.number}}</span>
+                    <img src="../../assets/人物拷贝.png" alt=""><span>{{item.sales}}</span>
+                    <span>&yen;&nbsp;<strong>{{item['price']}}</strong> </span>
+                  </div>
                     <div class="price">
-                        <a class="detailbtn" href="javascript:void(0);" target="_blank">
-                            <span @click="processPayment(item.price,item.id)" ><strong>立即报名</strong></span>
-                        </a>
+                      <a class="detailbtn" v-if="item.isBuy==1" :href="item.url" target="_blank">
+                          <span><strong>去上课</strong></span>
+                      </a>
+                      <a v-else class="detailbtn" href="javascript:void(0);" target="_blank">
+                          <span @click="processPayment(item.price,item.id)" ><strong>立即报名</strong></span>
+                      </a>
                     </div>
                 </div>
             </li>
         </ul>
+        <h3 v-else>您已经购买过该分类下所有课程，我们去看看其它课程吧！</h3>
     </div>
 </template>
 
@@ -38,7 +48,8 @@
         },
         data() {
             return {
-                observer: ''
+                observer: '',
+                clickFlag:true
             }
         },
 
@@ -67,6 +78,13 @@
                 this.$emit('imgLoad')
             },
           processPayment(willPayPrice,id){
+            if(!this.clickFlag){
+              return;
+            }
+            this.clickFlag=false;
+            setTimeout(()=>{
+              this.clickFlag=true;
+            },1500)
             let filteredCoupons=this.userCoupons.filter(item=>{
               return willPayPrice>=item.spendMoney
             });
@@ -74,13 +92,13 @@
               this.setWillPayPrice(willPayPrice)
               this.setCanUseCoupons(filteredCoupons);
               this.setBuyingId(id);
-              this.setShowCouponBuy(true);
+              this.setShowCouponsBuy(true);
             }else{
               this.wxpay(id);
             }
           },
           wxpay(id){
-            wxPays.justPay('/pay/weixin/youxue/prepare.json',{shareKey:this._GetQueryString('shareKey'),buyingId:id})
+            wxPays.justPay('/pay/weixin/youxue/prepare.json',{shareKey:this._GetQueryString('shareKey'),buyingid:id})
           },
           _GetQueryString(name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -88,7 +106,7 @@
             if (r != null) return unescape(r[2]);
             return '';
           },
-          ...mapActions(['setBuyingId','setShowCouponsBuy','setCanUseCoupons'])
+          ...mapActions(['setBuyingId','setShowCouponsBuy','setCanUseCoupons','setWillPayPrice'])
         },
         computed: {
           ...mapGetters(['userCoupons'])
@@ -97,6 +115,13 @@
 </script>
 
 <style media="screen" lang="scss" scoped>
+h3{
+  width: 70%;
+  margin: auto;
+  color: rgba(0,0,0,.5);
+  margin-top: 20%;
+  font-size:1rem;
+}
     .item {
         overflow: hidden;
         padding: 0.625rem;
@@ -151,7 +176,7 @@
 
             }
             .tuanInfo {
-                padding: 0.625rem;
+                padding:.31rem 0.625rem ;
                 height: auto;
                 overflow: hidden;
                 position: relative;
@@ -173,17 +198,26 @@
               .course-label{
                 float: left;
                 width: auto;
-                padding-top: 0.625rem;
+                padding-top: .19rem;
                 display: inline-block;
                 vertical-align: middle;
-                margin-top: .625rem;
+
                 img,span{
                   display: inline-block;vertical-align: initial;
                 }
                 img{
                   width: .75rem;
                 }
-                span{margin: 0 .31rem;color: #929292}
+                span{margin: 0 .31rem;color: #929292;
+                  &:last-child{
+                    color: #ed0d00;
+                    font-size: .75rem;
+                    // margin-left: 3.13rem;
+                    strong{
+                      font-size: 1rem;
+                    }
+                  }
+                }
               }
                 .price {
                     float: right;

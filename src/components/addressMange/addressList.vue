@@ -9,10 +9,10 @@
     <div>
       <div class="address_list">
         <div class="address" v-for="(item,index) in shippingAddress">
-          <ul :class="{selected: selectedIndex==index}" @click="setAddressIndex(index)">
+          <ul :class="{selected: selectedIndex==index}">
             <li><strong>{{item.name}}</strong>&nbsp;<strong>{{item.phone}}</strong></li>
-            <!--<li><span class="tag tag_red">默认</span>广东深圳市南山区佳嘉豪商务大厦10楼小伴龙</li>-->
-            <li>{{item.address}}</li>
+            <!-- <li><span class="tag tag_red">默认</span>广东深圳市南山区佳嘉豪商务大厦10楼小伴龙</li> -->
+            <li><span v-if="item.default==1" class="tag tag_red">默认</span>{{item.address}}</li>
             <li class="edit" @click.stop="$router.push({name:'EditAddressIndex',params:{index:index}})">编辑</li>
           </ul>
         </div>
@@ -38,24 +38,33 @@
 </template>
 
 <script>
-  import {mapGetters, mapActions} from 'vuex';
+  import { mapActions,mapGetters} from 'vuex';
+import{Request} from '../../api/request'
 
   export default {
     name: "addressList",
     data(){
       return{
         selectedIndex:0,
+        addressList:[]
       }
     },
-    methods:{
-      setAddressIndex(index){
-        this.setDefaultAddress(this.shippingAddress[index]);
-        this.selectedIndex=index;
-        this.$router.back()
-      },
-      ...mapActions(['setDefaultAddress'])
+    created(){
+      new Request('/address/list.json','GET').returnJson().then(res=>{
+        this.addressList=res.list;
+          this.setShippingAddress(res.list);
+        // console.log(res)0
+      })
     },
-    computed:{
+    methods:{
+      // setAddressIndex(index){
+      //   this.setDefaultAddress(this.shippingAddress[index]);
+      //   this.selectedIndex=index;
+      //   this.$router.back()
+      // },
+      ...mapActions(['setShippingAddress'])
+    },
+    computed: {
       ...mapGetters(['shippingAddress'])
     }
   }
@@ -135,24 +144,24 @@
           padding-right: 3.13rem;
           background-color: #fff;
           z-index: 2;
-          padding: .44rem 2.5rem;
+          padding: .44rem 2.5rem .44rem 1rem;
           position: relative;
           overflow: hidden;
-          &.selected:before {
-            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoBAMAAAB+0KVeAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAnUExURUdwTOk7Pe08Qeo8PvJFReo7Peo7Pek7Peo7Puo8Puk8Pek8QOk7Pd3EmuAAAAAMdFJOUwDqKYAPqPPWUHK/O5nvTfQAAAD0SURBVCjPY2CAAM2osvSlkxiQAYv5GTAodkASMzsDBckI0cYzcCABE2M+gwQMoJpjkAWPQgxgPYMCAsCCNqiCh0FiHGfQQANQ0BFdUARTN1g/Sw664DEHVEfCnMqOwpfuARIFDDrIYgcV9gDJQwxzkAWFmGSA5EmGGBSFimCfMqzBUHjmFEMNhsIzxxlyMBSeOYYkCFMIFARpP7ERWSFQO8ii0yAuXCHQohiYRrhCoJPmQHUiFAIdrwO1A6EQ6E12qGsQCoEBwgx1DkIhMOiggSy9ETmQsUYH9ojDGsVYEwP2ZIM1gWFNitgTLfbkjTUjoGcZAPLdyPDX/Hi9AAAAAElFTkSuQmCC) no-repeat 50%;
-            background-size: 1.25rem 1.25rem;
-          }
-          &::before {
-            content: "\20";
-            width: 1.25rem;
-            height: 1.25rem;
-            position: absolute;
-            top: 50%;
-            left: .63rem;
-            margin-top: -.63rem;
-            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyBAMAAADsEZWCAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAhUExURUdwTJycnJmZmZqampmZmZubm5mZmZmZmZmZmZmZmZmZmXES5I0AAAAKdFJOUwAU+FG8KKVz540ZLfSqAAABHklEQVQ4y2NggAHhKR1KHZ6GDOiAsURrFQgschdAk8hapVIcyCBq7rRqGYoU46RFyRABRjMtTWQpi1WpcHbYqmaEBPsqVyRlIasK4Oys5SiWVi2DsVgWGaDIMGs5wLS0onkhAqqJfVEAmgyrFsQmq8UY/oYIMXYVYMiwrwD5iXMJAybwmgAkhJZikYlSBLksAYsMG9B1jBgug7hOgIF9GQM2kFXAwLIYq4yVA4OQIlYZoLCVA1YZoFGzCrDKsK9k8DLAKsO8hKErAKsM6wqGLgGsMowrGLQYsINFeGRwm4bbBbhdjdunuEMHd4jijgXcMYc7tnGnEDypCndKxJ16cad4PLkEd87Ckxtx52A8uR53SYGndMFdIuEpxbCUfADAKFoNusO8mAAAAABJRU5ErkJggg==) no-repeat 50%;
-            background-size: 1.25rem 1.25rem;
-          }
+          // &.selected:before {
+          //   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoBAMAAAB+0KVeAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAnUExURUdwTOk7Pe08Qeo8PvJFReo7Peo7Pek7Peo7Puo8Puk8Pek8QOk7Pd3EmuAAAAAMdFJOUwDqKYAPqPPWUHK/O5nvTfQAAAD0SURBVCjPY2CAAM2osvSlkxiQAYv5GTAodkASMzsDBckI0cYzcCABE2M+gwQMoJpjkAWPQgxgPYMCAsCCNqiCh0FiHGfQQANQ0BFdUARTN1g/Sw664DEHVEfCnMqOwpfuARIFDDrIYgcV9gDJQwxzkAWFmGSA5EmGGBSFimCfMqzBUHjmFEMNhsIzxxlyMBSeOYYkCFMIFARpP7ERWSFQO8ii0yAuXCHQohiYRrhCoJPmQHUiFAIdrwO1A6EQ6E12qGsQCoEBwgx1DkIhMOiggSy9ETmQsUYH9ojDGsVYEwP2ZIM1gWFNitgTLfbkjTUjoGcZAPLdyPDX/Hi9AAAAAElFTkSuQmCC) no-repeat 50%;
+          //   background-size: 1.25rem 1.25rem;
+          // }
+          // &::before {
+          //   content: "\20";
+          //   width: 1.25rem;
+          //   height: 1.25rem;
+          //   position: absolute;
+          //   top: 50%;
+          //   left: .63rem;
+          //   margin-top: -.63rem;
+          //   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyBAMAAADsEZWCAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAhUExURUdwTJycnJmZmZqampmZmZubm5mZmZmZmZmZmZmZmZmZmXES5I0AAAAKdFJOUwAU+FG8KKVz540ZLfSqAAABHklEQVQ4y2NggAHhKR1KHZ6GDOiAsURrFQgschdAk8hapVIcyCBq7rRqGYoU46RFyRABRjMtTWQpi1WpcHbYqmaEBPsqVyRlIasK4Oys5SiWVi2DsVgWGaDIMGs5wLS0onkhAqqJfVEAmgyrFsQmq8UY/oYIMXYVYMiwrwD5iXMJAybwmgAkhJZikYlSBLksAYsMG9B1jBgug7hOgIF9GQM2kFXAwLIYq4yVA4OQIlYZoLCVA1YZoFGzCrDKsK9k8DLAKsO8hKErAKsM6wqGLgGsMowrGLQYsINFeGRwm4bbBbhdjdunuEMHd4jijgXcMYc7tnGnEDypCndKxJ16cad4PLkEd87Ckxtx52A8uR53SYGndMFdIuEpxbCUfADAKFoNusO8mAAAAABJRU5ErkJggg==) no-repeat 50%;
+          //   background-size: 1.25rem 1.25rem;
+          // }
           &::after {
             content: "";
             height: 0;

@@ -1,13 +1,13 @@
 <template>
-  <div class="main" v-if="couponsSent.length>0&&showCouponSent">
+  <div class="main" v-if="couponSent.length>0&&showCouponSent">
     <div class="coupons-sent">
         <h3>小伴龙优学元旦福利券</h3>
-        <div class="coupon-list1" v-if="couponsSent.length==1">
-            <li>满{{couponsSent[0].spendMoney}}元使用</li>
-            <li>&yen;<span>{{couponsSent[0].couponMoney}}</span></li>
+        <div class="coupon-list1" v-if="couponSent.length==1">
+            <li>满{{couponSent[0].spendMoney}}元使用</li>
+            <li>&yen;<span>{{couponSent[0].couponMoney}}</span></li>
         </div>
         <div class="coupon-list2" v-else>
-          <li v-for="(item,index) in couponsSent" key="index">
+          <li v-for="(item,index) in couponSent" key="index">
             <div>&yen;<span>{{item.couponMoney}}</span></div>
             <div>满{{item.spendMoney}}元使用</div>
           </li>
@@ -21,7 +21,7 @@
     export default {
         name: "coupon-sent",
       props:{
-        couponsSent:{
+        couponSent:{
           type:Array,
           default:()=>[]
         },

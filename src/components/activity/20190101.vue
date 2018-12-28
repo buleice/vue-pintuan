@@ -13,7 +13,7 @@
         </ul>
         <ClassifyNormal :lessonList="lessonList"></ClassifyNormal>
         <CouponBuy></CouponBuy>
-        <CouponSent></CouponSent>
+        <CouponSent :couponSent="couponSent"></CouponSent>
       </div>
     </div>
   </div>
@@ -48,6 +48,7 @@
         interest: [],
         auth: '',
         showAd: false,
+        couponSent:[]
       }
     },
     created() {
@@ -77,6 +78,7 @@
         this.locationId=category
         new Request('/activity/20190101/lesson.json', 'GET', {category: category}).returnJson().then(res => {
           this.lessonList = res.list;
+          this.couponSent=res.couponSent;
           this.setUserCoupons(res.coupons);
         })
       },
@@ -86,6 +88,8 @@
 </script>
 <style scoped lang="scss">
   .shop-page {
+    background: #ffffff;
+      padding-bottom: 2.5rem;
     .shop-content {
       .banner-bg {
         display: block;

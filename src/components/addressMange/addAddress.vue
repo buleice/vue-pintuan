@@ -25,6 +25,7 @@
 </template>
 
 <script>
+  import { mapActions,mapGetters} from 'vuex';
   import WxDialog from '../base/weixin-dialog/weixin-dialog'
   import {
     Group,
@@ -49,7 +50,7 @@
         addressData: ChinaAddressV4Data,
         title: '收货地址',
         addressName: '',
-        Geocode: [],
+        Geocode: ["110000","110100","110101"],
         showAddress: false,
         Fphone: '',
         Fname: '',
@@ -57,10 +58,18 @@
         Faddress: '',
         alertDesc:'',
         showAlertDialog:false,
-        Fdefault:1
+        Fdefault:"1"
       }
     },
     methods: {
+      testCardholder(holder) {
+        let uPattern = /^[\u4E00-\u9FA5]{2,4}$/;
+        return uPattern.test(holder);
+      },
+      testPhoneNumber(code) {
+        let mPattern = /^1\d{10}$/; //http://caibaojian.com/regexp-example.html
+        return mPattern.test(code);
+      },
       addAddressSubmit() {
         let postData = {
           Fname: this.Fname,
@@ -72,27 +81,32 @@
           Fdefault: this.Fdefault,
           FgeoCode:this.Geocode
         }
-        if(this.Fname.length<1){
-          this.alertDesc="请填写姓名"
+        if (!this.testCardholder(this.Fname)) {
+          this.alertDesc = "请输入符合姓名规范的收货人姓名"
           this.showAlertDialog=true;
-          return;
-        }else if(this.Fphone==''){
-          this.alertDesc="请填写收货人手机号"
+          return false;
+        } else if (!this.testPhoneNumber(this.Fphone.replace(/\s/g,""))) {
+          this.alertDesc = "请填写正确的手机号"
           this.showAlertDialog=true;
-          return;
+          return false;
         }
         else if(this.Geocode.length<1){
-          this.alertDesc="请填写收货人手机号"
+          this.alertDesc="请选择省市区地址"
           this.showAlertDialog=true;
           return;
         }
-        else if(this.Faddress.length<1){
+        else if(this.Faddress.length<5){
           this.alertDesc="请填写收货人详细地址"
           this.showAlertDialog=true;
           return;
         }else{
           axiosPost('/address/add.json',postData).then(res=>{
             if(res.data.rc==0){
+              new Request('/address/list.json','GET').returnJson().then(res=>{
+                this.addressList=res.list;
+                  this.setShippingAddress(res.list);
+                // console.log(res)0
+              })
               if(this.$route.name=='AddAddress'){
                 this.$router.back();
               }else{
@@ -113,7 +127,7 @@
       },
       onShadowChange(ids, names) {
         this.addressName = names;
-        this.Faddress=names.join('');
+        // this.Faddress=names.join('');
       },
       getName(value) {
         return value2name(value, ChinaAddressV4Data)
@@ -126,7 +140,8 @@
       },
       onEvent(event) {
         console.log('on', event)
-      }
+      },
+        ...mapActions(['setShippingAddress'])
     },
     components: {
       Group,
@@ -140,9 +155,8 @@
     },
   }
 </script>
-
 <style lang="scss" scoped>
-  @switch-checked-bg-color="#f69f00";
+
   .address {
     .address-box {
       width: 100%;
@@ -182,7 +196,17 @@
   .address >>> .weui-cells {
     margin-top: 0 !important;
   }
-
+  .address >>>  .vux-cell-value{
+      color: #666;
+    }
+  .address >>>.weui-input{color: #666}
+  .address >>>.vux-popup-picker-select{
+    padding-left: 1rem;
+    text-align: left !important;
+  }
+  .address >>>.weui-textarea{
+        color: #666;
+  }
   .address-box >>> .vux-no-group-title {
     position: absolute;
     bottom: 0;

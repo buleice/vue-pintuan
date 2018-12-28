@@ -141,6 +141,10 @@ export default {
                   text-align: left;
                   width: 38%;
                   border-right: 1px dashed #fff;
+                  
+                  sub{
+                    font-size: 1.2rem;
+                  }
                   li:first-child{
                     span{
                       font-size: 2.5rem;

@@ -41,11 +41,11 @@
     <!--</ul>-->
     <!--<img src="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2…8c.4.4.6 1 .6 1.4 0 .5-.2 1-.6 1.4l-8 8c-.4.4-1 .6-1.4.6z%22/%3E%3C/svg%3E" alt="">-->
     <div class="address-manage">
-      <AddressBox v-if="addressList.length>0"></AddressBox>
+      <AddressBox v-if="defaultAddress.name&&shippingAddress.length>0"></AddressBox>
       <AddAddress v-else style="margin-top: 1.88rem"></AddAddress>
     </div>
-    <div v-if="addressList.length>0" class="mod_btns fixed"><a href="javascript:void(0);" @click="handleSubmit"
-                                                               class="mod_btn bg_1">提交</a></div>
+    <div v-if="defaultAddress.name&&shippingAddress.length>0" class="mod_btns fixed"><a href="javascript:void(0);" @click="handleSubmit"
+                                                               class="mod_btn bg_1">领取奖品</a></div>
 
   </div>
 </template>
@@ -95,16 +95,13 @@
         this.$router.push({name: name, params: params})
       },
       handleSubmit() {
-        axiosPost('/lottery/prize/express.json', {
+        axiosPost('/lottery/prize/express.json', Object.assign({},{
           activityid: this._GetQueryString('activityid'),
           prizeid: this._GetQueryString('prizeid'),
-          name: this.choosenAddress.name,
-          phone: this.choosenAddress.phone,
-          address: this.choosenAddress.address
-        }).then(res => {
+        },this.defaultAddress)).then(res => {
           if (res.data.rc == 0) {
             setTimeout(() => {
-              window.location.href = "/activity/20190101"
+              window.location.href = "/purchase/20190101?#/lottery"
             }, 300)
           }
         })
@@ -116,7 +113,10 @@
         return '';
       },
       ...mapActions(['setDefaultAddress', 'setShippingAddress'])
-    }
+    },
+    computed: {
+          ...mapGetters(['shippingAddress','defaultAddress'])
+      }
   }
 </script>
 
@@ -391,14 +391,15 @@
       margin: .94rem .63rem;
     }
     .fixed {
-      left: 0;
-      right: 0;
+      // left: 0;
+      // right: 0;
       max-width: 33.75rem;
       margin: 0 auto;
       background-color: #fff;
-      position: fixed;
-      z-index: 101;
-      bottom: 0;
+      position: relative;
+      // position: fixed;
+      // z-index: 101;
+      // bottom: 0;
       padding-bottom: constant(safe-area-inset-bottom);
       padding-bottom: env(safe-area-inset-bottom);
       .mod_btn {

@@ -1,7 +1,7 @@
 <template>
   <div class="address_defalut_wrap"  style="height: 4.38rem;">
     <div class="address_defalut address_border" style="display: block;">
-      <ul @click="$router.push({name:'AddressLIst'})">
+      <ul @click="$router.push({name:'ChooseAddress',params:{id:defaultAddress.id}})">
         <li><strong>{{defaultAddress.name}} {{defaultAddress.phone}}</strong></li>
         <li><span v-if="defaultAddress.default===1" class="tag tag_red">默认</span> {{defaultAddress.address}}</li>
       </ul>

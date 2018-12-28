@@ -14,7 +14,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 @import "../../common/css/weui.min.css";
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

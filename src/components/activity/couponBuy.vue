@@ -43,7 +43,7 @@
         this.setShowCouponsBuy(bool)
       },
       wxpay(couponId){
-        wxPays.justPay('/pay/weixin/youxue/prepare.json',{couponId:couponId, shareKey:this._GetQueryString('shareKey'),buyingid:this.buyingId})
+        wxPays.justPay('/pay/weixin/youxue/prepare.json',{couponid:couponId, shareKey:this._GetQueryString('shareKey'),buyingid:this.buyingId})
       },
       _GetQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
