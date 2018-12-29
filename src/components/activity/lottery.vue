@@ -3,8 +3,11 @@
   <div class="lucky-wheel">
     <!--<div class="lucky-title"></div>-->
     <div class="lucky-danmuku">
-      <div class="" v-show="danmakuText.name">
-        <span>{{danmakuText.name}}</span><span>&nbsp;&nbsp;刚刚获得了</span> <span>{{danmakuText.prize}}</span>
+      <div  v-if="!danmakuText.name">
+        <span>幸运+++</span><span>&nbsp;&nbsp;刚刚获得了</span> <span>200优币</span>
+      </div>
+      <div v-else>
+        <span>{{danmakuText.name}}</span><span>&nbsp;&nbsp;刚刚获得了</span><span>{{danmakuText.prize}}</span>
       </div>
     </div>
     <div class="wheel-main">
@@ -16,7 +19,7 @@
           <div class="prize-list">
             <div class="prize-item" v-for="(item,index) in prize_list" :key="index">
               <div class="prize-type">
-                {{item.name}}
+                {{item.lname}}
               </div>
               <div class="prize-pic">
                 <img :src="item.image">
@@ -201,7 +204,7 @@ export default {
           if (initIndex>=this.messageList.length) {
             initIndex=0;
           }
-        }, 4000)
+        }, 3000)
       }
     }
   }
@@ -266,7 +269,7 @@ export default {
   height: 2rem;
   line-height: 2rem;
   color: #fff;
-  animation: danmu 4s;
+  animation: danmu 3s;
   /* animation-delay: 1s; */
   animation-iteration-count: infinite;
   font-size: .75rem;
@@ -421,7 +424,7 @@ transform: translateY(1rem);
 }
 .prize-pic img {
   margin-top: .63rem;
-  width: 2.1rem;
+  width: 2.5rem;
   /* height: 2.5rem; */
   /* margin-top: 1.640625rem; */
 }
@@ -576,6 +579,8 @@ transform: translateY(1rem);
                     display: flex;
                     flex-direction: column;
                     justify-content: center;
+                    margin-left: 2.5rem;
+                    margin-right: auto;
                     div {
                         font-weight: 700;
                         font-size: 1rem;

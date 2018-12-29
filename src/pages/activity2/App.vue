@@ -1,8 +1,6 @@
 <template>
 <div id="app">
-  <keep-alive>
     <router-view></router-view>
-  </keep-alive>
   <ul class="tabs">
     <li>
       <router-link  to="/lottery">首页</router-link>
@@ -90,4 +88,8 @@ overflow: hidden;
       }
     }
   }
+</style>
+<style>
+  a:-webkit-any-link{-webkit-tap-highlight-color:transparent;-webkit-tap-highlight-color:transparent;text-decoration:none;-webkit-touch-callout:none;}
+
 </style>

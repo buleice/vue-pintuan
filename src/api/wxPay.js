@@ -101,7 +101,7 @@ const onBridgeReady=function (params) {
     function(res) {
       if (res.err_msg === "get_brand_wcpay_request:ok") {
         alert("支付成功");
-        window.location.reload()
+        window.location.href="https://wxyx.youban.com/purchase/20190101?#/lottery";
       } else {
         alert("支付失败");
       }

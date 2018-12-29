@@ -94,13 +94,15 @@ export default {
                         display: flex;
                         flex-direction: column;
                         justify-content: center;
-                        width: 6.88rem;
-                            margin: auto;
+                        width:auto;
+                        margin-left: 2.5rem;
+                        margin-right: auto;
                         div {
                             font-weight: 700;
                             font-size: 1rem;
                             text-align: left;
                             margin: 0.31rem 0;
+                            color: #ed0d00;
                         }
                         .valueAndNumber {
                             font-size: 0.75rem;
@@ -115,7 +117,8 @@ export default {
                             display: inline-block;
                             width: 6.88rem;
                             line-height: 1.38rem;
-                            color: #ed0d00;
+                            color: inherit;
+                            font-size: .88rem;
                             border-radius: 0.63rem;
                             margin: 0.31rem 0;
                             position: relative;

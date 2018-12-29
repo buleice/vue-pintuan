@@ -20,7 +20,7 @@
                     <!--</div>-->
                   <div class="course-label">
                     <img src="../../assets/课时(1).png" alt=""><span>{{item.number}}</span>
-                    <img src="../../assets/人物拷贝.png" alt=""><span>{{item.sales}}</span>
+                    <!--<img src="../../assets/人物拷贝.png" alt=""><span>{{item.sales}}</span>-->
                     <span>&yen;&nbsp;<strong>{{item['price']}}</strong> </span>
                   </div>
                     <div class="price">
