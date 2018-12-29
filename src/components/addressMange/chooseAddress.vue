@@ -11,7 +11,7 @@
       <div class="address" v-for="(item,index) in shippingAddress">
         <ul :class="{selected: selectedIndex==item.id}" @click="setAddressIndex(index)">
           <li><strong>{{item.name}}</strong>&nbsp;<strong>{{item.phone}}</strong></li>
-     <li><span v-if="item.default==1" class="tag tag_red">默认</span>{{item.address}}</li>
+     <li><span v-if="item.default==1" class="tag tag_red">默认</span>{{item.province+item.city+item.district+item.address}}</li>
           <li class="edit" @click.stop="$router.push({name:'EditAddressIndex',params:{index:index}})">编辑</li>
         </ul>
       </div>

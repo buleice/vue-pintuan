@@ -23,7 +23,7 @@
       <x-textarea  v-model="addressInfo.address" title="详细信息" placeholder="详细地址需填写楼栋楼层或房间号信息" :show-counter="false" :rows="3"></x-textarea>
     </group>
     <group>
-      <x-switch title="设为默认地址" :value-map="['0', '1']" v-model="addressInfo.default" ></x-switch>
+      <x-switch title="设为默认地址" :value-map="[0, 1]" v-model="addressInfo.default" ></x-switch>
     </group>
    <div class="deleteButton" @click="deleteAdddress">删除该地址</div>
     <div  class="mod_btns"><a  href="javascript:void(0);"  @click="editSubmit" class="mod_btn bg_1">确认修改</a></div>

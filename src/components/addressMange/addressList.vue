@@ -12,7 +12,7 @@
           <ul :class="{selected: selectedIndex==index}">
             <li><strong>{{item.name}}</strong>&nbsp;<strong>{{item.phone}}</strong></li>
             <!-- <li><span class="tag tag_red">默认</span>广东深圳市南山区佳嘉豪商务大厦10楼小伴龙</li> -->
-            <li><span v-if="item.default==1" class="tag tag_red">默认</span>{{item.address}}</li>
+            <li><span v-if="item.default==1" class="tag tag_red">默认</span>{{item.province+item.city+item.district+item.address}}</li>
             <li class="edit" @click.stop="$router.push({name:'EditAddressIndex',params:{index:index}})">编辑</li>
           </ul>
         </div>

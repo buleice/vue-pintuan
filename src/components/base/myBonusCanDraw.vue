@@ -112,6 +112,7 @@ import {Request} from '../../api/request'
 </script>
 
 <style scoped>
+  @import "../../common/css/weui.min.css";
 .top{width: 100%;height: 13.75rem;background-color: #ffa922;color: #fff;text-align:center;padding: 1.88rem 0 1.69rem;box-sizing: border-box;display: }
 .top li:nth-child(2){font-size: 1.5rem}
 .top li:nth-child(3){width: 8.75rem;height: 2.63rem;border-radius: 1.31rem;text-align: center;background: #fff;color:#8c3b13;line-height: 2.63rem;margin:1.0rem auto;font-size: 1rem}

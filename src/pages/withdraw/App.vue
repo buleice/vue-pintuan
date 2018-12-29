@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import {Request} from '../../api/request'
 export default {
   name:"App",
   components:{
@@ -15,7 +14,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
-@import "../../common/css/weui.min.css";
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
