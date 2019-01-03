@@ -7,6 +7,7 @@ const BindCard=()=>import('../../../components/base/bindBankCard.vue')
 const  ToWallet=()=>import('../../../components/base/withdrawtowallet.vue')
 const BonusRecord=()=>import('../../../components/base/bonusrecord')
 
+
 Vue.use(Router);
 
 export default new Router({

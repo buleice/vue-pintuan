@@ -5,6 +5,7 @@ const activityLesson=()=>import('../../../components/activity/20190101')
 const Lottery=()=>import('../../../components/activity/lottery')
 const activityIntro=()=>import('../../../components/activity/activityIntro')
 
+
 Vue.use(Router);
 
 export default new Router({

@@ -3,7 +3,7 @@
     <div class="address_defalut address_border" style="display: block;">
       <ul @click="$router.push({name:'ChooseAddress',params:{id:defaultAddress.id}})">
         <li><strong>{{defaultAddress.name}} {{defaultAddress.phone}}</strong></li>
-        <li><span v-if="defaultAddress.default===1" class="tag tag_red">默认</span> {{defaultAddress.address}}</li>
+        <li><span v-if="defaultAddress.default===1" class="tag tag_red">默认</span> {{defaultAddress.province+defaultAddress.city+defaultAddress.address}}</li>
       </ul>
     </div>
   </div>

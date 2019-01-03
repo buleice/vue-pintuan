@@ -6,6 +6,9 @@ const EditAddressIndex=()=>import('../../../components/addressMange/editAddress.
 const AddressList=()=>import('../../../components/addressMange/addressList')
 const AddAddress=()=>import('../../../components/addressMange/addAddress')
 const ChooseAddress=()=>import('../../../components/addressMange/chooseAddress')
+const OrderPage=()=>import('../../../components/addressMange/order-page')
+const OrderList=()=>import('../../../components/addressMange/order-list')
+const orderDetail=()=>import('../../../components/addressMange/order-detail')
 Vue.use(Router);
 
 export default new Router({
@@ -36,6 +39,21 @@ export default new Router({
       path:'/addAddress',
       name:'AddAddress',
       component:AddAddress
+    },
+    {
+      path:'/orderpage',
+      name:"orderpage",
+      component:OrderPage
+    },
+    {
+      path:'/orderlist',
+      name:'orderlist',
+      component:OrderList
+    },
+    {
+      path:'/orderdetail',
+      name:'orderdetail',
+      component:orderDetail
     }
   ]
 });
