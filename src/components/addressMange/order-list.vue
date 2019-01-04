@@ -1,16 +1,10 @@
 <template>
   <ul class="orders">
-    <div class="m_header" style="">
-      <div class="m_header_bar">
-        <div class="m_header_bar_back" @click="$router.back()"></div>
-        <div class="m_header_bar_title">我的订单</div>
-      </div>
-    </div>
     <li class="order" v-for="(item,index) in orderData" :key="index">
       <div class="title"><span>订单号：{{item.bill_id.substr(7,15)}}</span><span :class="{'active' : item.status==1}">{{item.status==1?'已发货':'未发货'}}</span>
       </div>
       <ul class="data"
-          @click="item.address_filled==0? $router.push({path:'/orderpage',query:{id:item.goods_id,bid:item.bill_id}}):$router.push({path:'/orderdetail',query:{id:item.goods_id,bid:item.bill_id}})">
+          @click="item.address_filled==1? $router.push({path:'/orderpage',query:{id:item.goods_id,bid:item.bill_id}}):$router.push({path:'/orderdetail',query:{id:item.goods_id,bid:item.bill_id}})">
         <li class="left"><img src="http://cliveimages.youban.com/20181015/3044105140Fi8CBvh88l8h5B8-JDfaylvVn-bi.png"
                               alt=""></li>
         <li class="right">
@@ -34,6 +28,11 @@
       return {
         orderData: []
       }
+    },
+    beforeRouteEnter (to, from, next) {
+      next(vm => {
+        document.title="我的订单"
+      })
     },
     created() {
       new Request('/order/list.json', "GET").returnJson().then(res => {

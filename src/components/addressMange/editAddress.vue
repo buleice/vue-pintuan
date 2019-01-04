@@ -7,10 +7,10 @@
       </div>
     </div>
     <group>
-      <x-input title="姓名" name="username" placeholder="请输入姓名" v-model="addressInfo.name" is-type="china-name"></x-input>
+      <x-input title="收货人：" name="username" placeholder="请输入姓名" v-model="addressInfo.name" is-type="china-name"></x-input>
     </group>
     <group>
-      <x-input title="手机" mask="999 9999 9999" v-model="addressInfo.phone" :max="13" is-type="china-mobile"></x-input>
+      <x-input title="手机：" mask="999 9999 9999" v-model="addressInfo.phone" :max="13" is-type="china-mobile"></x-input>
     </group>
     <div class="address-box2">
       <group>
@@ -22,11 +22,11 @@
       <!--<x-textarea :max="20" placeholder="详细地址" @on-focus="onEvent('focus')" @on-blur="onEvent('blur')"></x-textarea>-->
       <x-textarea  v-model="addressInfo.address" title="详细信息" placeholder="详细地址需填写楼栋楼层或房间号信息" :show-counter="false" :rows="3"></x-textarea>
     </group>
-    <group>
+    <group style="margin-top: .5rem;">
       <x-switch title="设为默认地址" :value-map="[0, 1]" v-model="addressInfo.default" ></x-switch>
     </group>
    <div class="deleteButton" @click="deleteAdddress">删除该地址</div>
-    <div  class="mod_btns"><a  href="javascript:void(0);"  @click="editSubmit" class="mod_btn bg_1">确认修改</a></div>
+    <div  class="mod_btns fixed"><a  href="javascript:void(0);"  @click="editSubmit" class="mod_btn bg_1">确认修改</a></div>
     <WxDialog  :alertDesc="alertDesc" :showAlertDialog="showAlertDialog" @AOk="delAok" :showPromptDialog="showPromptDialog" :promptDesc="promptDesc" @POk="delPok" @PCancle="delPcancle"></WxDialog>
   </div>
 </template>
@@ -52,7 +52,7 @@
     data(){
       return{
         addressData: ChinaAddressV4Data,
-        title:'收货地址',
+        title:'所在地区：',
         showAddress: false,
         addressInfo:{},
         promptDesc:'',
@@ -67,6 +67,7 @@
       next(vm => {
         vm.addressInfo=JSON.parse(JSON.stringify(vm.shippingAddress[to.params.index]));
         vm.addressInfo.Geocode=[vm.addressInfo.province,vm.addressInfo.city,vm.addressInfo.district]
+        document.title="修改地址"
       })
     },
     methods:{
@@ -272,21 +273,32 @@
     }
   }
   .deleteButton{
-    width: 80%;
     height: 2.88rem;
     line-height: 2.88rem;
-    border-radius: .25rem;
-    text-align: center;
-    background: #e4393c;
-    color: #ffffff;
-    margin: .94rem auto;
+    /*border-radius: .25rem;*/
+    text-align: left;
+    padding-left: 15px;
+    background: #FFFFFF;
+    color: #f69f00;
+    margin: .5rem auto;
+  }
+  .fixed{
+    left: 0;
+    right: 0;
+    max-width: 33.75rem;
+    margin: 0 auto;
+    background-color: #fff;
+    position: fixed;
+    z-index: 101;
+    bottom: 0;
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
   }
   .mod_btns {
     display: -webkit-box;
     display: -webkit-flex;
     display: flex;
     overflow: hidden;
-    margin: .94rem .63rem;
     .mod_btn {
       display: block;
       -webkit-box-flex: 1;
@@ -297,7 +309,6 @@
       line-height: 2.88rem;
       text-align: center;
       font-size: 1rem;
-      border-radius: .25rem;
       position: relative;
     }
     .bg_1 {

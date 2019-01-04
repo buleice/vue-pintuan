@@ -1,10 +1,10 @@
 <template>
   <div class="address">
     <group>
-      <x-input title="姓名" name="username" placeholder="请输入姓名" v-model="Fname" is-type="china-name"></x-input>
+      <x-input title="收货人：" name="username" placeholder="请输入姓名" v-model="Fname" is-type="china-name"></x-input>
     </group>
     <group>
-      <x-input title="手机" mask="999 9999 9999" v-model="Fphone" :max="13" is-type="china-mobile"></x-input>
+      <x-input title="手机：" mask="999 9999 9999" v-model="Fphone" :max="13" is-type="china-mobile"></x-input>
     </group>
     <div class="address-box">
       <group>
@@ -13,14 +13,13 @@
       </group>
     </div>
     <group>
-      <!--<x-textarea :max="20" placeholder="详细地址" @on-focus="onEvent('focus')" @on-blur="onEvent('blur')"></x-textarea>-->
-      <x-textarea title="详细信息" v-model="Faddress" placeholder="请填写详细信息" :show-counter="false" :rows="3"></x-textarea>
+      <x-textarea title="详细信息：" v-model="Faddress" placeholder="请填写详细信息" :show-counter="false" :rows="3"></x-textarea>
     </group>
     <group>
     <x-switch title="设为默认地址" :value-map="['0', '1']" v-model="Fdefault" ></x-switch>
     </group>
     <WxDialog :alertDesc="alertDesc" :showAlertDialog="showAlertDialog" @AOk="delPok"></WxDialog>
-    <div class="mod_btns"><a href="javascript:void(0);" @click="addAddressSubmit" class="mod_btn bg_1">确认</a></div>
+    <div class="mod_btns fixed"><a href="javascript:void(0);" @click="addAddressSubmit" class="mod_btn bg_1">确认</a></div>
   </div>
 </template>
 
@@ -48,7 +47,7 @@
         title:'提示',
         show: false,
         addressData: ChinaAddressV4Data,
-        title: '收货地址',
+        title: '所在地区：',
         addressName: '',
         Geocode: ["110000","110100","110101"],
         showAddress: false,
@@ -60,6 +59,11 @@
         showAlertDialog:false,
         Fdefault:"1"
       }
+    },
+    beforeRouteEnter (to, from, next) {
+      next(vm => {
+        document.title="增加地址"
+      })
     },
     methods: {
       testCardholder(holder) {
@@ -104,16 +108,15 @@
             if(res.data.rc==0){
               new Request('/address/list.json','GET').returnJson().then(res=>{
                 this.addressList=res.list;
-                  this.setShippingAddress(res.list);
-                // console.log(res)0
+                this.setShippingAddress(res.list);
+                if(this.$route.name=='orderpage'){
+                  this.$emit("submitorder");
+                  this.setDefaultAddress(res.list[0]);
+                }
               })
-              if(this.$route.name=='AddAddress'){
-                this.$router.back();
-              }else{
-                window.location.reload()
-              }
             }
           })
+
         }
       },
       delPok(){
@@ -138,10 +141,7 @@
       logShow(str) {
         this.pickStatus = true
       },
-      onEvent(event) {
-        console.log('on', event)
-      },
-        ...mapActions(['setShippingAddress'])
+        ...mapActions(['setShippingAddress','setDefaultAddress'])
     },
     components: {
       Group,
@@ -186,9 +186,23 @@
         border-radius: 0;
       }
       .mod_btn.bg_1 {
-        background: #e4393c;
+        background: #ff4e09;
+        /*background: #e4393c;*/
         color: #fff;
       }
+    }
+    .fixed{
+      left: 0;
+      right: 0;
+      max-width: 33.75rem;
+      margin: 0 auto;
+      background-color: #fff;
+      position: relative;
+      position: fixed;
+      z-index: 90;
+      bottom: 0;
+      padding-bottom: constant(safe-area-inset-bottom);
+      padding-bottom: env(safe-area-inset-bottom);
     }
   }
 </style>

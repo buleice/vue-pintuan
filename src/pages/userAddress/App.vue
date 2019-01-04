@@ -19,7 +19,6 @@ export default {
   }
   *{margin:0;padding:0;-webkit-tap-highlight-color: rgba(0,0,0,0);
     outline: 0;}
-  body{background-color: #ffffff}
   li{list-style:none}
   a:-webkit-any-link{-webkit-tap-highlight-color:transparent;-webkit-tap-highlight-color:transparent;text-decoration:none;-webkit-touch-callout:none;}
 

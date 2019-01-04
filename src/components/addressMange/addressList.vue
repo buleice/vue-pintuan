@@ -49,6 +49,11 @@ import{Request} from '../../api/request'
         addressList:[]
       }
     },
+    beforeRouteEnter (to, from, next) {
+      next(vm => {
+        document.title="地址列表"
+      })
+    },
     created(){
       new Request('/address/list.json','GET').returnJson().then(res=>{
         this.addressList=res.list;
@@ -290,7 +295,7 @@ import{Request} from '../../api/request'
         border-radius: 0;
       }
       .mod_btn.bg_1 {
-        background: #e4393c;
+        background: #ff4e09;
         color: #fff;
       }
     }

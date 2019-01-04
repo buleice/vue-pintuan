@@ -34,7 +34,7 @@
         <!--<div class="content">&lt;!&ndash;&ndash;&gt;¥ 6.00&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt;</div>-->
       <!--</div>-->
       <div class="inner_line"><span class="title">订单号：</span>
-        <div class="content"><!---->{{addressInfo.Fbillid.substr(7,15)}}<!----> <!----></div>
+        <div class="content"><!---->{{addressInfo.Fbillid}}<!----> <!----></div>
       </div>
       <div class="inner_line"><span class="title">收货人：</span>
         <div class="content"><!---->{{addressInfo.Fname}} {{addressInfo.Fphone}}<!----> <!----></div>
@@ -45,7 +45,7 @@
       <div class="inner_line"><span class="title">物流信息：</span>
         <div class="content"><!---->{{express.name}} {{express.id}}<!----> <!----></div>
       </div>
-      <div class="inner_line"><span class="title">期望送货时间：</span>
+      <div class="inner_line"><span class="title">下单时间：</span>
         <div class="content"><!---->2018-12-01 15:00-19:00<!----> <!----></div>
       </div>
     </div>
@@ -76,6 +76,11 @@
         express:{},
         addressInfo:{},
       }
+    },
+    beforeRouteEnter (to, from, next) {
+      next(vm => {
+        document.title="订单详情"
+      })
     },
     created() {
       new Request('/order/detail.json', 'GET', {
