@@ -1,11 +1,5 @@
 <template>
   <div class="order-confirmation">
-    <div class="m_header" style="">
-      <div class="m_header_bar">
-        <div class="m_header_bar_back" @click="$router.back()"></div>
-        <div class="m_header_bar_title">订单详情</div>
-      </div>
-    </div>
     <div class="order_info">
       <ul>
         <li class="hproduct noclick"><img
@@ -186,6 +180,7 @@
 
       ul {
         list-style: none;
+        padding-bottom: 15px;
         .hproduct {
           position: relative;
           min-height: 4.69rem;

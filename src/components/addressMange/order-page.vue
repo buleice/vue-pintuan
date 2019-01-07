@@ -1,31 +1,21 @@
 <template>
   <div class="order-confirmation">
-    <div class="order_info">
-      <ul>
-        <li class="hproduct noclick"><img
-          class="photo"
-          :src="goodsInfo.image">
-          <div class="fn">
-            <strong>{{goodsInfo.name}}</strong></div>
-            <p class="sku_coll" v-html="goodsInfo.desc">  </p>
-            <!--<p class="sku_price">&yen;<span>59</span>.00 </p>-->
-          <div class="sku">
-            <div class="num_wrap">
-              <!--<span class="minus disabled" ></span> -->
-              <!--<input class="num"  type="tel" value="×1">-->
-              <!--<span class="plus"></span>-->
-            </div>
-            <!--<div class="sku_num">&times;1</div>-->
-          </div>
+    <div class="order">
+      <ul class="data" v-for="(item,index) in goodsInfo" :key="index">
+        <li class="left"><img :src="item.image"
+                              alt=""></li>
+        <li class="right">
+          <div class="line_1"><span>{{item.name}}</span><b>&yen;{{item.price}}</b></div>
+          <p class="line_2" v-html="item.desc"></p>
+          <div class="line_4">&times;1</div>
         </li>
       </ul>
     </div>
     <div class="addressbanner">收获地址</div>
     <div class="address-manage">
-      <AddAddress></AddAddress>
-
-      <AddAddress @submitorder="handleSubmitOrder" v-if="!defaultAddress.name&&shippingAddress.length<=0"></AddAddress>
-      <!--<SelectAddress></SelectAddress>-->
+      <!---->
+      <AddAddress @submitorder="handleSubmitOrder" v-if="defaultAddress.name==undefined&&shippingAddress.length<=0"></AddAddress>
+      <SelectAddress v-else></SelectAddress>
     </div>
     <div v-if="defaultAddress.name&&shippingAddress.length>0" class="mod_btns fixed"><a href="javascript:void(0);" @click="handleSubmit"
                                                                                         class="mod_btn bg_1">提交订单</a></div>
@@ -54,45 +44,48 @@
         prizeInfo: {},
         addressList: [],
         choosenAddress: {},
-        goodsInfo:{}
+        goodsInfo:[],
+        type:0,
       }
     },
     beforeRouteEnter (to, from, next) {
       next(vm => {
         document.title="提交订单"
-      })
-    },
-    created() {
-      new Request('/order/address.json', 'GET', {
-        goodsid: this.$route.query.id
-      }).returnJson().then(res => {
-        // if(res.filled==1){
-        //   this.$router.push({path:'/orderdetail',query:{id:this.$route.query.id,bid:this.$route.query.bid}});
-        //   return;
-        // }
-        this.goodsInfo=res.goodsInfo;
-        this.setShippingAddress(res.list);
-        if (res.list.length > 0) {
-          this.addressList = res.list;
-          if (!(res.list.find(item => item.default === 1))) {
-            this.choosenAddress = res.list[0]
-            this.setDefaultAddress(res.list[0]);
-          } else {
-            this.choosenAddress = res.list.find(item => item.default === 1)
-            this.setDefaultAddress(res.list.find(item => item.default === 1))
-          }
-        }
-        this.prizeInfo = res.prizeInfo
+        vm.initPageData()
       })
     },
     methods: {
+      initPageData(){
+        new Request('/order/address.json', 'GET', {
+          goodsid: this.$route.query.id
+        }).returnJson().then(res => {
+          // if(res.filled==1){
+          //   this.$router.push({path:'/orderdetail',query:{id:this.$route.query.id,bid:this.$route.query.bid}});
+          //   return;
+          // }
+          this.goodsInfo=res.goodsInfo;
+          this.setShippingAddress(res.list);
+          this.type=res.type
+          if (res.list.length > 0) {
+            this.addressList = res.list;
+            if (!(res.list.find(item => item.default === 1))) {
+              this.choosenAddress = res.list[0]
+              this.setDefaultAddress(res.list[0]);
+            } else {
+              this.choosenAddress = res.list.find(item => item.default === 1)
+              this.setDefaultAddress(res.list.find(item => item.default === 1))
+            }
+          }
+          this.prizeInfo = res.prizeInfo
+        })
+      },
       hrefTo(name, params) {
         this.$router.push({name: name, params: params})
       },
       handleSubmit() {
         axiosPost('/order/address.json', Object.assign({},{
           goodsid: this.$route.query.id,
-          bid:this.$route.query['bid']
+          type:this.type
         },this.defaultAddress)).then(res => {
           if (res.data.rc == 0) {
             setTimeout(() => {
@@ -108,8 +101,9 @@
         return '';
       },
       handleSubmitOrder(){
-        console.log(11111)
-        this.handleSubmit()
+        setTimeout(()=>{
+          this.handleSubmit();
+        },300)
       },
       ...mapActions(['setDefaultAddress', 'setShippingAddress'])
     },
@@ -180,180 +174,116 @@
         }
       }
     }
-    .order_info {
-      padding: 0 .63rem .94rem;
-      background: #fff;
-      position: relative;
-      ul {
-        list-style: none;
-        .hproduct {
-          position: relative;
-          min-height: 4.69rem;
-          padding: 0;
-          font-size: .75rem;
-          padding-top: .94rem;
-          img {
-            border: 0 none;
-            vertical-align: top;
-            &.photo {
-              width: 4.69rem;
-              height: 4.69rem;
-              position: absolute;
-              top: .94rem;
-              left: 0;
-            }
+    .order {
+      font-size: 14px;
+      .title {
+        height: 43px;
+        line-height: 43px;
+        position: relative;
+        box-sizing: border-box;
+        padding: 0 10px;
+        &::before {
+          content: '';
+          display: block;
+          position: absolute;
+          width: 5px;
+          height: 24px;
+          background: #ff4e09;
+          top: 50%;
+          left: 0;
+          transform: translateY(-50%);
+        }
+        &::after {
+          content: '';
+          display: block;
+          position: absolute;
+          width: 350px;
+          margin: auto;
+          height: 0;
+          bottom: 0;
+          border-bottom: 1px solid rgba(0, 0, 0, .2);
+        }
+        span {
+          &:first-child {
+            float: left;
           }
-          .fn {
-            padding-left: 5.31rem;
-            color: #333;
-            line-height: 1.25rem;
-            margin-bottom: .31rem;
-            font-size: .88rem;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            i {
-              font-style: normal;
-              &.mod_tag {
-                display: inline-block;
-                vertical-align: middle;
-                margin-top: -.13rem;
-                margin-right: .31rem;
-                height: .88rem;
-              }
-            }
-
+          &:last-child {
+            display: inline-block;
+            line-height: 21px;
+            float: right;
+            width: 60px;
+            height: 21px;
+            color: #f69f00;
+            border: 1px solid #f69f00;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 10px;
           }
-          .sku_coll {
-            padding-left: 5.31rem;
-            margin-bottom: .38rem;
-            font-size: .75rem;
-            color: #999;
-            line-height: 1;
-          }
-          .sku_price {
-            padding-left: 5.31rem;
-            height: 1.88rem;
-            line-height: 1.88rem;
-            color: #e93b3d;
-            font-size: .63rem;
-            span {
-              font-size: 1rem;
-            }
-          }
-          .sku {
-            padding-left: 5.31rem;
-            height: 1.88rem;
-            margin-top: -1.88rem;
-            text-align: right;
-            word-wrap: break-word;
-            word-break: break-all;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            .num_wrap {
-              display: inline-block;
-              width: 6.69rem;
-              vertical-align: middle;
-              span {
-                color: #333;
-                position: relative;
-                float: left;
-                width: 1.88rem;
-                height: 1.88rem;
-                line-height: 1.88rem;
-                background: #f7f7f7;
-                text-align: center;
-                &.minus {
-                  border-radius: .13rem 0 0 .13rem;
-                  &::after {
-                    position: absolute;
-                    left: 50%;
-                    top: 50%;
-                    content: "";
-                    width: .75rem;
-                    height: .13rem;
-                    margin: -1px 0 0 -.38rem;
-                    background: #e9e9e9;
-                  }
-                }
-                &.disabled:before {
-                  background: #e9e9e9;
-                }
-                &.plus:before {
-                  position: absolute;
-                  left: 50%;
-                  top: 50%;
-                  content: "";
-                  background: #999;
-                  width: .13rem;
-                  height: .75rem;
-                  margin: -.38rem 0 0 -1px;
-                }
-                &.plus::after {
-                  position: absolute;
-                  left: 50%;
-                  top: 50%;
-                  content: "";
-                  width: .75rem;
-                  height: .13rem;
-                  margin: -1px 0 0 -.38rem;
-                  background: #999;
-                }
-              }
-              input {
-                position: relative;
-                float: left;
-                width: 1.88rem;
-                height: 1.88rem;
-                line-height: 1.88rem;
-                background: #f7f7f7;
-                text-align: center;
-                &.num {
-                  -webkit-appearance: none;
-                  border-radius: 0;
-                  width: 2.81rem;
-                  height: 1.88rem;
-                  line-height: normal;
-                  border: 0;
-                  border-left: 1px solid #fff;
-                  border-right: 1px solid #fff;
-                  background: #f7f7f7;
-                  font-size: .75rem;
-                  text-align: center;
-                }
-              }
-            }
-            .sku_num {
-              line-height: 1.88rem;
-              color: #999;
-              font-size: .75rem;
-            }
-          }
-
-          .order_info_tips {
-            margin: .38rem 0;
-            padding-left: 5.31rem;
-            overflow: hidden;
-          }
-          &::before {
-            content: "";
-            position: absolute;
-            z-index: 1;
-            pointer-events: none;
-            /*background-color: #e5e5e5;*/
-            height: 1px;
-            top: 0;
-            left: -.63rem;
-            right: -.63rem;
-          }
-          .hproduct.noclick:after {
-            display: none;
+          &.active {
+            color: #f69f00;
+            border: 1px solid #27b77e;
           }
         }
       }
+      .data {
+        height: 110px;
+        box-sizing: border-box;
+        padding: 10px 13px;
+        position: relative;
+        /*border-bottom: 1px solid rgba(0, 0, 0, .2);*/
+        background: #fff;
+        li {
+          float: left;
+          &.left {
+            img {
+              width: 85px;
+              height: 85px;
+            }
+          }
+          &.right {
+            height: 85px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-sizing: border-box;
+            padding-left: 13px;
+            .line_1 {
+              width: 250px;
+              span {
+                font-size: 16px;
+                font-weight: 500;
+                display: inline-block;
+                max-width: 200px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+              }
+              b {
+                float: right;
+                font-weight: 500;
+              }
+            }
+            .line_2 {
+              display: -webkit-box;
+              width: 190px;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 2;
+              overflow: hidden;
+              margin-bottom: auto;
+            }
+            .line_3 {
+              color: #707070;
+            }
+            .line_4 {
+              position: absolute;
+              top: 30px;
+              right: 13px;
+              color: #707070;
+            }
+          }
+        }
+      }
+
     }
     .addressbanner{
       width: 100%;

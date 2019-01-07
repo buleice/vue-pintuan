@@ -13,7 +13,7 @@
       </group>
     </div>
     <group>
-      <x-textarea title="详细信息：" v-model="Faddress" placeholder="请填写详细信息" :show-counter="false" :rows="3"></x-textarea>
+      <x-textarea title="详细信息：" v-model="Faddress" placeholder="如道路、门牌号、小区、楼栋号、单元室等" :show-counter="false" :rows="3"></x-textarea>
     </group>
     <group>
     <x-switch title="设为默认地址" :value-map="['0', '1']" v-model="Fdefault" ></x-switch>
@@ -100,23 +100,24 @@
           return;
         }
         else if(this.Faddress.length<5){
-          this.alertDesc="请填写收货人详细地址"
+          this.alertDesc="请填写详细地址如道路、门牌号、小区、楼栋号、单元室等"
           this.showAlertDialog=true;
           return;
         }else{
           axiosPost('/address/add.json',postData).then(res=>{
             if(res.data.rc==0){
-              new Request('/address/list.json','GET').returnJson().then(res=>{
-                this.addressList=res.list;
-                this.setShippingAddress(res.list);
-                if(this.$route.name=='orderpage'){
-                  this.$emit("submitorder");
+              if(this.$route.name=='orderpage'){
+                new Request('/address/list.json','GET').returnJson().then(res=>{
+                  this.addressList=res.list;
                   this.setDefaultAddress(res.list[0]);
-                }
-              })
+                  this.setShippingAddress(res.list);
+                  this.$emit("submitorder");
+                })
+              }else{
+                this.$router.back()
+              }
             }
           })
-
         }
       },
       delPok(){
@@ -209,6 +210,7 @@
 <style scoped>
   .address >>> .weui-cells {
     margin-top: 0 !important;
+    font-size: 14px;
   }
   .address >>>  .vux-cell-value{
       color: #666;

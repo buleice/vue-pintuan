@@ -4,7 +4,7 @@
       <div class="title"><span>订单号：{{item.bill_id.substr(7,15)}}</span><span :class="{'active' : item.status==1}">{{item.status==1?'已发货':'未发货'}}</span>
       </div>
       <ul class="data"
-          @click="item.address_filled==1? $router.push({path:'/orderpage',query:{id:item.goods_id,bid:item.bill_id}}):$router.push({path:'/orderdetail',query:{id:item.goods_id,bid:item.bill_id}})">
+          @click="item.address_filled==0? $router.push({path:'/orderpage',query:{id:item.goods_id,bid:item.bill_id}}):$router.push({path:'/orderdetail',query:{id:item.goods_id,bid:item.bill_id}})">
         <li class="left"><img src="http://cliveimages.youban.com/20181015/3044105140Fi8CBvh88l8h5B8-JDfaylvVn-bi.png"
                               alt=""></li>
         <li class="right">
@@ -155,8 +155,8 @@
             margin-top: 10px;
           }
           &.active {
-            color: #f69f00;
-            border: 1px solid #27b77e;
+            color: #27b77e;
+            border: 1px solid currentColor;
           }
         }
       }
