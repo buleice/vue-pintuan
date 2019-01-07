@@ -210,7 +210,7 @@
 <style scoped>
   .address >>> .weui-cells {
     margin-top: 0 !important;
-    font-size: 14px;
+    font-size: .88rem;
   }
   .address >>>  .vux-cell-value{
       color: #666;

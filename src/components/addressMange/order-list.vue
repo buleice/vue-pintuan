@@ -52,7 +52,7 @@
 
 <style scoped lang="scss">
   .orders {
-    font-size: 14px;
+    font-size: .88rem;
     .m_header {
       .m_header_bar {
         position: relative;
@@ -110,19 +110,19 @@
       }
     }
     .order {
-      /*height: 152px;*/
+      /*height: 9.5rem;*/
       .title {
-        height: 43px;
-        line-height: 43px;
+        height: 2.69rem;
+        line-height: 2.69rem;
         position: relative;
         box-sizing: border-box;
-        padding: 0 10px;
+        padding: 0 .63rem;
         &::before {
           content: '';
           display: block;
           position: absolute;
-          width: 5px;
-          height: 24px;
+          width: .31rem;
+          height: 1.5rem;
           background: #ff4e09;
           top: 50%;
           left: 0;
@@ -132,7 +132,7 @@
           content: '';
           display: block;
           position: absolute;
-          width: 350px;
+          width: 21.88rem;
           margin: auto;
           height: 0;
           bottom: 0;
@@ -144,15 +144,15 @@
           }
           &:last-child {
             display: inline-block;
-            line-height: 21px;
+            line-height: 1.31rem;
             float: right;
-            width: 60px;
-            height: 21px;
+            width: 3.75rem;
+            height: 1.31rem;
             color: #f69f00;
             border: 1px solid #f69f00;
-            border-radius: 10px;
+            border-radius: .63rem;
             text-align: center;
-            margin-top: 10px;
+            margin-top: .63rem;
           }
           &.active {
             color: #27b77e;
@@ -161,33 +161,33 @@
         }
       }
       .data {
-        height: 110px;
+        height: 6.88rem;
         box-sizing: border-box;
-        padding: 10px 13px;
+        padding: .63rem .81rem;
         position: relative;
         border-bottom: 1px solid rgba(0, 0, 0, .2);
         li {
           float: left;
           &.left {
             img {
-              width: 85px;
-              height: 85px;
+              width: 5.31rem;
+              height: 5.31rem;
             }
           }
           &.right {
-            height: 85px;
+            height: 5.31rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             box-sizing: border-box;
-            padding-left: 13px;
+            padding-left: .81rem;
             .line_1 {
-              width: 250px;
+              width: 15.63rem;
               span {
-                font-size: 16px;
+                font-size: 1rem;
                 font-weight: 500;
                 display: inline-block;
-                max-width: 210px;
+                max-width: 13.13rem;
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
@@ -199,7 +199,7 @@
             }
             .line_2 {
               display: -webkit-box;
-              width: 190px;
+              width: 11.88rem;
               -webkit-box-orient: vertical;
               -webkit-line-clamp: 2;
               overflow: hidden;
@@ -209,8 +209,8 @@
             }
             .line_4 {
               position: absolute;
-              top: 30px;
-              right: 13px;
+              top: 1.88rem;
+              right: .81rem;
               color: #707070;
             }
           }

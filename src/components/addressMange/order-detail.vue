@@ -180,7 +180,7 @@
 
       ul {
         list-style: none;
-        padding-bottom: 15px;
+        padding-bottom: .94rem;
         .hproduct {
           position: relative;
           min-height: 4.69rem;
@@ -419,17 +419,17 @@
     }
     .order_block_content {
       background-color: #fff;
-      padding: 8px 10px 11px;
+      padding: .5rem .63rem .69rem;
       position: relative;
-      margin-top: 15px;
+      margin-top: .94rem;
       .inner_line {
         display: flex;
-        padding-top: 3px;
-        font-size: 14px;
-        line-height: 21px;
+        padding-top: .19rem;
+        font-size: .88rem;
+        line-height: 1.31rem;
         position: relative;
         .title {
-          min-width: 70px;
+          min-width: 4.38rem;
           color: #999;
         }
         .content {
@@ -442,11 +442,10 @@
           flex: 1;
           .grey_tip {
             color: #999;
-            margin-left: 5px;
+            margin-left: .31rem;
           }
         }
       }
     }
   }
 </style>
-

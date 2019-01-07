@@ -277,7 +277,7 @@
     line-height: 2.88rem;
     /*border-radius: .25rem;*/
     text-align: left;
-    padding-left: 15px;
+    padding-left: .94rem;
     background: #FFFFFF;
     color: #f69f00;
     margin: .5rem auto;
