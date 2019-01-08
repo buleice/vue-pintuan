@@ -1,11 +1,5 @@
 <template>
   <div class="wx_wrap">
-    <div class="m_header">
-      <div class="m_header_bar">
-        <div class="m_header_bar_back" @click="$router.back()"></div>
-        <div class="m_header_bar_title">收货地址</div>
-      </div>
-    </div>
     <div>
       <div class="address_list">
         <div class="address" v-for="(item,index) in shippingAddress">
@@ -58,15 +52,9 @@ import{Request} from '../../api/request'
       new Request('/address/list.json','GET').returnJson().then(res=>{
         this.addressList=res.list;
           this.setShippingAddress(res.list);
-        // console.log(res)0
       })
     },
     methods:{
-      // setAddressIndex(index){
-      //   this.setDefaultAddress(this.shippingAddress[index]);
-      //   this.selectedIndex=index;
-      //   this.$router.back()
-      // },
       ...mapActions(['setShippingAddress'])
     },
     computed: {
@@ -79,62 +67,6 @@ import{Request} from '../../api/request'
   .wx_wrap {
     position: relative;
     min-height: 23.44rem;
-    .m_header {
-      .m_header_bar {
-        position: relative;
-        height: 2.81rem;
-        line-height: 2.81rem;
-        text-align: center;
-        font-size: 1rem;
-        color: #333;
-        background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#efefef));
-        background: -webkit-linear-gradient(top, #fff, #efefef);
-        background: linear-gradient(180deg, #fff, #efefef);
-        &::before {
-          content: "";
-          position: absolute;
-          z-index: 1;
-          pointer-events: none;
-          background-color: #e5e5e5;
-          height: 1px;
-          left: 0;
-          right: 0;
-          top: 0;
-        }
-        .m_header_bar_back {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 2.63rem;
-          height: 2.81rem;
-          &::after {
-            content: "";
-            display: block;
-            width: .75rem;
-            height: .75rem;
-            border-top: 1px solid #848689;
-            border-left: 1px solid #848689;
-            -webkit-transform-origin: 50%;
-            transform-origin: 50%;
-            -webkit-transform: rotate(-45deg);
-            transform: rotate(-45deg);
-            position: absolute;
-            top: 50%;
-            left: 1.13rem;
-            margin-top: -.38rem;
-          }
-        }
-        .m_header_bar_menu {
-          position: absolute;
-          top: 0;
-          right: 0;
-          width: 2.63rem;
-          height: 2.81rem;
-          background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkAgMAAACcbnALAAAADFBMV…jUeAFFjBRTYPYyQt2CEKO/Kd+gLEagAXAx3DpK4KwZDBgAAAh+brVZ2vz9AAAAAElFTkSuQmCC) no-repeat 50%;
-          background-size: 1.13rem;
-        }
-      }
-    }
     .address_list {
       margin-bottom: .63rem;
       font-size: .88rem;

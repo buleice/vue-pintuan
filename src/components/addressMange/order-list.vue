@@ -4,8 +4,8 @@
       <div class="title"><span>订单号：{{item.bill_id.substr(7,15)}}</span><span :class="{'active' : item.status==1}">{{item.status==1?'已发货':'未发货'}}</span>
       </div>
       <ul class="data"
-          @click="item.address_filled==0? $router.push({path:'/orderpage',query:{id:item.goods_id,bid:item.bill_id}}):$router.push({path:'/orderdetail',query:{id:item.goods_id,bid:item.bill_id}})">
-        <li class="left"><img src="http://cliveimages.youban.com/20181015/3044105140Fi8CBvh88l8h5B8-JDfaylvVn-bi.png"
+          @click="item.address_filled==0? $router.push({path:'/orderpage',query:{id:item.goods_id}}):$router.push({path:'/orderdetail',query:{id:item.goods_id}})">
+        <li class="left"><img :src="item.goods_image"
                               alt=""></li>
         <li class="right">
           <div class="line_1"><span>{{item.goods_name}}</span><b>&yen;{{item.price}}</b></div>
@@ -20,34 +20,37 @@
 
 <script>
 
-  import {Request} from "../../api/request";
+  import { Request } from '../../api/request';
 
   export default {
-    name: "order-list",
+    name: 'order-list',
     data() {
       return {
         orderData: []
-      }
+      };
     },
-    beforeRouteEnter (to, from, next) {
+    beforeRouteEnter(to, from, next) {
       next(vm => {
-        document.title="我的订单"
-      })
-    },
-    created() {
-      new Request('/order/list.json', "GET").returnJson().then(res => {
-        this.orderData = res.list;
-      })
+        document.title = '我的订单';
+        vm.initPageData();
+      });
     },
     methods: {
-      _GetQueryString(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-        var r = window.location.search.substr(1).match(reg); //search,查询？后面的参数，并匹配正则
-        if (r != null) return unescape(r[2]);
-        return '';
+      initPageData() {
+        new Request('/order/list.json', 'GET').returnJson().then(res => {
+          this.orderData = res.list;
+        });
       },
+      _GetQueryString(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
+        var r = window.location.search.substr(1).match(reg); //search,查询？后面的参数，并匹配正则
+        if (r != null) {
+          return unescape(r[2]);
+        }
+        return '';
+      }
     }
-  }
+  };
 </script>
 
 <style scoped lang="scss">
@@ -110,7 +113,7 @@
       }
     }
     .order {
-      /*height: 9.5rem;*/
+      background: #FFFFFF;
       .title {
         height: 2.69rem;
         line-height: 2.69rem;

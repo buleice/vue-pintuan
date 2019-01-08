@@ -11,14 +11,18 @@
         </li>
       </ul>
     </div>
-    <div class="addressbanner">收获地址</div>
-    <div class="address-manage">
-      <!---->
-      <AddAddress @submitorder="handleSubmitOrder" v-if="defaultAddress.name==undefined&&shippingAddress.length<=0"></AddAddress>
-      <SelectAddress v-else></SelectAddress>
+    <div v-if="filled==0">
+      <div class="addressbanner">收获地址</div>
+      <div class="address-manage">
+        <AddAddress @submitorder="handleSubmitOrder" v-if="defaultAddress.name==undefined&&shippingAddress.length<=0"></AddAddress>
+        <SelectAddress v-else></SelectAddress>
+      </div>
+      <div  v-if="defaultAddress.name&&shippingAddress.length>0" class="mod_btns fixed"><a href="javascript:void(0);" @click="handleSubmit"
+                                                                                           class="mod_btn bg_1">提交订单</a></div>
     </div>
-    <div v-if="defaultAddress.name&&shippingAddress.length>0" class="mod_btns fixed"><a href="javascript:void(0);" @click="handleSubmit"
-                                                                                        class="mod_btn bg_1">提交订单</a></div>
+    <div v-else>
+      <div class="mod_btns fixed" style="background: #f5f5f5"><a href="javascript:void(0);" class="mod_btn bg_1">订单已完成</a></div>
+    </div>
 
   </div>
 </template>
@@ -46,6 +50,7 @@
         choosenAddress: {},
         goodsInfo:[],
         type:0,
+        filled:0
       }
     },
     beforeRouteEnter (to, from, next) {
@@ -65,7 +70,8 @@
           // }
           this.goodsInfo=res.goodsInfo;
           this.setShippingAddress(res.list);
-          this.type=res.type
+          this.type=res.type;
+          this.filled=res.filled;
           if (res.list.length > 0) {
             this.addressList = res.list;
             if (!(res.list.find(item => item.default === 1))) {
@@ -89,7 +95,7 @@
         },this.defaultAddress)).then(res => {
           if (res.data.rc == 0) {
             setTimeout(() => {
-              window.location.href = "/address.html#/orderlist"
+              this.$router.push({path:'/orderlist'})
             }, 300)
           }
         })

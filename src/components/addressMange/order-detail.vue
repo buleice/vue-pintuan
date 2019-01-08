@@ -37,11 +37,11 @@
         <div class="content"><!---->{{`${addressInfo.Fprovince}${addressInfo.Fcity}${addressInfo.Fdistrict}${addressInfo.Faddress}`}}<!----> <!----></div>
       </div>
       <div class="inner_line"><span class="title">物流信息：</span>
-        <div class="content"><!---->{{express.name}} {{express.id}}<!----> <!----></div>
+        <div class="content"><!---->{{addressInfo.Fcompany}} {{addressInfo.Fnumber}}<!----> <!----></div>
       </div>
-      <div class="inner_line"><span class="title">下单时间：</span>
-        <div class="content"><!---->2018-12-01 15:00-19:00<!----> <!----></div>
-      </div>
+      <!--<div class="inner_line"><span class="title">下单时间：</span>-->
+        <!--<div class="content">&lt;!&ndash;&ndash;&gt;{{}}&lt;!&ndash;&ndash;&gt; &lt;!&ndash;&ndash;&gt;</div>-->
+      <!--</div>-->
     </div>
 
   </div>
@@ -67,7 +67,6 @@
         addressList: [],
         choosenAddress: {},
         goodsInfo: {},
-        express:{},
         addressInfo:{},
       }
     },
@@ -78,10 +77,9 @@
     },
     created() {
       new Request('/order/detail.json', 'GET', {
-        bid: this.$route.query.bid
+        goodsid: this.$route.query.id
       }).returnJson().then(res => {
         this.goodsInfo = res.goodsInfo;
-        this.express=res.express;
         this.addressInfo=res.addressInfo;
       })
     },

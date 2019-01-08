@@ -1,11 +1,5 @@
 <template>
   <div class="address2">
-    <div class="m_header">
-      <div class="m_header_bar">
-        <div class="m_header_bar_back" @click="$router.back()"></div>
-        <div class="m_header_bar_title">修改地址</div>
-      </div>
-    </div>
     <group>
       <x-input title="收货人：" name="username" placeholder="请输入姓名" v-model="addressInfo.name" is-type="china-name"></x-input>
     </group>
@@ -216,62 +210,6 @@
   }
 </script>
 <style lang="scss" scoped>
-  .m_header {
-    .m_header_bar {
-      position: relative;
-      height: 2.81rem;
-      line-height: 2.81rem;
-      text-align: center;
-      font-size: 1rem;
-      color: #333;
-      background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#efefef));
-      background: -webkit-linear-gradient(top, #fff, #efefef);
-      background: linear-gradient(180deg, #fff, #efefef);
-      &::before {
-        content: "";
-        position: absolute;
-        z-index: 1;
-        pointer-events: none;
-        background-color: #e5e5e5;
-        height: 1px;
-        left: 0;
-        right: 0;
-        top: 0;
-      }
-      .m_header_bar_back {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 2.63rem;
-        height: 2.81rem;
-        &::after {
-          content: "";
-          display: block;
-          width: .75rem;
-          height: .75rem;
-          border-top: 1px solid #848689;
-          border-left: 1px solid #848689;
-          -webkit-transform-origin: 50%;
-          transform-origin: 50%;
-          -webkit-transform: rotate(-45deg);
-          transform: rotate(-45deg);
-          position: absolute;
-          top: 50%;
-          left: 1.13rem;
-          margin-top: -.38rem;
-        }
-      }
-      .m_header_bar_menu {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 2.63rem;
-        height: 2.81rem;
-        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkAgMAAACcbnALAAAADFBMV…jUeAFFjBRTYPYyQt2CEKO/Kd+gLEagAXAx3DpK4KwZDBgAAAh+brVZ2vz9AAAAAElFTkSuQmCC) no-repeat 50%;
-        background-size: 1.13rem;
-      }
-    }
-  }
   .deleteButton{
     height: 2.88rem;
     line-height: 2.88rem;
@@ -312,7 +250,7 @@
       position: relative;
     }
     .bg_1 {
-      background: #e4393c;
+      background: #ff4e09;
       color: #fff;
     }
   }
