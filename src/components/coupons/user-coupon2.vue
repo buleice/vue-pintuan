@@ -5,9 +5,9 @@
       <li :class="[tabIndex==1?'tabactive':'','tab']" @click='toggleTabs(1)'>已使用({{hasused.length}})</li>
       <li :class="[tabIndex==2?'tabactive':'','tab']" @click='toggleTabs(2)'>已过期({{useless.length}})</li>
     </ul>
-    <div v-if="coupons.length<=0">
-      <img src="//udata.youban.com/webimg/wxyx/puintuan/double11_gift_noget.png" style="margin-top:33%;" alt="">
-      <p style="font-size:1.25rem;">{{alertContent}}</p>
+    <div v-if="coupons.length<=0" class="default-img">
+      <img src="//udata.youban.com/webimg/wxyx/puintuan/double11_gift_noget.png" alt="">
+      <p>{{alertContent}}</p>
     </div>
     <ul class="coupons" v-else >
       <li :class="[changeCouponStyle(),'coupon']" v-for="coupon in coupons">
@@ -107,19 +107,26 @@ export default {
       }
     }
   }
+  .default-img{
+    text-align: center;
+    img{
+      margin-top:33%;
+      width: 5rem;
+    }
+  }
   .coupons {
     width: 100%;
     padding: 0 1rem;
     box-sizing: border-box;
     margin-top: 1rem;
       .canuse{
-          background: url("//udata.youban.com/webimg/wxyx/puintuan/canuse-coupon-bg.png") no-repeat;
+          background: url("//udata.youban.com/webimg/wxyx/puintuan/canuse-coupon-bg2.png") no-repeat;
       }
       .hasused{
-          background: url("//udata.youban.com/webimg/wxyx/puintuan/used-coupon-bg.png") no-repeat;
+          background: url("//udata.youban.com/webimg/wxyx/puintuan/used-coupon-bg2.png") no-repeat;
       }
       .useless{
-            background: url("//udata.youban.com/webimg/wxyx/puintuan/nouse-coupon-bg.png") no-repeat;
+            background: url("//udata.youban.com/webimg/wxyx/puintuan/nouse-coupon-bg2.png") no-repeat;
       }
       .coupon {
           width: 21.44rem;
@@ -140,8 +147,6 @@ export default {
               &.value {
                   text-align: left;
                   width: 38%;
-                  border-right: 1px dashed #fff;
-                  
                   sub{
                     font-size: 1.2rem;
                   }
@@ -156,10 +161,12 @@ export default {
                 text-align: left;
                 li.expiration{
                   margin-top: .25rem;
+                  color: #585858;
                 }
                 li.info{
-                  font-size:1.38rem;
+                  font-size:1.1rem;
                   margin-top: .25rem;
+                  color: #000000;
                 }
               }
           }

@@ -72,18 +72,19 @@
     },
     beforeRouteEnter (to, from, next) {
       next(vm => {
-        document.title="订单详情"
-      })
-    },
-    created() {
-      new Request('/order/detail.json', 'GET', {
-        goodsid: this.$route.query.id
-      }).returnJson().then(res => {
-        this.goodsInfo = res.goodsInfo;
-        this.addressInfo=res.addressInfo;
+        document.title="订单详情";
+        vm.initPageData()
       })
     },
     methods: {
+      initPageData(){
+        new Request('/order/detail.json', 'GET', {
+          goodsid: this.$route.query.id
+        }).returnJson().then(res => {
+          this.goodsInfo = res.goodsInfo;
+          this.addressInfo=res.addressInfo;
+        })
+      },
       hrefTo(name, params) {
         this.$router.push({name: name, params: params})
       },

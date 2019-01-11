@@ -1,32 +1,43 @@
 <template>
-  <ul class="orders">
-    <li class="order" v-for="(item,index) in orderData" :key="index">
-      <div class="title"><span>订单号：{{item.bill_id.substr(7,15)}}</span><span :class="{'active' : item.status==1}">{{item.status==1?'已发货':'未发货'}}</span>
-      </div>
-      <ul class="data"
-          @click="item.address_filled==0? $router.push({path:'/orderpage',query:{id:item.goods_id}}):$router.push({path:'/orderdetail',query:{id:item.goods_id}})">
-        <li class="left"><img :src="item.goods_image"
-                              alt=""></li>
-        <li class="right">
-          <div class="line_1"><span>{{item.goods_name}}</span><b>&yen;{{item.price}}</b></div>
-          <p class="line_2">{{item.goods_desc}}</p>
-          <div class="line_3">下单时间：{{item.time}}</div>
-          <div class="line_4">&times;1</div>
-        </li>
-      </ul>
-    </li>
-  </ul>
+  <div>
+    <ul class="orders">
+      <li class="order" v-for="(item,index) in orderData" :key="index">
+        <div class="title"><span>订单号：{{item.bill_id.substr(7,15)}}</span><span :class="{'active' : item.status==1}">{{item.status==1?'已发货':'待发货'}}</span>
+        </div>
+        <ul class="data"
+            @click="item.address_filled==0? (showAlertDialog=true,clickId=item.goods_id):$router.push({path:'/orderdetail',query:{id:item.goods_id}})">
+          <li class="left"><img :src="item.goods_image"
+                                alt=""></li>
+          <li class="right">
+            <div class="line_1"><span>{{item.goods_name}}</span></div>
+            <p class="line_2">{{item.goods_desc}}</p>
+            <div class="line_3">下单时间：{{item.time}}</div>
+            <div class="line_4">&times;1</div>
+            <b class="line_5">&yen;{{item.price}}</b>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <div v-if="orderData.length<=0" class="default-img">
+      <img src="//udata.youban.com/webimg/wxyx/puintuan/double11_gift_noget.png" alt="">
+      <p>订单空空如也~~</p>
+    </div>
+    <WeixinDialog :alertDesc="alertDesc" :showAlertDialog="showAlertDialog" @AOk="delAok"></WeixinDialog>
+  </div>
 </template>
 
 <script>
-
+  import WeixinDialog from '../base/weixin-dialog/weixin-dialog';
   import { Request } from '../../api/request';
 
   export default {
     name: 'order-list',
     data() {
       return {
-        orderData: []
+        orderData: [],
+        alertDesc:'您还有实物商品未填写收获地址,现在去填写地址？',
+        showAlertDialog:false,
+        clickId:''
       };
     },
     beforeRouteEnter(to, from, next) {
@@ -48,7 +59,14 @@
           return unescape(r[2]);
         }
         return '';
-      }
+      },
+      delAok(){
+        this.showAlertDialog=false;
+        this.$router.push({path:'/orderpage',query:{id:this.clickId}})
+      },
+    },
+    components:{
+      WeixinDialog
     }
   };
 </script>
@@ -139,7 +157,7 @@
           margin: auto;
           height: 0;
           bottom: 0;
-          border-bottom: 1px solid rgba(0, 0, 0, .2);
+          border-bottom: 1px solid rgba(0, 0, 0, .1);
         }
         span {
           &:first-child {
@@ -168,7 +186,7 @@
         box-sizing: border-box;
         padding: .63rem .81rem;
         position: relative;
-        border-bottom: 1px solid rgba(0, 0, 0, .2);
+        border-bottom: 1px solid rgba(0, 0, 0, .1);
         li {
           float: left;
           &.left {
@@ -185,7 +203,7 @@
             box-sizing: border-box;
             padding-left: .81rem;
             .line_1 {
-              width: 15.63rem;
+              width: auto;
               span {
                 font-size: 1rem;
                 font-weight: 500;
@@ -216,10 +234,22 @@
               right: .81rem;
               color: #707070;
             }
+            .line_5{
+              position: absolute;
+              right: .81rem;
+              font-weight: 500;
+            }
           }
         }
       }
 
+    }
+  }
+  .default-img{
+    text-align: center;
+    img{
+      margin-top:33%;
+      width: 5rem;
     }
   }
 </style>

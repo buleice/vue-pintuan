@@ -5,38 +5,44 @@
         <li class="left"><img :src="item.image"
                               alt=""></li>
         <li class="right">
-          <div class="line_1"><span>{{item.name}}</span><b>&yen;{{item.price}}</b></div>
+          <div class="line_1"><span>{{item.name}}</span></div>
           <p class="line_2" v-html="item.desc"></p>
           <div class="line_4">&times;1</div>
+          <b class="line_5">&yen;{{item.price}}</b>
         </li>
       </ul>
     </div>
-    <div v-if="filled==0">
+    <div>
       <div class="addressbanner">收获地址</div>
       <div class="address-manage">
-        <AddAddress @submitorder="handleSubmitOrder" v-if="defaultAddress.name==undefined&&shippingAddress.length<=0"></AddAddress>
+        <AddAddress @submitorder="handleSubmitOrder"
+                    v-if="defaultAddress.name==undefined&&shippingAddress.length<=0"></AddAddress>
         <SelectAddress v-else></SelectAddress>
       </div>
-      <div  v-if="defaultAddress.name&&shippingAddress.length>0" class="mod_btns fixed"><a href="javascript:void(0);" @click="handleSubmit"
-                                                                                           class="mod_btn bg_1">提交订单</a></div>
+      <div v-if="defaultAddress.name&&shippingAddress.length>0" class="mod_btns fixed"><a href="javascript:void(0);"
+                                                                                          @click="handleSubmit"
+                                                                                          class="mod_btn bg_1">提交订单</a>
+      </div>
     </div>
-    <div v-else>
-      <div class="mod_btns fixed" style="background: #f5f5f5"><a href="javascript:void(0);" class="mod_btn bg_1">订单已完成</a></div>
+    <div v-if="filled==1">
+      <div class="mod_btns fixed" style="background: #f5f5f5"><a :href="'#/orderdetail?id='+$route.query.id"
+                                                                 class="mod_btn bg_1">信息已提交,查看订单详情</a></div>
     </div>
+
 
   </div>
 </template>
 
 <script>
-  import {mapGetters, mapActions} from 'vuex'
+  import { mapGetters, mapActions } from 'vuex';
   import AddAddress from './addAddress';
-  import AddressBox from './userAddress'
-  import {Request} from "../../api/request";
-  import {axiosPost} from "../../api/axios-data";
-  import SelectAddress from './select-address'
+  import AddressBox from './userAddress';
+  import { Request } from '../../api/request';
+  import { axiosPost } from '../../api/axios-data';
+  import SelectAddress from './select-address';
 
   export default {
-    name: "order-confirmation",
+    name: 'order-confirmation',
     components: {
       AddAddress,
       AddressBox,
@@ -48,73 +54,78 @@
         prizeInfo: {},
         addressList: [],
         choosenAddress: {},
-        goodsInfo:[],
-        type:0,
-        filled:0
-      }
+        goodsInfo: [],
+        type: 0,
+        filled: 0
+      };
     },
-    beforeRouteEnter (to, from, next) {
+    beforeRouteEnter(to, from, next) {
       next(vm => {
-        document.title="提交订单"
-        vm.initPageData()
-      })
+        document.title = '提交订单';
+        vm.initPageData();
+      });
     },
     methods: {
-      initPageData(){
+      initPageData() {
         new Request('/order/address.json', 'GET', {
           goodsid: this.$route.query.id
         }).returnJson().then(res => {
-          // if(res.filled==1){
-          //   this.$router.push({path:'/orderdetail',query:{id:this.$route.query.id,bid:this.$route.query.bid}});
-          //   return;
-          // }
-          this.goodsInfo=res.goodsInfo;
+          this.goodsInfo = res.goodsInfo;
           this.setShippingAddress(res.list);
-          this.type=res.type;
-          this.filled=res.filled;
+          this.type = res.type;
+          this.filled = res.filled;
           if (res.list.length > 0) {
             this.addressList = res.list;
             if (!(res.list.find(item => item.default === 1))) {
-              this.choosenAddress = res.list[0]
+              this.choosenAddress = res.list[0];
               this.setDefaultAddress(res.list[0]);
             } else {
-              this.choosenAddress = res.list.find(item => item.default === 1)
-              this.setDefaultAddress(res.list.find(item => item.default === 1))
+              this.choosenAddress = res.list.find(item => item.default === 1);
+              this.setDefaultAddress(res.list.find(item => item.default === 1));
             }
           }
-          this.prizeInfo = res.prizeInfo
-        })
+          this.prizeInfo = res.prizeInfo;
+        });
       },
       hrefTo(name, params) {
-        this.$router.push({name: name, params: params})
+        this.$router.push({ name: name, params: params });
       },
       handleSubmit() {
-        axiosPost('/order/address.json', Object.assign({},{
+        axiosPost('/order/address.json', Object.assign({}, {
           goodsid: this.$route.query.id,
-          type:this.type
-        },this.defaultAddress)).then(res => {
-          if (res.data.rc == 0) {
-            setTimeout(() => {
-              this.$router.push({path:'/orderlist'})
-            }, 300)
+          type: this.type
+        }, this.defaultAddress)).then(res => {
+            if (res.data.rc == 0) {
+              if (this._GetQueryString('from') == 'index') {
+                setTimeout(() => {
+                  window.location.href = `/purchase/index?id=${this.$route.query.id}`;
+                }, 300);
+              } else {
+                setTimeout(() => {
+                  this.$router.push({ path: '/orderlist' });
+                }, 300);
+              }
+            }
           }
-        })
+        );
       },
       _GetQueryString(name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
         var r = window.location.search.substr(1).match(reg); //search,查询？后面的参数，并匹配正则
-        if (r != null) return unescape(r[2]);
+        if (r != null) {
+          return unescape(r[2]);
+        }
         return '';
       },
-      handleSubmitOrder(){
-        setTimeout(()=>{
+      handleSubmitOrder() {
+        setTimeout(() => {
           this.handleSubmit();
-        },300)
+        }, 300);
       },
-      ...mapActions(['setDefaultAddress', 'setShippingAddress'])
+      ... mapActions(['setDefaultAddress', 'setShippingAddress'])
     },
     computed: {
-      ...mapGetters(['shippingAddress','defaultAddress'])
+      ...mapGetters(['shippingAddress', 'defaultAddress'])
     }
   }
 </script>
@@ -254,7 +265,7 @@
             box-sizing: border-box;
             padding-left: .81rem;
             .line_1 {
-              width: 15.63rem;
+              width: auto;
               span {
                 font-size: 1rem;
                 font-weight: 500;
@@ -263,10 +274,6 @@
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
-              }
-              b {
-                float: right;
-                font-weight: 500;
               }
             }
             .line_2 {
@@ -286,12 +293,17 @@
               right: .81rem;
               color: #707070;
             }
+            .line_5{
+                position: absolute;
+                right: .81rem;
+                font-weight: 500;
+            }
           }
         }
       }
 
     }
-    .addressbanner{
+    .addressbanner {
       width: 100%;
       height: 2.13rem;
       line-height: 2.13rem;
@@ -299,7 +311,7 @@
       box-sizing: border-box;
       padding-left: 1.75rem;
       position: relative;
-      &::before{
+      &::before {
         content: '';
         display: block;
         width: 1.13rem;
@@ -350,13 +362,13 @@
     }
     .fixed {
       left: 0;
-     right: 0;
+      right: 0;
       max-width: 33.75rem;
       margin: 0 auto;
       background-color: #fff;
       position: relative;
-    position: fixed;
-       z-index: 70;
+      position: fixed;
+      z-index: 70;
       bottom: 0;
       padding-bottom: constant(safe-area-inset-bottom);
       padding-bottom: env(safe-area-inset-bottom);
