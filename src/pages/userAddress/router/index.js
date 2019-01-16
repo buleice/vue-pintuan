@@ -9,6 +9,7 @@ const ChooseAddress=()=>import('../../../components/addressMange/chooseAddress')
 const OrderPage=()=>import('../../../components/addressMange/order-page')
 const OrderList=()=>import('../../../components/addressMange/order-list')
 const orderDetail=()=>import('../../../components/addressMange/order-detail')
+const unpayOrder=()=>import('../../../components/addressMange/unpayorder')
 Vue.use(Router);
 
 export default new Router({
@@ -54,6 +55,11 @@ export default new Router({
       path:'/orderdetail',
       name:'orderdetail',
       component:orderDetail
+    },
+    {
+      path:'/unpayorder',
+      name:'unpayorder',
+      component:unpayOrder
     }
   ]
 });

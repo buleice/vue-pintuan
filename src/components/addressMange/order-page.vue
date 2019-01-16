@@ -25,7 +25,7 @@
       </div>
     </div>
     <div v-if="filled==1">
-      <div class="mod_btns fixed" style="background: #f5f5f5"><a :href="'#/orderdetail?id='+$route.query.id"
+      <div class="mod_btns fixed" style="background: #f5f5f5"><a href="javascript:void(0);" @click="hrefTo"
                                                                  class="mod_btn bg_1">信息已提交,查看订单详情</a></div>
     </div>
 
@@ -68,7 +68,7 @@
     methods: {
       initPageData() {
         new Request('/order/address.json', 'GET', {
-          goodsid: this.$route.query.id
+          bid: this.$route.query.id
         }).returnJson().then(res => {
           this.goodsInfo = res.goodsInfo;
           this.setShippingAddress(res.list);
@@ -87,19 +87,30 @@
           this.prizeInfo = res.prizeInfo;
         });
       },
-      hrefTo(name, params) {
-        this.$router.push({ name: name, params: params });
+      hrefTo() {
+        if (this._GetQueryString('from') == 'index') {
+          this.$router.push({
+            path: '/orderdetail',
+            query: { id: this.$route.query.id, goodsid: this.$route.query.goodsid }
+          });
+        } else {
+          setTimeout(() => {
+            this.$router.push({ path: '/orderlist' });
+          }, 300);
+        }
+
       },
       handleSubmit() {
         axiosPost('/order/address.json', Object.assign({}, {
-          goodsid: this.$route.query.id,
+          bid: this.$route.query.id,
           type: this.type
         }, this.defaultAddress)).then(res => {
             if (res.data.rc == 0) {
+              this.initPageData();
               if (this._GetQueryString('from') == 'index') {
                 setTimeout(() => {
-                  window.location.href = `/purchase/index?id=${this.$route.query.id}`;
-                }, 300);
+                  window.location.href = `/purchase/index?id=${this.$route.query.goodsid}`;
+                }, 500);
               } else {
                 setTimeout(() => {
                   this.$router.push({ path: '/orderlist' });
@@ -127,7 +138,7 @@
     computed: {
       ...mapGetters(['shippingAddress', 'defaultAddress'])
     }
-  }
+  };
 </script>
 
 <style scoped lang="scss">
@@ -293,10 +304,10 @@
               right: .81rem;
               color: #707070;
             }
-            .line_5{
-                position: absolute;
-                right: .81rem;
-                font-weight: 500;
+            .line_5 {
+              position: absolute;
+              right: .81rem;
+              font-weight: 500;
             }
           }
         }

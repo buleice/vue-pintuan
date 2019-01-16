@@ -79,7 +79,8 @@
     methods: {
       initPageData(){
         new Request('/order/detail.json', 'GET', {
-          goodsid: this.$route.query.id
+        bid: this.$route.query.id,
+          goodsid:this.$route.query.goodsid
         }).returnJson().then(res => {
           this.goodsInfo = res.goodsInfo;
           this.addressInfo=res.addressInfo;
@@ -87,17 +88,6 @@
       },
       hrefTo(name, params) {
         this.$router.push({name: name, params: params})
-      },
-      handleSubmit() {
-        axiosPost('/order/address.json', Object.assign({}, {
-          goodsid: this.$route.query.id,
-        }, this.defaultAddress)).then(res => {
-          if (res.data.rc == 0) {
-            setTimeout(() => {
-              window.location.href = "/address.html#/orderlist"
-            }, 300)
-          }
-        })
       },
       _GetQueryString(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");

@@ -2,10 +2,10 @@
   <div>
     <ul class="orders">
       <li class="order" v-for="(item,index) in orderData" :key="index">
-        <div class="title"><span>订单号：{{item.bill_id.substr(7,15)}}</span><span :class="{'active' : item.status==1}">{{item.status==1?'已发货':'待发货'}}</span>
+        <div class="title"><span>订单号：{{item.bill_id.substr(7,15)}}</span><span :class="{'active' : item.status==1}">{{item.status==1?'已发货':switchExpressStatua(item.address_filled)}}</span>
         </div>
         <ul class="data"
-            @click="item.address_filled==0? (showAlertDialog=true,clickId=item.goods_id):$router.push({path:'/orderdetail',query:{id:item.goods_id}})">
+            @click="item.address_filled==0? (showAlertDialog=true,clickId=item.bill_id):$router.push({path:'/orderdetail',query:{id:item.bill_id,goodsid:item.goods_id}})">
           <li class="left"><img :src="item.goods_image"
                                 alt=""></li>
           <li class="right">
@@ -63,6 +63,9 @@
       delAok(){
         this.showAlertDialog=false;
         this.$router.push({path:'/orderpage',query:{id:this.clickId}})
+      },
+      switchExpressStatua(status){
+        return status==1?"待发货":"未填地址";
       },
     },
     components:{
@@ -165,15 +168,15 @@
           }
           &:last-child {
             display: inline-block;
-            line-height: 1.31rem;
+            line-height: 1rem;
             float: right;
-            width: 3.75rem;
-            height: 1.31rem;
             color: #f69f00;
             border: 1px solid #f69f00;
             border-radius: .63rem;
             text-align: center;
             margin-top: .63rem;
+            padding: 0 .26rem;
+            font-size: .75rem;
           }
           &.active {
             color: #27b77e;
