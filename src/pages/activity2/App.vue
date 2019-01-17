@@ -36,6 +36,9 @@ import WxShare from '../../components/base/wxshare.vue'
         }
       }
     },
+    created(){
+      console.log(1111)
+    },
     components:{
       WxShare
     }
