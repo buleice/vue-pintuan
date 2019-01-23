@@ -1,7 +1,7 @@
 <template>
   <div class="address">
     <group>
-      <x-input title="收货人：" name="username" placeholder="请输入姓名" v-model="Fname" is-type="china-name"></x-input>
+      <x-input title="收货人：" name="username" placeholder="请输入姓名" autofocus v-model="Fname" is-type="china-name"></x-input>
     </group>
     <group>
       <x-input title="手机：" mask="999 9999 9999" v-model="Fphone" :max="13" is-type="china-mobile"></x-input>
@@ -200,7 +200,7 @@
       background-color: #fff;
       position: relative;
       position: fixed;
-      z-index: 90;
+      z-index: 500;
       bottom: 0;
       padding-bottom: constant(safe-area-inset-bottom);
       padding-bottom: env(safe-area-inset-bottom);

@@ -1,7 +1,7 @@
 <template>
   <div class="single-order">
     <div class="status">
-      <img src="../../assets/order.png" alt=""><span>&nbsp;&nbsp;订单状态：&nbsp;&nbsp;</span><span>{{haveBuy===1?'已支付':'待支付'}}</span>
+      <img src="../../assets/order.png" alt=""><span>&nbsp;&nbsp;订单状态：&nbsp;&nbsp;</span><span>{{haveBuy===1||disabled===1?'已关闭':'待支付'}}</span>
     </div>
     <div class="goodsInfo">
       <img :src="orderdata.image" alt="">
@@ -21,9 +21,15 @@
       <li>支付时间：{{orderdata.time}}</li>
       <li>支付方式：{{orderdata.payway}}</li>
     </ul>
-    <div class="pay" v-if="haveBuy===0" @click="switchPay()">
+    <div class="pay" v-if="haveBuy===0&&disabled==0" @click="switchPay()">
       马上支付
     </div>
+    <div class="pay" style="background-color:#9e9e9e" v-if="disabled==1">
+      订单超时，该订单已关闭！
+    </div>
+    <a class="pay" :href="`/purchase/index?id=${goodsid}`" v-if="haveBuy===1">
+      您已经购买过该课程,快去上课吧！
+    </a>
   </div>
 </template>
 
@@ -36,14 +42,24 @@
     data() {
       return {
         orderdata: {},
-        haveBuy:0
+        haveBuy:0,
+        goodsid:'',
+        goodstype:'',
+        disabled:0,
       };
     },
     created() {
       this.initpageData();
+      // window.addEventListener('pageshow', function(event) {
+      //   if (event.persisted) {
+      //     this.initpageData()
+      //   } else {
+      //     return false;
+      //   }
+      // })
       window.addEventListener('pageshow', function(event) {
         if (event.persisted) {
-          this.initpageData()
+          this.initPageData();
         } else {
           return false;
         }
@@ -54,6 +70,9 @@
         new Request('/purchase/unpaid.json', 'GET', { bid: this._GetQueryString('bid') }).returnJson().then(res => {
           this.orderdata = res.data;
           this.haveBuy=res.haveBuy;
+          this.goodstype=res.data.goods_type;
+          this.goodsid=res.data.goods_id;
+          this.disabled=res.disabled;
         });
       },
       switchPay() {
@@ -73,13 +92,15 @@
       },
       wxPay(url, params) {
         newWxPay.repeatPay(url, params).then(res => {
-          console.log(res);
           this.initpageData();
           setTimeout(() => {
-            window.location.assign('/address/index?#/orderlist');
+           if(this.goodstype==0){
+             window.location.assign('/purchase/index?id='+this.orderdata.goods_id);
+           }else{
+             window.location.assign(`/address/index?from=index#/orderpage?id=${res.bid}&goodsid=${this.goodsid}`);
+           }
           }, 500);
         }).catch(error => {
-          console.log(error);
           window.alert('支付失败');
         });
       },

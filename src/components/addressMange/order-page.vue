@@ -65,6 +65,12 @@
         vm.initPageData();
       });
     },
+    created(){
+      document.body.addEventListener('focusout', () => {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+      })
+    },
     methods: {
       initPageData() {
         new Request('/order/address.json', 'GET', {
