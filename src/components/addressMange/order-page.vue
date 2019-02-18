@@ -65,11 +65,11 @@
         vm.initPageData();
       });
     },
-    created(){
+    created() {
       document.body.addEventListener('focusout', () => {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
-      })
+      });
     },
     methods: {
       initPageData() {
@@ -114,9 +114,15 @@
             if (res.data.rc == 0) {
               this.initPageData();
               if (this._GetQueryString('from') == 'index') {
-                setTimeout(() => {
-                  window.location.href = `/purchase/index?id=${this.$route.query.goodsid}`;
-                }, 500);
+                if (this._GetQueryString('activity')) {
+                  setTimeout(() => {
+                    window.location.href = `/purchase/20190218?`;
+                  }, 300);
+                } else {
+                  setTimeout(() => {
+                    window.location.href = `/purchase/index?id=${this.$route.query.goodsid}`;
+                  }, 500);
+                }
               } else {
                 setTimeout(() => {
                   this.$router.push({ path: '/orderlist' });

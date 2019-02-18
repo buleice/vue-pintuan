@@ -57,7 +57,7 @@ const wxPays = {
     });
   },
   justPay(url,data){
-    wxPay(url, Object.assign({}, data, {urltag:'activity20190101'}));
+    wxPay(url, Object.assign({}, data, {urltag:'activity20190218'}));
   },
   bonusPay(url,data){
     axiosPost(url, data).then(response => {
@@ -75,7 +75,7 @@ const wxPays = {
 const wxPay=function (url,data) {
   axiosPost(url,data).then(response=>{
     if(response.data.rc==0){
-      Pay(response.data.data);
+      Pay(response.data);
     }
   }).catch(function (errors) {
     console.log('errors', errors);
@@ -97,11 +97,17 @@ const Pay = function(params) {
 
 const onBridgeReady=function (params) {
   window.WeixinJSBridge.invoke(
-    'getBrandWCPayRequest', params,
+    'getBrandWCPayRequest', params.data,
     function(res) {
       if (res.err_msg === "get_brand_wcpay_request:ok") {
-        alert("支付成功");
-        window.location.href="https://wxyx.youban.com/purchase/20190101?#/lottery";
+        if(params.needAddress==1){
+          alert("支付成功");
+          window.location.href = `/address/index?from=index#/orderpage?activity=${params.activity}&id=${params.bid}&goodsid=${params.buyingid}`
+        }else{
+          alert("支付成功");
+          window.location.href="http://test.wxyx.youban.com/purchase/20190218";
+        }
+
       } else {
         alert("支付失败");
       }

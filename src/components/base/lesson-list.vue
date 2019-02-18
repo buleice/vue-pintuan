@@ -3,7 +3,7 @@
         <ul class="item" v-if="lessonList.length>0">
             <li v-for="(item,index) in lessonList" :key="index">
                 <div class="tuanimg">
-                    <a :href="item.url" target="_blank">
+                    <a :href="item.url+'&isactivity=20180218'" target="_blank">
                         <img class="course-img" @load="imgLoad" ref="lazy" :src="item['banner']" :key="item['banner']">
                     </a>
                     <!--<div class="people">-->

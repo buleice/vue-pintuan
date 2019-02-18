@@ -2,7 +2,7 @@
   <div class="shop-page">
     <div class="shop-content">
       <div>
-        <img class="banner-bg" src="//udata.youban.com/webimg/wxyx/puintuan/common/20190101/bg-01.png" alt="">
+        <img class="banner-bg" src="//udata.youban.com/webimg/wxyx/puintuan/common/20190101/yuanxiao.png" alt="">
         <ul class="shop-category">
           <li v-for="item in category" :key="item.title" @click="_getlessonList(item.id)">
             <div :class="[locationId==item.id?'active':'']">
@@ -101,6 +101,8 @@
         justify-content: space-around;
         padding-bottom: .5rem;
         padding: 0 .31rem;
+        overflow-x: scroll;
+        overflow-y: hidden;
         li {
           list-style-type: none;
           color: #0d0d0d;
