@@ -107,7 +107,7 @@ export default {
     }
   },
   created(){
-        new Request("/activity/20181111.json","POST").returnJson().then(res=>{
+        new Request("/activity/20181111.json?debug=20009150","POST").returnJson().then(res=>{
           this.goodsList=res.goodsList;
           this.myPurchases=res.myPurchases;
           this.isValid=res.isValid;

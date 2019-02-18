@@ -1,8 +1,8 @@
 <template lang="html">
-  <div class="shop-page">
+  <div class="shop-page" >
     <div class="shop-content">
       <div>
-        <img class="banner-bg" src="//udata.youban.com/webimg/wxyx/puintuan/common/20190101/yuanxiao.png" alt="">
+        <img class="banner-bg" src="//wxyx.youban.com/img/bg1.png" alt="">
         <ul class="shop-category">
           <li v-for="item in category" :key="item.title" @click="_getlessonList(item.id)">
             <div :class="[locationId==item.id?'active':'']">
@@ -90,6 +90,8 @@
   .shop-page {
     background: #ffffff;
       padding-bottom: 2.5rem;
+      background:url('//wxyx.youban.com/img/content_bg.png');
+      background-size:100% auto;
     .shop-content {
       .banner-bg {
         display: block;
