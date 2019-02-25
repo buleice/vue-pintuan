@@ -105,7 +105,7 @@ const onBridgeReady=function (params) {
           window.location.href = `/address/index?from=index#/orderpage?activity=${params.activity}&id=${params.bid}&goodsid=${params.buyingid}`
         }else{
           alert("支付成功");
-          window.location.href="http://test.wxyx.youban.com/purchase/20190218";
+          window.location.href="/purchase/20190218";
         }
 
       } else {

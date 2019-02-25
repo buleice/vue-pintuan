@@ -25,8 +25,8 @@ import WxShare from '../../components/base/wxshare.vue'
         shareData:{
           title: `小伴龙优学元宵节发红包啦！`,
           desc: '最高可领88.88元！快来看看吧~',
-          link: 'http://test.wxyx.youban.com/purchase/20190218',
-          imgUrl: 'https://udata.youban.com/webimg/wxyx/puintuan/common/20190101/shareicon.png',
+          link: 'http://wxyx.youban.com/purchase/20190218',
+          imgUrl: 'https://wxyx.youban.com/img/shareicon.png',
           success: function() {
             new Request('/common/record.json?wxschool=20190218',"GET").returnJson()
           },
